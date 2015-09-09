@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,14 +22,14 @@
 // -------------------------------------------------------------------------
 //  File name:   GLIngr.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
 //  Description: This .h file contains constants, typedefs, etc. for Intergraph
 //               extensions to OpenGL.  These extensions are:
 //               - Multiple Palette Extension
 //               - Texture Object Extension
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -42,8 +42,8 @@
 #define GL_MAX_PALETTE_ENTRIES_INGR     0x80c2
 #define GL_CURRENT_PALETTE_INGR         0x80c3
 #define GL_PALETTE_WRITEMASK_INGR       0x80c4
-#define GL_CURRENT_RASTER_PALETTE_INGR	0x80c5
-#define GL_PALETTE_CLEAR_VALUE_INGR	0x80c6
+#define GL_CURRENT_RASTER_PALETTE_INGR  0x80c5
+#define GL_PALETTE_CLEAR_VALUE_INGR 0x80c6
 
 // Function prototypes for the Multiple Palette Extension routines
 typedef void ( APIENTRY* PALETTEFUNCPTR )( GLuint );
@@ -60,13 +60,13 @@ typedef void ( APIENTRY* CLEARPALETTEFUNCPTR )( GLuint );
 
 // Function prototypes for the Texture Object Extension routines
 typedef GLboolean( APIENTRY* ARETEXRESFUNCPTR )( GLsizei, const GLuint*,
-        const GLboolean* );
+		const GLboolean* );
 typedef void ( APIENTRY* BINDTEXFUNCPTR )( GLenum, GLuint );
 typedef void ( APIENTRY* DELTEXFUNCPTR )( GLsizei, const GLuint* );
 typedef void ( APIENTRY* GENTEXFUNCPTR )( GLsizei, GLuint* );
 typedef GLboolean( APIENTRY* ISTEXFUNCPTR )( GLuint );
 typedef void ( APIENTRY* PRIORTEXFUNCPTR )( GLsizei, const GLuint*,
-        const GLclampf* );
+		const GLclampf* );
 
 
 /* OpenGL ExtEscape escape function constants */
@@ -86,7 +86,7 @@ typedef void ( APIENTRY* PRIORTEXFUNCPTR )( GLsizei, const GLuint*,
 
 typedef struct _OPENGLGETINFO
 {
-    ULONG   ulSubEsc;
+	ULONG   ulSubEsc;
 } OPENGLGETINFO, *POPENGLGETINFO;
 
 
@@ -94,9 +94,9 @@ typedef struct _OPENGLGETINFO
 
 typedef struct _GLDRVNAMERET
 {
-    ULONG   ulVersion;              // must be 1 for this version
-    ULONG   ulDriverVersion;        // driver specific version number
-    WCHAR   awch[MAX_PATH + 1];
+	ULONG   ulVersion;              // must be 1 for this version
+	ULONG   ulDriverVersion;        // driver specific version number
+	WCHAR   awch[MAX_PATH + 1];
 } GLDRVNAMERET, *PGLDRVNAMERET;
 
 #endif

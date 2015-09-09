@@ -30,39 +30,39 @@ or simply visit <http://www.gnu.org/licenses/>.
 
 bool CG_RayTrace( class trace_c& tr, u32 skipEntNum )
 {
-    if( rf->rayTraceWorldMap( tr ) )
-    {
-        tr.setHitCGEntity( &cg_entities[ENTITYNUM_WORLD] );
-    }
-    for( u32 i = 0; i < MAX_GENTITIES; i++ )
-    {
-        centity_s* cent = &cg_entities[i];
-        if( cent->currentValid == false )
-        {
-            continue;
-        }
-        if( cent->rEnt == 0 )
-        {
-            continue;
-        }
-        if( skipEntNum != ENTITYNUM_NONE )
-        {
-            if( i == skipEntNum )
-                continue;
-            if( cent->currentState.parentNum == skipEntNum )
-                continue;
-        }
-        const aabb& bb = cent->rEnt->getBoundsABS();
-        if( tr.getTraceBounds().intersect( bb ) == false )
-        {
-            continue;
-        }
-        if( cent->rEnt->rayTraceWorld( tr ) )
-        {
-            tr.setHitCGEntity( cent );
-        }
-    }
-    return tr.hasHit();
+	if ( rf->rayTraceWorldMap( tr ) )
+	{
+		tr.setHitCGEntity( &cg_entities[ENTITYNUM_WORLD] );
+	}
+	for ( u32 i = 0; i < MAX_GENTITIES; i++ )
+	{
+		centity_s* cent = &cg_entities[i];
+		if ( cent->currentValid == false )
+		{
+			continue;
+		}
+		if ( cent->rEnt == 0 )
+		{
+			continue;
+		}
+		if ( skipEntNum != ENTITYNUM_NONE )
+		{
+			if ( i == skipEntNum )
+				continue;
+			if ( cent->currentState.parentNum == skipEntNum )
+				continue;
+		}
+		const aabb& bb = cent->rEnt->getBoundsABS();
+		if ( tr.getTraceBounds().intersect( bb ) == false )
+		{
+			continue;
+		}
+		if ( cent->rEnt->rayTraceWorld( tr ) )
+		{
+			tr.setHitCGEntity( cent );
+		}
+	}
+	return tr.hasHit();
 }
 
 

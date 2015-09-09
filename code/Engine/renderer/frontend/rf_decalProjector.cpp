@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 2012 V.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   rf_decalProjector.cpp
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -40,124 +40,124 @@ static aCvar_c decalProjector_debugDraw( "decalProjector_debugDraw", "0" );
 
 decalProjector_c::decalProjector_c()
 {
-    mat = 0;
+	mat = 0;
 }
 bool decalProjector_c::init( const vec3_c& pos, const vec3_c& normal, float radius )
 {
-    if( radius <= 0 )
-    {
-        g_core->RedWarning( "decalProjector_c::init: radius (%f) <= 0\n", radius );
-        return true; //return error
-    }
-    if( normal.lenSQ() < 0.01f )
-    {
-        g_core->RedWarning( "decalProjector_c::init: normal.lenSQ() < 0.01f (%f, %f, %f)\n", normal.x, normal.y, normal.z );
-        return true; // return error
-    }
-    
-    inPos = pos;
-    inNormal = normal;
-    inRadius = radius;
-    
-    planes[0].fromPointAndNormal( pos - normal * radius, normal );
-    planes[1].fromPointAndNormal( pos + normal * radius, -normal );
-    perp = normal.getPerpendicular();
-    perp2.crossProduct( normal, perp );
-    
-    if( decalProjector_debugDraw.getInt() )
-    {
-        RFDL_AddDebugLine( pos - normal, pos + perp * 10.f - normal, vec3_c( 0, 0, 1 ), 5.f );
-        RFDL_AddDebugLine( pos - normal, pos + perp2 * 10.f - normal, vec3_c( 0, 1, 0 ), 5.f );
-    }
-    vec3_c points[4];
-    points[0] = pos + perp * radius + perp2 * radius - normal * radius;
-    points[1] = pos - perp * radius + perp2 * radius - normal * radius;
-    points[2] = pos - perp * radius - perp2 * radius - normal * radius;
-    points[3] = pos + perp * radius - perp2 * radius - normal * radius;
-    bounds.addPoint( points[0] );
-    bounds.addPoint( points[1] );
-    bounds.addPoint( points[2] );
-    bounds.addPoint( points[3] );
-    bounds.addPoint( points[0] + normal * radius * 2.f );
-    bounds.addPoint( points[1] + normal * radius * 2.f );
-    bounds.addPoint( points[2] + normal * radius * 2.f );
-    bounds.addPoint( points[3] + normal * radius * 2.f );
-    planes[2].fromThreePointsINV( points[0], points[1], points[1] + normal * radius * 2.f );
-    planes[3].fromThreePointsINV( points[1], points[2], points[2] + normal * radius * 2.f );
-    planes[4].fromThreePointsINV( points[2], points[3], points[3] + normal * radius * 2.f );
-    planes[5].fromThreePointsINV( points[3], points[0], points[0] + normal * radius * 2.f );
-    return false;
+	if ( radius <= 0 )
+	{
+		g_core->RedWarning( "decalProjector_c::init: radius (%f) <= 0\n", radius );
+		return true; //return error
+	}
+	if ( normal.lenSQ() < 0.01f )
+	{
+		g_core->RedWarning( "decalProjector_c::init: normal.lenSQ() < 0.01f (%f, %f, %f)\n", normal.x, normal.y, normal.z );
+		return true; // return error
+	}
+	
+	inPos = pos;
+	inNormal = normal;
+	inRadius = radius;
+	
+	planes[0].fromPointAndNormal( pos - normal * radius, normal );
+	planes[1].fromPointAndNormal( pos + normal * radius, -normal );
+	perp = normal.getPerpendicular();
+	perp2.crossProduct( normal, perp );
+	
+	if ( decalProjector_debugDraw.getInt() )
+	{
+		RFDL_AddDebugLine( pos - normal, pos + perp * 10.f - normal, vec3_c( 0, 0, 1 ), 5.f );
+		RFDL_AddDebugLine( pos - normal, pos + perp2 * 10.f - normal, vec3_c( 0, 1, 0 ), 5.f );
+	}
+	vec3_c points[4];
+	points[0] = pos + perp * radius + perp2 * radius - normal * radius;
+	points[1] = pos - perp * radius + perp2 * radius - normal * radius;
+	points[2] = pos - perp * radius - perp2 * radius - normal * radius;
+	points[3] = pos + perp * radius - perp2 * radius - normal * radius;
+	bounds.addPoint( points[0] );
+	bounds.addPoint( points[1] );
+	bounds.addPoint( points[2] );
+	bounds.addPoint( points[3] );
+	bounds.addPoint( points[0] + normal * radius * 2.f );
+	bounds.addPoint( points[1] + normal * radius * 2.f );
+	bounds.addPoint( points[2] + normal * radius * 2.f );
+	bounds.addPoint( points[3] + normal * radius * 2.f );
+	planes[2].fromThreePointsINV( points[0], points[1], points[1] + normal * radius * 2.f );
+	planes[3].fromThreePointsINV( points[1], points[2], points[2] + normal * radius * 2.f );
+	planes[4].fromThreePointsINV( points[2], points[3], points[3] + normal * radius * 2.f );
+	planes[5].fromThreePointsINV( points[3], points[0], points[0] + normal * radius * 2.f );
+	return false;
 }
 void decalProjector_c::setMaterial( class mtrAPI_i* newMat )
 {
-    mat = newMat;
+	mat = newMat;
 }
 u32 decalProjector_c::clipTriangle( const vec3_c& p0, const vec3_c& p1, const vec3_c& p2 )
 {
-    aabb tmpBB;
-    tmpBB.fromThreePoints( p0, p1, p2 );
-    if( tmpBB.intersect( bounds ) == false )
-        return 0;
+	aabb tmpBB;
+	tmpBB.fromThreePoints( p0, p1, p2 );
+	if ( tmpBB.intersect( bounds ) == false )
+		return 0;
 #if 0
-    plane_c triPlane;
-    triPlane.fromThreePoints( p0, p1, p2 );
-    triPlane.norm *= 0.001f;
-    cmWinding_c w( p0 - triPlane.norm, p1 - triPlane.norm, p2 - triPlane.norm );
+	plane_c triPlane;
+	triPlane.fromThreePoints( p0, p1, p2 );
+	triPlane.norm *= 0.001f;
+	cmWinding_c w( p0 - triPlane.norm, p1 - triPlane.norm, p2 - triPlane.norm );
 #else
-    cmWinding_c w( p0, p1, p2 );
+	cmWinding_c w( p0, p1, p2 );
 #endif
-    for( u32 i = 0; i < 6; i++ )
-    {
-        w.clipWindingByPlane( planes[i] );
-    }
-    if( w.size() == 0 )
-    {
-        //g_core->Print("decalProjector_c::clipTriangle: winding chopped away\n");
-        return 0;
-    }
-    //g_core->Print("decalProjector_c::clipTriangle: remaining windings points: %i\n",w.size());
-    results.push_back( w );
-    return w.size();
+	for ( u32 i = 0; i < 6; i++ )
+	{
+		w.clipWindingByPlane( planes[i] );
+	}
+	if ( w.size() == 0 )
+	{
+		//g_core->Print("decalProjector_c::clipTriangle: winding chopped away\n");
+		return 0;
+	}
+	//g_core->Print("decalProjector_c::clipTriangle: remaining windings points: %i\n",w.size());
+	results.push_back( w );
+	return w.size();
 }
 void decalProjector_c::iterateResults( void ( *untexturedTriCallback )( const vec3_c& p0, const vec3_c& p1, const vec3_c& p2 ) )
 {
-    for( u32 i = 0; i < results.size(); i++ )
-    {
-        results[i].iterateTriangles( untexturedTriCallback );
-    }
+	for ( u32 i = 0; i < results.size(); i++ )
+	{
+		results[i].iterateTriangles( untexturedTriCallback );
+	}
 }
 void decalProjector_c::iterateResults( class staticModelCreatorAPI_i* smc )
 {
-    for( u32 i = 0; i < results.size(); i++ )
-    {
-        results[i].iterateTriangles( smc );
-    }
+	for ( u32 i = 0; i < results.size(); i++ )
+	{
+		results[i].iterateTriangles( smc );
+	}
 }
 void decalProjector_c::addResultsToDecalBatcher( class simpleDecalBatcher_c* batcher )
 {
-    if( results.size() == 0 )
-    {
-        return;
-    }
-    float texCoordScale = 0.5f * 1.0f / inRadius;
-    for( u32 i = 0; i < results.size(); i++ )
-    {
-        const cmWinding_c& w = results[i];
-        simplePoly_s p;
-        p.material = this->mat;
-        p.verts.resize( w.size() );
-        for( u32 j = 0; j < w.size(); j++ )
-        {
-            p.verts[j].xyz = w[j];
-            vec3_c delta = w[j] - inPos;
-            p.verts[j].tc.x = 0.5 + delta.dotProduct( perp ) * texCoordScale;
-            p.verts[j].tc.y = 0.5 + delta.dotProduct( perp2 ) * texCoordScale;
-        }
-        batcher->addDecalToBatch( p );
-    }
-    batcher->rebuildBatches();
+	if ( results.size() == 0 )
+	{
+		return;
+	}
+	float texCoordScale = 0.5f * 1.0f / inRadius;
+	for ( u32 i = 0; i < results.size(); i++ )
+	{
+		const cmWinding_c& w = results[i];
+		simplePoly_s p;
+		p.material = this->mat;
+		p.verts.resize( w.size() );
+		for ( u32 j = 0; j < w.size(); j++ )
+		{
+			p.verts[j].xyz = w[j];
+			vec3_c delta = w[j] - inPos;
+			p.verts[j].tc.x = 0.5 + delta.dotProduct( perp ) * texCoordScale;
+			p.verts[j].tc.y = 0.5 + delta.dotProduct( perp2 ) * texCoordScale;
+		}
+		batcher->addDecalToBatch( p );
+	}
+	batcher->rebuildBatches();
 }
 const aabb& decalProjector_c::getBounds() const
 {
-    return bounds;
+	return bounds;
 }

@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 2012 V.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,12 +22,12 @@
 // -------------------------------------------------------------------------
 //  File name:   r_drawCallSort.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
 //  Description: Enum used while sorting surfaces
 //               (opaques are drawn first)
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -36,28 +36,28 @@
 
 enum drawCallSort_e
 {
-    DCS_BAD,
-    // mirrors, portals, viewscreens
-    DCS_PORTAL, // materials with "portal" keyword
-    
-    //DCS_OPAQUE_WORLD,
-    DCS_OPAQUE,
-    //DCS_BLEND_WORLD,
-    DCS_BLEND,
-    
-    DCS_BLEND2,
-    
-    DCS_BLEND3,
-    
-    DCS_BLEND4,
-    
-    DCS_SPECIAL_SHADOWVOLUME,
-    
-    DCS_BLEND_AFTER_LIGHTING_SKY,
-    
-    DCS_BLEND_AFTER_LIGHTING,
-    
-    DCS_NUM_DRAWCALLSORTS,
+	DCS_BAD,
+	// mirrors, portals, viewscreens
+	DCS_PORTAL, // materials with "portal" keyword
+	
+	//DCS_OPAQUE_WORLD,
+	DCS_OPAQUE,
+	//DCS_BLEND_WORLD,
+	DCS_BLEND,
+	
+	DCS_BLEND2,
+	
+	DCS_BLEND3,
+	
+	DCS_BLEND4,
+	
+	DCS_SPECIAL_SHADOWVOLUME,
+	
+	DCS_BLEND_AFTER_LIGHTING_SKY,
+	
+	DCS_BLEND_AFTER_LIGHTING,
+	
+	DCS_NUM_DRAWCALLSORTS,
 };
 
 #endif // __R_DRAWCALLSORT_H__

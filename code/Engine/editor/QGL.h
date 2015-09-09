@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   QGL.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -68,14 +68,14 @@ extern BOOL ( WINAPI* qwglShareLists )( HGLRC, HGLRC );
 extern BOOL ( WINAPI* qwglUseFontBitmaps )( HDC, DWORD, DWORD, DWORD );
 
 extern BOOL ( WINAPI* qwglUseFontOutlines )( HDC, DWORD, DWORD, DWORD, FLOAT,
-        FLOAT, int, LPGLYPHMETRICSFLOAT );
+		FLOAT, int, LPGLYPHMETRICSFLOAT );
 
 extern BOOL ( WINAPI* qwglDescribeLayerPlane )( HDC, int, int, UINT,
-        LPLAYERPLANEDESCRIPTOR );
+		LPLAYERPLANEDESCRIPTOR );
 extern int ( WINAPI* qwglSetLayerPaletteEntries )( HDC, int, int, int,
-        CONST COLORREF* );
+		CONST COLORREF* );
 extern int ( WINAPI* qwglGetLayerPaletteEntries )( HDC, int, int, int,
-        COLORREF* );
+		COLORREF* );
 extern BOOL ( WINAPI* qwglRealizeLayerPalette )( HDC, int, BOOL );
 extern BOOL ( WINAPI* qwglSwapLayerBuffers )( HDC, UINT );
 
@@ -93,14 +93,14 @@ extern BOOL ( WINAPI* qwglSetDeviceGammaRampEXT )( const unsigned char* pRed, co
 /*
 ** extension constants
 */
-#define GL_POINT_SIZE_MIN_EXT				0x8126
-#define GL_POINT_SIZE_MAX_EXT				0x8127
-#define GL_POINT_FADE_THRESHOLD_SIZE_EXT	0x8128
-#define GL_DISTANCE_ATTENUATION_EXT			0x8129
+#define GL_POINT_SIZE_MIN_EXT               0x8126
+#define GL_POINT_SIZE_MAX_EXT               0x8127
+#define GL_POINT_FADE_THRESHOLD_SIZE_EXT    0x8128
+#define GL_DISTANCE_ATTENUATION_EXT         0x8129
 
-#define GL_SHARED_TEXTURE_PALETTE_EXT		0x81FB
+#define GL_SHARED_TEXTURE_PALETTE_EXT       0x81FB
 
-#define GL_TEXTURE0_SGIS					0x835E
-#define GL_TEXTURE1_SGIS					0x835F
+#define GL_TEXTURE0_SGIS                    0x835E
+#define GL_TEXTURE1_SGIS                    0x835F
 
 #endif

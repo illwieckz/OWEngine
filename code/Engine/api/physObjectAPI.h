@@ -28,28 +28,28 @@ or simply visit <http://www.gnu.org/licenses/>.
 
 class physObjectAPI_i
 {
-public:
-    virtual void setOrigin( const class vec3_c& newXYZ ) = 0;
-    virtual const class vec3_c getRealOrigin() const = 0;
-    virtual void setMatrix( const class matrix_c& newMatrix ) = 0;
-    virtual void getCurrentMatrix( class matrix_c& out ) const = 0;
-    virtual void applyCentralForce( const class vec3_c& velToAdd ) = 0;
-    virtual void applyCentralImpulse( const class vec3_c& impToAdd ) = 0;
-    virtual void applyTorque( const class vec3_c& torqueToAdd ) = 0;
-    virtual void applyPointImpulse( const class vec3_c& val, const class vec3_c& point ) = 0;
-    // linear velocity access (in Quake units)
-    virtual const class vec3_c getLinearVelocity() const = 0;
-    virtual void setLinearVelocity( const class vec3_c& newVel ) = 0;
-    // angular velocity access
-    virtual const vec3_c getAngularVelocity() const = 0;
-    virtual void setAngularVelocity( const class vec3_c& newAVel ) = 0;
-    // misc
-    virtual void setKinematic() = 0;
-    virtual bool isDynamic() const = 0;
-    virtual void setEntityPointer( class BaseEntity* ent ) = 0;
-    virtual BaseEntity* getEntityPointer() const = 0;
-    // water physics
-    virtual void runWaterPhysics( float curWaterLevel ) = 0;
+	public:
+		virtual void setOrigin( const class vec3_c& newXYZ ) = 0;
+		virtual const class vec3_c getRealOrigin() const = 0;
+		virtual void setMatrix( const class matrix_c& newMatrix ) = 0;
+		virtual void getCurrentMatrix( class matrix_c& out ) const = 0;
+		virtual void applyCentralForce( const class vec3_c& velToAdd ) = 0;
+		virtual void applyCentralImpulse( const class vec3_c& impToAdd ) = 0;
+		virtual void applyTorque( const class vec3_c& torqueToAdd ) = 0;
+		virtual void applyPointImpulse( const class vec3_c& val, const class vec3_c& point ) = 0;
+		// linear velocity access (in Quake units)
+		virtual const class vec3_c getLinearVelocity() const = 0;
+		virtual void setLinearVelocity( const class vec3_c& newVel ) = 0;
+		// angular velocity access
+		virtual const vec3_c getAngularVelocity() const = 0;
+		virtual void setAngularVelocity( const class vec3_c& newAVel ) = 0;
+		// misc
+		virtual void setKinematic() = 0;
+		virtual bool isDynamic() const = 0;
+		virtual void setEntityPointer( class BaseEntity* ent ) = 0;
+		virtual BaseEntity* getEntityPointer() const = 0;
+		// water physics
+		virtual void runWaterPhysics( float curWaterLevel ) = 0;
 };
 
 #endif // __PHYSOBJECT_API_H__

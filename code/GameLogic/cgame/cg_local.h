@@ -33,16 +33,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // If you absolutely need something stored, it can either be kept
 // by the server in the server stored userinfos, or stashed in a cvar.
 
-#define	LAND_DEFLECT_TIME	150
-#define	LAND_RETURN_TIME	300
-#define	STEP_TIME			200
-#define	DUCK_TIME			100
-#define	ZOOM_TIME			150
+#define LAND_DEFLECT_TIME   150
+#define LAND_RETURN_TIME    300
+#define STEP_TIME           200
+#define DUCK_TIME           100
+#define ZOOM_TIME           150
 
-#define	MAX_STEP_CHANGE		32
+#define MAX_STEP_CHANGE     32
 
-#define	CHAR_WIDTH			32
-#define	CHAR_HEIGHT			48
+#define CHAR_WIDTH          32
+#define CHAR_HEIGHT         48
 
 //=================================================
 
@@ -51,23 +51,23 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // only the entityState_s is directly communicated to the cgame
 typedef struct centity_s
 {
-    entityState_s	currentState;	// from cg.frame
-    entityState_s	nextState;		// from cg.nextFrame, if available
-    bool		interpolate;	// true if next is valid to interpolate to
-    bool		currentValid;	// true if cg.frame holds this entity
-    
-    int				snapShotTime;	// last time this entity was found in a snapshot
-    int				lastUpdateFrame; // cg.frameNum when entity was updated
-    
-    bool		extrapolated;	// false if origin / angles is an interpolation
-    
-    // exact interpolated position of entity on this frame
-    vec3_c			lerpOrigin;
-    vec3_c			lerpAngles;
-    
-    class rEntityAPI_i* rEnt; // for all entity types except ET_LIGHT
-    class rLightAPI_i* rLight; // for ET_LIGHT and for all entities with entityState_t::lightRadius != 0.f
-    class emitterBase_c* emitter; // for all entities with entity emitter enabled
+	entityState_s   currentState;   // from cg.frame
+	entityState_s   nextState;      // from cg.nextFrame, if available
+	bool        interpolate;    // true if next is valid to interpolate to
+	bool        currentValid;   // true if cg.frame holds this entity
+	
+	int             snapShotTime;   // last time this entity was found in a snapshot
+	int             lastUpdateFrame; // cg.frameNum when entity was updated
+	
+	bool        extrapolated;   // false if origin / angles is an interpolation
+	
+	// exact interpolated position of entity on this frame
+	vec3_c          lerpOrigin;
+	vec3_c          lerpAngles;
+	
+	class rEntityAPI_i* rEnt; // for all entity types except ET_LIGHT
+	class rLightAPI_i* rLight; // for ET_LIGHT and for all entities with entityState_t::lightRadius != 0.f
+	class emitterBase_c* emitter; // for all entities with entity emitter enabled
 } centity_t;
 
 
@@ -81,62 +81,62 @@ typedef struct centity_s
 
 typedef struct
 {
-    int			clientFrame;		// incremented each frame
-    
-    int			clientNum;
-    
-    bool	demoPlayback;
-    
-    // there are only one or two snapshot_t that are relevent at a time
-    int			latestSnapshotNum;	// the number of snapshots the client system has received
-    int			latestSnapshotTime;	// the time from latestSnapshotNum, so we don't need to read the snapshot yet
-    
-    snapshot_t*	snap;				// cg.snap->serverTime <= cg.time
-    snapshot_t*	nextSnap;			// cg.nextSnap->serverTime > cg.time, or NULL
-    snapshot_t	activeSnapshots[2];
-    
-    float		frameInterpolation;	// (float)( cg.time - cg.frame->serverTime ) / (cg.nextFrame->serverTime - cg.frame->serverTime)
-    
-    int			frametime;		// cg.time - cg.oldTime
-    
-    int			time;			// this is the time value that the client
-    // is rendering at.
-    int			oldTime;		// time at last frame, used for missile trails and prediction checking
-    
-    int			physicsTime;	// either cg.snap->time or cg.nextSnap->time
-    
-    // prediction state
-    playerState_s	predictedPlayerState;
-    centity_t		predictedPlayerEntity;
-    bool	validPPS;				// clear until the first call to CG_PredictPlayerState
-    
-    float		stepChange;				// for stair up smoothing
-    int			stepTime;
-    
-    float		duckChange;				// for duck viewheight smoothing
-    int			duckTime;
-    
-    float		landChange;				// for landing hard
-    int			landTime;
-    
-    // input state sent to server
-    
-    
-    
-    // view rendering
-    vec3_c		refdefViewOrigin;
-    vec3_c		refdefViewAngles;		// will be converted to refdef.viewaxis
-    axis_c		refdefViewAxis;
-    
-    // zoom key
-    bool	zoomed;
-    int			zoomTime;
-    float		zoomSensitivity;
-    
-    // zFar value
-    float farPlane;
-    
-    
+	int         clientFrame;        // incremented each frame
+	
+	int         clientNum;
+	
+	bool    demoPlayback;
+	
+	// there are only one or two snapshot_t that are relevent at a time
+	int         latestSnapshotNum;  // the number of snapshots the client system has received
+	int         latestSnapshotTime; // the time from latestSnapshotNum, so we don't need to read the snapshot yet
+	
+	snapshot_t* snap;               // cg.snap->serverTime <= cg.time
+	snapshot_t* nextSnap;           // cg.nextSnap->serverTime > cg.time, or NULL
+	snapshot_t  activeSnapshots[2];
+	
+	float       frameInterpolation; // (float)( cg.time - cg.frame->serverTime ) / (cg.nextFrame->serverTime - cg.frame->serverTime)
+	
+	int         frametime;      // cg.time - cg.oldTime
+	
+	int         time;           // this is the time value that the client
+	// is rendering at.
+	int         oldTime;        // time at last frame, used for missile trails and prediction checking
+	
+	int         physicsTime;    // either cg.snap->time or cg.nextSnap->time
+	
+	// prediction state
+	playerState_s   predictedPlayerState;
+	centity_t       predictedPlayerEntity;
+	bool    validPPS;               // clear until the first call to CG_PredictPlayerState
+	
+	float       stepChange;             // for stair up smoothing
+	int         stepTime;
+	
+	float       duckChange;             // for duck viewheight smoothing
+	int         duckTime;
+	
+	float       landChange;             // for landing hard
+	int         landTime;
+	
+	// input state sent to server
+	
+	
+	
+	// view rendering
+	vec3_c      refdefViewOrigin;
+	vec3_c      refdefViewAngles;       // will be converted to refdef.viewaxis
+	axis_c      refdefViewAxis;
+	
+	// zoom key
+	bool    zoomed;
+	int         zoomTime;
+	float       zoomSensitivity;
+	
+	// zFar value
+	float farPlane;
+	
+	
 } cg_t;
 
 
@@ -146,10 +146,10 @@ typedef struct
 // stored in the clientInfo_t, itemInfo_t, weaponInfo_t, and powerupInfo_t
 typedef struct
 {
-    class mtrAPI_i* charsetShader;
-    class mtrAPI_i* whiteShader;
-    
-    
+	class mtrAPI_i* charsetShader;
+	class mtrAPI_i* whiteShader;
+	
+	
 } cgMedia_t;
 
 
@@ -159,54 +159,54 @@ typedef struct
 // all clients to begin playing instantly
 typedef struct
 {
-    gameState_s		gameState;			// gamestate from server
-    float			screenXScale;		// derived from renderer
-    float			screenYScale;
-    float			screenXBias;
-    
-    int				serverCommandSequence;	// reliable command stream counter
-    int				processedSnapshotNum;// the number of snapshots cgame has requested
-    
-    bool		localServer;		// detected on startup by checking sv_running
-    
-    int				maxclients;
-    char			mapname[MAX_QPATH];
-    
-    
-    int				levelStartTime;
-    
-    
-    //
-    // locally derived information from gamestate
-    //
-    class rModelAPI_i*	gameModels[MAX_MODELS];
-    class cMod_i*		gameCollModels[MAX_MODELS];
-    //sfxHandle_t		gameSounds[MAX_SOUNDS];
-    const class skelAnimAPI_i*	gameAnims[MAX_ANIMATIONS];
-//	str gameAnimNames[MAX_ANIMATIONS];
-    const class afDeclAPI_i*	gameAFs[MAX_RAGDOLLDEFS];
-    class mtrAPI_i* gameMaterials[MAX_MATERIALS];
-    // media
-    cgMedia_t		media;
-    
+	gameState_s     gameState;          // gamestate from server
+	float           screenXScale;       // derived from renderer
+	float           screenYScale;
+	float           screenXBias;
+	
+	int             serverCommandSequence;  // reliable command stream counter
+	int             processedSnapshotNum;// the number of snapshots cgame has requested
+	
+	bool        localServer;        // detected on startup by checking sv_running
+	
+	int             maxclients;
+	char            mapname[MAX_QPATH];
+	
+	
+	int             levelStartTime;
+	
+	
+	//
+	// locally derived information from gamestate
+	//
+	class rModelAPI_i*  gameModels[MAX_MODELS];
+	class cMod_i*       gameCollModels[MAX_MODELS];
+	//sfxHandle_t       gameSounds[MAX_SOUNDS];
+	const class skelAnimAPI_i*  gameAnims[MAX_ANIMATIONS];
+	//  str gameAnimNames[MAX_ANIMATIONS];
+	const class afDeclAPI_i*    gameAFs[MAX_RAGDOLLDEFS];
+	class mtrAPI_i* gameMaterials[MAX_MATERIALS];
+	// media
+	cgMedia_t       media;
+	
 } cgs_t;
 
 //==============================================================================
 
-extern	cgs_t			cgs;
-extern	cg_t			cg;
-extern	centity_t		cg_entities[MAX_GENTITIES];
+extern  cgs_t           cgs;
+extern  cg_t            cg;
+extern  centity_t       cg_entities[MAX_GENTITIES];
 
-extern	vmCvar_s		cg_lagometer;
-extern	vmCvar_s		cg_drawFPS;
-extern	vmCvar_s		cg_draw2D;
-extern	vmCvar_s		cg_fov;
-extern	vmCvar_s		cg_thirdPersonRange;
-extern	vmCvar_s		cg_thirdPersonAngle;
-extern	vmCvar_s		cg_thirdPerson;
-extern	vmCvar_s		cg_timescale;
-extern	vmCvar_s		cg_timescaleFadeEnd;
-extern	vmCvar_s		cg_timescaleFadeSpeed;
+extern  vmCvar_s        cg_lagometer;
+extern  vmCvar_s        cg_drawFPS;
+extern  vmCvar_s        cg_draw2D;
+extern  vmCvar_s        cg_fov;
+extern  vmCvar_s        cg_thirdPersonRange;
+extern  vmCvar_s        cg_thirdPersonAngle;
+extern  vmCvar_s        cg_thirdPerson;
+extern  vmCvar_s        cg_timescale;
+extern  vmCvar_s        cg_timescaleFadeEnd;
+extern  vmCvar_s        cg_timescaleFadeSpeed;
 
 //
 // cg_main.c
@@ -338,12 +338,12 @@ void CG_AddChatMessage( const char* msg );
 // for map changing, etc.  The command is not executed immediately,
 // but will be executed in order the next time console commands
 // are processed
-void		trap_SendConsoleCommand( const char* text );
+void        trap_SendConsoleCommand( const char* text );
 
 // register a command name so the console can perform command completion.
 // FIXME: replace this with a normal console command "defineCommand"?
-void		trap_AddCommand( const char* cmdName );
+void        trap_AddCommand( const char* cmdName );
 
 // send a string to the server over the network
-void		trap_SendClientCommand( const char* s );
+void        trap_SendClientCommand( const char* s );
 

@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   q_platform.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -52,16 +52,16 @@
 #endif
 
 #if (defined(powerc) || defined(powerpc) || defined(ppc) || \
-	defined(__ppc) || defined(__ppc__)) && !defined(C_ONLY)
+    defined(__ppc) || defined(__ppc__)) && !defined(C_ONLY)
 #define idppc 1
 #if defined(__VEC__)
 #define idppc_altivec 1
 #ifdef MACOS_X  // Apple's GCC does this differently than the FSF.
 #define VECCONST_UINT8(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) \
-	(vector unsigned char) (a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p)
+    (vector unsigned char) (a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p)
 #else
 #define VECCONST_UINT8(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) \
-	(vector unsigned char) {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p}
+    (vector unsigned char) {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p}
 #endif
 #else
 #define idppc_altivec 0

@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   RadiantView.cpp
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
 //  Description: Implementation of the CRadiantView class
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -48,14 +48,14 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE( CRadiantView, CView )
 
 BEGIN_MESSAGE_MAP( CRadiantView, CView )
-    //{{AFX_MSG_MAP(CRadiantView)
-    // NOTE - the ClassWizard will add and remove mapping macros here.
-    //    DO NOT EDIT what you see in these blocks of generated code!
-    //}}AFX_MSG_MAP
-    // Standard printing commands
-    ON_COMMAND( ID_FILE_PRINT, CView::OnFilePrint )
-    ON_COMMAND( ID_FILE_PRINT_DIRECT, CView::OnFilePrint )
-    ON_COMMAND( ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview )
+	//{{AFX_MSG_MAP(CRadiantView)
+	// NOTE - the ClassWizard will add and remove mapping macros here.
+	//    DO NOT EDIT what you see in these blocks of generated code!
+	//}}AFX_MSG_MAP
+	// Standard printing commands
+	ON_COMMAND( ID_FILE_PRINT, CView::OnFilePrint )
+	ON_COMMAND( ID_FILE_PRINT_DIRECT, CView::OnFilePrint )
+	ON_COMMAND( ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview )
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -63,8 +63,8 @@ END_MESSAGE_MAP()
 
 CRadiantView::CRadiantView()
 {
-    // TODO: add construction code here
-    
+	// TODO: add construction code here
+	
 }
 
 CRadiantView::~CRadiantView()
@@ -73,10 +73,10 @@ CRadiantView::~CRadiantView()
 
 BOOL CRadiantView::PreCreateWindow( CREATESTRUCT& cs )
 {
-    // TODO: Modify the Window class or styles here by modifying
-    //  the CREATESTRUCT cs
-    
-    return CView::PreCreateWindow( cs );
+	// TODO: Modify the Window class or styles here by modifying
+	//  the CREATESTRUCT cs
+	
+	return CView::PreCreateWindow( cs );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,10 +84,10 @@ BOOL CRadiantView::PreCreateWindow( CREATESTRUCT& cs )
 
 void CRadiantView::OnDraw( CDC* pDC )
 {
-    CRadiantDoc* pDoc = GetDocument();
-    ASSERT_VALID( pDoc );
-    
-    // TODO: add draw code for native data here
+	CRadiantDoc* pDoc = GetDocument();
+	ASSERT_VALID( pDoc );
+	
+	// TODO: add draw code for native data here
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -95,18 +95,18 @@ void CRadiantView::OnDraw( CDC* pDC )
 
 BOOL CRadiantView::OnPreparePrinting( CPrintInfo* pInfo )
 {
-    // default preparation
-    return DoPreparePrinting( pInfo );
+	// default preparation
+	return DoPreparePrinting( pInfo );
 }
 
 void CRadiantView::OnBeginPrinting( CDC* /*pDC*/, CPrintInfo* /*pInfo*/ )
 {
-    // TODO: add extra initialization before printing
+	// TODO: add extra initialization before printing
 }
 
 void CRadiantView::OnEndPrinting( CDC* /*pDC*/, CPrintInfo* /*pInfo*/ )
 {
-    // TODO: add cleanup after printing
+	// TODO: add cleanup after printing
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -115,18 +115,18 @@ void CRadiantView::OnEndPrinting( CDC* /*pDC*/, CPrintInfo* /*pInfo*/ )
 #ifdef _DEBUG
 void CRadiantView::AssertValid() const
 {
-    CView::AssertValid();
+	CView::AssertValid();
 }
 
 void CRadiantView::Dump( CDumpContext& dc ) const
 {
-    CView::Dump( dc );
+	CView::Dump( dc );
 }
 
-CRadiantDoc* CRadiantView::GetDocument() // non-debug version is inline
+CRadiantDoc* CRadiantView::GetDocument()   // non-debug version is inline
 {
-    ASSERT( m_pDocument->IsKindOf( RUNTIME_CLASS( CRadiantDoc ) ) );
-    return ( CRadiantDoc* )m_pDocument;
+	ASSERT( m_pDocument->IsKindOf( RUNTIME_CLASS( CRadiantDoc ) ) );
+	return ( CRadiantDoc* )m_pDocument;
 }
 #endif //_DEBUG
 

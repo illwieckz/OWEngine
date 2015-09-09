@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 2012 V.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   collisionUtils.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -43,7 +43,7 @@ class vec3_c;
 //             1 = intersect in unique point I1
 //             2 = are in the same plane
 int CU_RayTraceTriangle( const vec3_c& rayStart, const vec3_c& rayEnd,
-                         const vec3_c& pointA, const vec3_c& pointB, const vec3_c& pointC, vec3_c* out );
+						 const vec3_c& pointA, const vec3_c& pointB, const vec3_c& pointC, vec3_c* out );
 
 //Check collision between a line segment and an AABB
 //Param:    Start point of line segement, End point of line segment,

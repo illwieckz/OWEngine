@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   CmdLib.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -55,27 +55,27 @@ typedef unsigned char byte;
 //typedef unsigned char byte;
 #endif
 
-FILE*	SafeOpenWrite( const char* filename );
-FILE*	SafeOpenRead( const char* filename );
-void	SafeRead( FILE* f, void* buffer, int count );
-void	SafeWrite( FILE* f, const void* buffer, int count );
-int		LoadFile( const char* filename, void** bufferptr );
-int		LoadFileNoCrash( const char* filename, void** bufferptr );
-void	SaveFile( const char* filename, void* buffer, int count );
-void 	DefaultExtension( char* path, char* extension );
-void 	DefaultPath( char* path, char* basepath );
-void 	StripFilename( char* path );
-void 	StripExtension( char* path );
-void 	ExtractFilePath( const char* path, char* dest );
-void	ExtractFileName( const char* path, char* dest );
-void 	ExtractFileBase( const char* path, char* dest );
-void	ExtractFileExtension( const char* path, char* dest );
-short	BigShort( short l );
-short	LittleShort( short l );
-int		BigLong( int l );
-int		LittleLong( int l );
-float	BigFloat( float l );
-float	LittleFloat( float l );
+FILE*   SafeOpenWrite( const char* filename );
+FILE*   SafeOpenRead( const char* filename );
+void    SafeRead( FILE* f, void* buffer, int count );
+void    SafeWrite( FILE* f, const void* buffer, int count );
+int     LoadFile( const char* filename, void** bufferptr );
+int     LoadFileNoCrash( const char* filename, void** bufferptr );
+void    SaveFile( const char* filename, void* buffer, int count );
+void    DefaultExtension( char* path, char* extension );
+void    DefaultPath( char* path, char* basepath );
+void    StripFilename( char* path );
+void    StripExtension( char* path );
+void    ExtractFilePath( const char* path, char* dest );
+void    ExtractFileName( const char* path, char* dest );
+void    ExtractFileBase( const char* path, char* dest );
+void    ExtractFileExtension( const char* path, char* dest );
+short   BigShort( short l );
+short   LittleShort( short l );
+int     BigLong( int l );
+int     LittleLong( int l );
+float   BigFloat( float l );
+float   LittleFloat( float l );
 void* qmalloc( size_t size );
 void* qblockmalloc( size_t nSize );
 

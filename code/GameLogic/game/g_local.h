@@ -4,18 +4,18 @@
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2012 V.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -23,11 +23,11 @@
 // -------------------------------------------------------------------------
 //  File name:   g_local.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
 //  Description: Localdefinitions for game module
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -43,39 +43,43 @@
 //==================================================================
 
 // the "gameversion" client command will print this plus compile date
-#define	GAMEVERSION	BASEGAME
+#define GAMEVERSION BASEGAME
 
-#define	FRAMETIME			100					// msec
+#define FRAMETIME           100                 // msec
 
 //============================================================================
 
-typedef struct {
-	struct edict_s	*gentities;
-	int			gentitySize;
-	int			num_entities;		// MAX_CLIENTS <= num_entities <= ENTITYNUM_MAX_NORMAL
-
-	int			framenum;
-	int			time;					// in msec
+typedef struct
+{
+	struct edict_s* gentities;
+	int         gentitySize;
+	int         num_entities;       // MAX_CLIENTS <= num_entities <= ENTITYNUM_MAX_NORMAL
+	
+	int         framenum;
+	int         time;                   // in msec
 	float frameTime; // in sec
-	int			previousTime;			// so movers can back up when blocked
-
-	int			startTime;				// level.time the map was started
+	int         previousTime;           // so movers can back up when blocked
+	
+	int         startTime;              // level.time the map was started
 } level_locals_t;
 
 #include <shared/str.h>
-struct railgunAttackMaterials_s {
+struct railgunAttackMaterials_s
+{
 	str railCore;
 	str railExplosion;
 	str railDisc;
 	str markMaterial;
-
-	railgunAttackMaterials_s() {
+	
+	railgunAttackMaterials_s()
+	{
 		railCore = "xrealRailCore";
 		railExplosion = "xrealRailRing";
 		railDisc = "xrealRailDisc";
 		markMaterial = "xrealPlasmaMark";
 	}
-	void setupQuake3() {
+	void setupQuake3()
+	{
 		railCore = "railCore";
 		railExplosion = "railExplosion";
 		railDisc = "railDisc";
@@ -86,32 +90,32 @@ struct railgunAttackMaterials_s {
 //
 // g_utils.cpp
 //
-int G_RenderModelIndex( const char *name );
-int G_CollisionModelIndex( const char *name );
-int	G_SoundIndex( const char *name );
-int G_AnimationIndex( const char *name );
-int G_RagdollDefIndex( const char *name );
-int G_RenderSkinIndex( const char *name );
-int G_RenderMaterialIndex( const char *name );
+int G_RenderModelIndex( const char* name );
+int G_CollisionModelIndex( const char* name );
+int G_SoundIndex( const char* name );
+int G_AnimationIndex( const char* name );
+int G_RagdollDefIndex( const char* name );
+int G_RenderSkinIndex( const char* name );
+int G_RenderMaterialIndex( const char* name );
 
-edict_s *G_Find (edict_s *from, int fieldofs, const char *match);
-edict_s	*G_Spawn (void);
+edict_s* G_Find( edict_s* from, int fieldofs, const char* match );
+edict_s*    G_Spawn( void );
 bool G_EntitiesFree( void );
-u32 G_GetEntitiesOfClass(const char *classNameOrig, arraySTD_c<class BaseEntity*> &out);
-class BaseEntity *G_GetRandomEntityOfClass(const char *classNameOrig);
-class BaseEntity *G_FindFirstEntityWithTargetName(const char *targetName);
-void G_HideEntitiesWithTargetName(const char *targetName);
-void G_ShowEntitiesWithTargetName(const char *targetName);
-void G_PostEvent(const char *targetName, int execTime, const char *eventName, const char *arg0 = 0, const char *arg1 = 0, const char *arg2 = 0, const char *arg3 = 0);
-u32 G_RemoveEntitiesOfClass(const char *className);
-const vec3_c &G_GetPlayerOrigin(u32 playerNum);
-class Player *G_GetPlayer(u32 playerNum);
+u32 G_GetEntitiesOfClass( const char* classNameOrig, arraySTD_c<class BaseEntity*>& out );
+class BaseEntity* G_GetRandomEntityOfClass( const char* classNameOrig );
+class BaseEntity* G_FindFirstEntityWithTargetName( const char* targetName );
+void G_HideEntitiesWithTargetName( const char* targetName );
+void G_ShowEntitiesWithTargetName( const char* targetName );
+void G_PostEvent( const char* targetName, int execTime, const char* eventName, const char* arg0 = 0, const char* arg1 = 0, const char* arg2 = 0, const char* arg3 = 0 );
+u32 G_RemoveEntitiesOfClass( const char* className );
+const vec3_c& G_GetPlayerOrigin( u32 playerNum );
+class Player* G_GetPlayer( u32 playerNum );
 
 //
 // g_client.c
 //
-void ClientRespawn(edict_s *ent);
-void ClientSpawn( edict_s *ent );
+void ClientRespawn( edict_s* ent );
+void ClientSpawn( edict_s* ent );
 
 //
 // g_main.c
@@ -120,25 +124,25 @@ void G_InitGame( int levelTime, int randomSeed, int restart );
 void G_RunFrame( int levelTime );
 void G_ProcessEntityEvents();
 void G_ShutdownGame( int restart );
-void QDECL G_Printf( const char *fmt, ... ) __attribute__ ((format (printf, 1, 2)));
-void QDECL G_Error( const char *fmt, ... ) __attribute__ ((noreturn, format (printf, 1, 2)));
+void QDECL G_Printf( const char* fmt, ... ) __attribute__( ( format( printf, 1, 2 ) ) );
+void QDECL G_Error( const char* fmt, ... ) __attribute__( ( noreturn, format( printf, 1, 2 ) ) );
 
 //
 // g_client.c
 //
-const char *ClientConnect( int clientNum, bool firstTime, bool isBot );
+const char* ClientConnect( int clientNum, bool firstTime, bool isBot );
 void ClientUserinfoChanged( int clientNum );
 void ClientDisconnect( int clientNum );
 void ClientBegin( int clientNum );
 void ClientCommand( int clientNum );
-struct playerState_s *ClientGetPlayerState(u32 clientNum);
+struct playerState_s* ClientGetPlayerState( u32 clientNum );
 
 //
 // g_active.c
 //
 void ClientThink( int clientNum );
-void ClientEndFrame( edict_s *ent );
-void G_RunClient( edict_s *ent );
+void ClientEndFrame( edict_s* ent );
+void G_RunClient( edict_s* ent );
 
 
 //
@@ -170,64 +174,64 @@ void G_RunClient( edict_s *ent );
 // g_physDLL.cpp
 //
 void G_InitPhysicsEngine();
-void G_LoadMap(const char *mapName);
+void G_LoadMap( const char* mapName );
 void G_ShutdownPhysicsEngine();
 void G_RunPhysics();
 
 //
 // g_debugDraw.cpp
 //
-void G_DebugDrawFrame(class rAPI_i *pRFAPI);
+void G_DebugDrawFrame( class rAPI_i* pRFAPI );
 
 //
 // g_spawn.cpp
 //
-void G_SpawnMapEntities(const char *mapName);
+void G_SpawnMapEntities( const char* mapName );
 // spawns a new entity with classname and key values
 // loaded from .entDef file
-BaseEntity *G_SpawnFirstEntDefFromFile(const char *fileName);
+BaseEntity* G_SpawnFirstEntDefFromFile( const char* fileName );
 // spawn entity defined in .def file (Doom3 decls)
-BaseEntity *G_SpawnEntityFromEntDecl(const char *declName);
-BaseEntity *G_SpawnClass(const char *className);
+BaseEntity* G_SpawnEntityFromEntDecl( const char* declName );
+BaseEntity* G_SpawnClass( const char* className );
 
 //
 // g_bullet_debugDraw.cpp
 //
-void G_DoBulletDebugDrawing(class rDebugDrawer_i *dd);
+void G_DoBulletDebugDrawing( class rDebugDrawer_i* dd );
 
 //
 // g_collision.cpp
 //
-bool G_TraceRay(class trace_c &tr, BaseEntity *baseSkip);
-u32 G_BoxEntities(const class aabb &bb, arraySTD_c<class BaseEntity*> &out);
+bool G_TraceRay( class trace_c& tr, BaseEntity* baseSkip );
+u32 G_BoxEntities( const class aabb& bb, arraySTD_c<class BaseEntity*>& out );
 
 //
 // g_weapons.cpp
 //
-void G_BulletAttack(const vec3_c &muzzle, const vec3_c &dir, BaseEntity *baseSkip, const char *markMaterial = 0);
-void G_MultiBulletAttack(const vec3_c &muzzle, const vec3_c &dir, BaseEntity *baseSkip, u32 numBullets, float maxSpread, float spreadDist, const char *markMaterial = 0);
-void G_Explosion(const vec3_c &pos, const struct explosionInfo_s &explosionInfo, const char *extraDamageDefName = 0);
-void G_RailGunAttack(const vec3_c &muzzle, const vec3_c &dir, BaseEntity *baseSkip, const struct railgunAttackMaterials_s *mats);
+void G_BulletAttack( const vec3_c& muzzle, const vec3_c& dir, BaseEntity* baseSkip, const char* markMaterial = 0 );
+void G_MultiBulletAttack( const vec3_c& muzzle, const vec3_c& dir, BaseEntity* baseSkip, u32 numBullets, float maxSpread, float spreadDist, const char* markMaterial = 0 );
+void G_Explosion( const vec3_c& pos, const struct explosionInfo_s& explosionInfo, const char* extraDamageDefName = 0 );
+void G_RailGunAttack( const vec3_c& muzzle, const vec3_c& dir, BaseEntity* baseSkip, const struct railgunAttackMaterials_s* mats );
 // projectileDefName is the name of Doom3 projectile entity def
 // (for example: "projectile_bfg")
-void G_FireProjectile(const char *projectileDefName, const vec3_c &muzzle, const vec3_c &dir, BaseEntity *baseSkip);
+void G_FireProjectile( const char* projectileDefName, const vec3_c& muzzle, const vec3_c& dir, BaseEntity* baseSkip );
 
 //
 // g_ragdoll.cpp
 //
-class ragdollAPI_i *G_SpawnTestRagdollFromAF(const char *afName, const vec3_c &pos, const vec3_c &angles);
+class ragdollAPI_i* G_SpawnTestRagdollFromAF( const char* afName, const vec3_c& pos, const vec3_c& angles );
 
 //
 // g_saveMapFile.cpp
 //
-bool G_SaveCurrentSceneToMapFile(const char *outFName);
+bool G_SaveCurrentSceneToMapFile( const char* outFName );
 
 //
 // g_scriptedClasses.cpp
 //
 void G_InitScriptedClasses();
 void G_ShutdownScriptedClasses();
-const class scriptedClass_c *G_FindScriptedClassDef(const char *className);
+const class scriptedClass_c* G_FindScriptedClassDef( const char* className );
 u32 G_GetNumKnownScriptedClassDefs();
 
 //
@@ -235,7 +239,7 @@ u32 G_GetNumKnownScriptedClassDefs();
 //
 void            G_InitLua();
 void            G_ShutdownLua();
-void            G_LoadLuaScript(const char *filename);
+void            G_LoadLuaScript( const char* filename );
 void            G_DumpLuaStack();
 
 //
@@ -243,7 +247,7 @@ void            G_DumpLuaStack();
 //
 void G_InitAmmoTypes();
 
-extern	level_locals_t	level;
-extern	edict_s		g_entities[MAX_GENTITIES];
+extern  level_locals_t  level;
+extern  edict_s     g_entities[MAX_GENTITIES];
 
 #endif // __G_LOCAL_H__

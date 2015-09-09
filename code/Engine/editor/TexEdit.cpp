@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   TexEdit.cpp
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -45,7 +45,7 @@ static char THIS_FILE[] = __FILE__;
 
 CTexEdit::CTexEdit()
 {
-    m_pTexWnd = NULL;
+	m_pTexWnd = NULL;
 }
 
 CTexEdit::~CTexEdit()
@@ -54,18 +54,18 @@ CTexEdit::~CTexEdit()
 
 
 BEGIN_MESSAGE_MAP( CTexEdit, CEdit )
-    //{{AFX_MSG_MAP(CTexEdit)
+	//{{AFX_MSG_MAP(CTexEdit)
 #if 0
-    ON_WM_CTLCOLOR_REFLECT()
+	ON_WM_CTLCOLOR_REFLECT()
 #else
-    {
-        WM_CTLCOLOR + WM_REFLECT_BASE, 0, 0, 0, AfxSig_hDw,
-                    ( AFX_PMSG )( AFX_PMSGW )( HBRUSH( AFX_MSG_CALL CWnd::* )( CDC*, UINT ) )&CTexEdit::CtlColor
-    },
+	{
+		WM_CTLCOLOR + WM_REFLECT_BASE, 0, 0, 0, AfxSig_hDw,
+					( AFX_PMSG )( AFX_PMSGW )( HBRUSH( AFX_MSG_CALL CWnd::* )( CDC*, UINT ) )&CTexEdit::CtlColor
+	},
 #endif
-    ON_CONTROL_REFLECT( EN_CHANGE, OnChange )
-    ON_WM_CREATE()
-    //}}AFX_MSG_MAP
+	ON_CONTROL_REFLECT( EN_CHANGE, OnChange )
+	ON_WM_CREATE()
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -73,28 +73,28 @@ END_MESSAGE_MAP()
 
 HBRUSH CTexEdit::CtlColor( CDC* pDC, UINT nCtlColor )
 {
-    if( nCtlColor == CTLCOLOR_EDIT )
-    {
-        pDC->SetBkColor( RGB( 192, 192, 192 ) );
-        return ( HBRUSH )GetStockObject( LTGRAY_BRUSH );
-    }
-    return NULL;
+	if ( nCtlColor == CTLCOLOR_EDIT )
+	{
+		pDC->SetBkColor( RGB( 192, 192, 192 ) );
+		return ( HBRUSH )GetStockObject( LTGRAY_BRUSH );
+	}
+	return NULL;
 }
 
 void CTexEdit::OnChange()
 {
-    CString str;
-    GetWindowText( str );
-    if( m_pTexWnd )
-        m_pTexWnd->UpdateFilter( str );
+	CString str;
+	GetWindowText( str );
+	if ( m_pTexWnd )
+		m_pTexWnd->UpdateFilter( str );
 }
 
 int CTexEdit::OnCreate( LPCREATESTRUCT lpCreateStruct )
 {
-    if( CEdit::OnCreate( lpCreateStruct ) == -1 )
-        return -1;
-        
-    m_Font.CreatePointFont( 100, "Arial" );
-    SetFont( &m_Font, FALSE );
-    return 0;
+	if ( CEdit::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
+		
+	m_Font.CreatePointFont( 100, "Arial" );
+	SetFont( &m_Font, FALSE );
+	return 0;
 }

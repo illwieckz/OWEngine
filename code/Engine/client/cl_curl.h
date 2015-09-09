@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 2006 Tony J. White <tjw@tjw.com>
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,9 +22,9 @@
 // -------------------------------------------------------------------------
 //  File name:   cl_curl.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
 //  History:
 //
@@ -67,19 +67,19 @@ extern const char* ( *qcurl_easy_strerror )( CURLcode );
 
 extern CURLM* ( *qcurl_multi_init )( void );
 extern CURLMcode( *qcurl_multi_add_handle )( CURLM* multi_handle,
-        CURL* curl_handle );
+		CURL* curl_handle );
 extern CURLMcode( *qcurl_multi_remove_handle )( CURLM* multi_handle,
-        CURL* curl_handle );
+		CURL* curl_handle );
 extern CURLMcode( *qcurl_multi_fdset )( CURLM* multi_handle,
-                                        fd_set* read_fd_set,
-                                        fd_set* write_fd_set,
-                                        fd_set* exc_fd_set,
-                                        int* max_fd );
+										fd_set* read_fd_set,
+										fd_set* write_fd_set,
+										fd_set* exc_fd_set,
+										int* max_fd );
 extern CURLMcode( *qcurl_multi_perform )( CURLM* multi_handle,
-        int* running_handles );
+		int* running_handles );
 extern CURLMcode( *qcurl_multi_cleanup )( CURLM* multi_handle );
 extern CURLMsg* ( *qcurl_multi_info_read )( CURLM* multi_handle,
-        int* msgs_in_queue );
+		int* msgs_in_queue );
 extern const char* ( *qcurl_multi_strerror )( CURLMcode );
 #else
 #define qcurl_version curl_version
@@ -108,4 +108,4 @@ void CL_cURL_Shutdown( void );
 void CL_cURL_BeginDownload( const char* localName, const char* remoteURL );
 void CL_cURL_PerformDownload( void );
 void CL_cURL_Cleanup( void );
-#endif	// __QCURL_H__
+#endif  // __QCURL_H__

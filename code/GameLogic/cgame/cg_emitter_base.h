@@ -30,15 +30,15 @@ or simply visit <http://www.gnu.org/licenses/>.
 // emitter object base
 class emitterBase_c : public customRenderObjectAPI_i
 {
-public:
-    virtual ~emitterBase_c() { }
-    
-    virtual void setOrigin( const class vec3_c& newOrigin ) { };
-    virtual void updateEmitter( int newTime ) { };
-    virtual void setRadius( float newSpriteRadius ) { };
-    virtual void setInterval( int newSpawnInterval ) { };
-    virtual void setMaterial( class mtrAPI_i* newMat ) { };
-    virtual void setParticleDecl( class particleDeclAPI_i* newDecl ) { };
+	public:
+		virtual ~emitterBase_c() { }
+		
+		virtual void setOrigin( const class vec3_c& newOrigin ) { };
+		virtual void updateEmitter( int newTime ) { };
+		virtual void setRadius( float newSpriteRadius ) { };
+		virtual void setInterval( int newSpawnInterval ) { };
+		virtual void setMaterial( class mtrAPI_i* newMat ) { };
+		virtual void setParticleDecl( class particleDeclAPI_i* newDecl ) { };
 };
 
 #endif // __CG_EMITTER_BASE_H__

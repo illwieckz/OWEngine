@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   MathInfo.cpp
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -46,31 +46,31 @@ static char THIS_FILE[] = __FILE__;
 
 
 CMapInfo::CMapInfo( CWnd* pParent /*=NULL*/ )
-    : CDialog( CMapInfo::IDD, pParent )
+	: CDialog( CMapInfo::IDD, pParent )
 {
-    //{{AFX_DATA_INIT(CMapInfo)
-    m_nNet = 0;
-    m_nTotalBrushes = 0;
-    m_nTotalEntities = 0;
-    //}}AFX_DATA_INIT
+	//{{AFX_DATA_INIT(CMapInfo)
+	m_nNet = 0;
+	m_nTotalBrushes = 0;
+	m_nTotalEntities = 0;
+	//}}AFX_DATA_INIT
 }
 
 
 void CMapInfo::DoDataExchange( CDataExchange* pDX )
 {
-    CDialog::DoDataExchange( pDX );
-    //{{AFX_DATA_MAP(CMapInfo)
-    DDX_Control( pDX, IDC_LIST_ENTITIES, m_lstEntity );
-    DDX_Text( pDX, IDC_EDIT_NET, m_nNet );
-    DDX_Text( pDX, IDC_EDIT_TOTALBRUSHES, m_nTotalBrushes );
-    DDX_Text( pDX, IDC_EDIT_TOTALENTITIES, m_nTotalEntities );
-    //}}AFX_DATA_MAP
+	CDialog::DoDataExchange( pDX );
+	//{{AFX_DATA_MAP(CMapInfo)
+	DDX_Control( pDX, IDC_LIST_ENTITIES, m_lstEntity );
+	DDX_Text( pDX, IDC_EDIT_NET, m_nNet );
+	DDX_Text( pDX, IDC_EDIT_TOTALBRUSHES, m_nTotalBrushes );
+	DDX_Text( pDX, IDC_EDIT_TOTALENTITIES, m_nTotalEntities );
+	//}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP( CMapInfo, CDialog )
-    //{{AFX_MSG_MAP(CMapInfo)
-    //}}AFX_MSG_MAP
+	//{{AFX_MSG_MAP(CMapInfo)
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,45 +78,45 @@ END_MESSAGE_MAP()
 
 BOOL CMapInfo::OnInitDialog()
 {
-    CDialog::OnInitDialog();
-    
-    m_nTotalBrushes = 0;
-    m_nTotalEntities = 0;
-    m_nNet = 0;
-    for( brush_s* pBrush = active_brushes.next ; pBrush != &active_brushes ; pBrush = pBrush->next )
-    {
-        m_nTotalBrushes++;
-        if( pBrush->owner == world_entity )
-            m_nNet++;
-    }
-    
-    
-    CMapStringToPtr mapEntity;
-    
-    int nValue = 0;
-    for( entity_s* pEntity = entities.next ; pEntity != &entities ; pEntity = pEntity->next )
-    {
-        m_nTotalEntities++;
-        nValue = 0;
-        mapEntity.Lookup( pEntity->eclass->name, reinterpret_cast<void*&>( nValue ) );
-        nValue++ ;
-        mapEntity.SetAt( pEntity->eclass->name, reinterpret_cast<void*>( nValue ) );
-    }
-    
-    m_lstEntity.ResetContent();
-    m_lstEntity.SetTabStops( 96 );
-    CString strKey;
-    POSITION pos = mapEntity.GetStartPosition();
-    while( pos )
-    {
-        mapEntity.GetNextAssoc( pos, strKey, reinterpret_cast<void*&>( nValue ) );
-        CString strList;
-        strList.Format( "%s\t%i", strKey, nValue );
-        m_lstEntity.AddString( strList );
-    }
-    
-    UpdateData( FALSE );
-    
-    return TRUE;  // return TRUE unless you set the focus to a control
-    // EXCEPTION: OCX Property Pages should return FALSE
+	CDialog::OnInitDialog();
+	
+	m_nTotalBrushes = 0;
+	m_nTotalEntities = 0;
+	m_nNet = 0;
+	for ( brush_s* pBrush = active_brushes.next ; pBrush != &active_brushes ; pBrush = pBrush->next )
+	{
+		m_nTotalBrushes++;
+		if ( pBrush->owner == world_entity )
+			m_nNet++;
+	}
+	
+	
+	CMapStringToPtr mapEntity;
+	
+	int nValue = 0;
+	for ( entity_s* pEntity = entities.next ; pEntity != &entities ; pEntity = pEntity->next )
+	{
+		m_nTotalEntities++;
+		nValue = 0;
+		mapEntity.Lookup( pEntity->eclass->name, reinterpret_cast<void*&>( nValue ) );
+		nValue++ ;
+		mapEntity.SetAt( pEntity->eclass->name, reinterpret_cast<void*>( nValue ) );
+	}
+	
+	m_lstEntity.ResetContent();
+	m_lstEntity.SetTabStops( 96 );
+	CString strKey;
+	POSITION pos = mapEntity.GetStartPosition();
+	while ( pos )
+	{
+		mapEntity.GetNextAssoc( pos, strKey, reinterpret_cast<void*&>( nValue ) );
+		CString strList;
+		strList.Format( "%s\t%i", strKey, nValue );
+		m_lstEntity.AddString( strList );
+	}
+	
+	UpdateData( FALSE );
+	
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// EXCEPTION: OCX Property Pages should return FALSE
 }

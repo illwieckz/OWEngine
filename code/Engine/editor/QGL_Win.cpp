@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,15 +22,15 @@
 // -------------------------------------------------------------------------
 //  File name:   QGL_Win.cpp
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: This file implements the operating system binding of GL to 
+//  Description: This file implements the operating system binding of GL to
 //               QGL function pointers.  When doing a port of Quake2 you must
 //               implement the following wo functions:
 //               QGL_Init() - loads libraries, assigns function pointers, etc.
 //               QGL_Shutdown()
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -39,7 +39,7 @@
 
 HMODULE g_hGLDLL = NULL;
 
-#	pragma warning (disable : 4113 4133 4047 )
+#   pragma warning (disable : 4113 4133 4047 )
 
 int ( WINAPI* qwglChoosePixelFormat )( HDC, CONST PIXELFORMATDESCRIPTOR* );
 int ( WINAPI* qwglDescribePixelFormat )( HDC, int, UINT, LPPIXELFORMATDESCRIPTOR );
@@ -59,14 +59,14 @@ BOOL ( WINAPI* qwglShareLists )( HGLRC, HGLRC );
 BOOL ( WINAPI* qwglUseFontBitmaps )( HDC, DWORD, DWORD, DWORD );
 
 BOOL ( WINAPI* qwglUseFontOutlines )( HDC, DWORD, DWORD, DWORD, FLOAT,
-                                      FLOAT, int, LPGLYPHMETRICSFLOAT );
+									  FLOAT, int, LPGLYPHMETRICSFLOAT );
 
 BOOL ( WINAPI* qwglDescribeLayerPlane )( HDC, int, int, UINT,
-        LPLAYERPLANEDESCRIPTOR );
+		LPLAYERPLANEDESCRIPTOR );
 int ( WINAPI* qwglSetLayerPaletteEntries )( HDC, int, int, int,
-        CONST COLORREF* );
+		CONST COLORREF* );
 int ( WINAPI* qwglGetLayerPaletteEntries )( HDC, int, int, int,
-        COLORREF* );
+		COLORREF* );
 BOOL ( WINAPI* qwglRealizeLayerPalette )( HDC, int, BOOL );
 BOOL ( WINAPI* qwglSwapLayerBuffers )( HDC, UINT );
 
@@ -760,379 +760,379 @@ static void ( APIENTRY* dllViewport )( GLint x, GLint y, GLsizei width, GLsizei 
 */
 void QGL_Shutdown( void )
 {
-    if( g_hGLDLL )
-    {
-        ::FreeLibrary( g_hGLDLL );
-        g_hGLDLL = NULL;
-    }
-    
-    qglAccum                     = NULL;
-    qglAlphaFunc                 = NULL;
-    qglAreTexturesResident       = NULL;
-    qglArrayElement              = NULL;
-    qglBegin                     = NULL;
-    qglBindTexture               = NULL;
-    qglBitmap                    = NULL;
-    qglBlendFunc                 = NULL;
-    qglCallList                  = NULL;
-    qglCallLists                 = NULL;
-    qglClear                     = NULL;
-    qglClearAccum                = NULL;
-    qglClearColor                = NULL;
-    qglClearDepth                = NULL;
-    qglClearIndex                = NULL;
-    qglClearStencil              = NULL;
-    qglClipPlane                 = NULL;
-    qglColor3b                   = NULL;
-    qglColor3bv                  = NULL;
-    qglColor3d                   = NULL;
-    qglColor3dv                  = NULL;
-    qglColor3f                   = NULL;
-    qglColor3fv                  = NULL;
-    qglColor3i                   = NULL;
-    qglColor3iv                  = NULL;
-    qglColor3s                   = NULL;
-    qglColor3sv                  = NULL;
-    qglColor3ub                  = NULL;
-    qglColor3ubv                 = NULL;
-    qglColor3ui                  = NULL;
-    qglColor3uiv                 = NULL;
-    qglColor3us                  = NULL;
-    qglColor3usv                 = NULL;
-    qglColor4b                   = NULL;
-    qglColor4bv                  = NULL;
-    qglColor4d                   = NULL;
-    qglColor4dv                  = NULL;
-    qglColor4f                   = NULL;
-    qglColor4fv                  = NULL;
-    qglColor4i                   = NULL;
-    qglColor4iv                  = NULL;
-    qglColor4s                   = NULL;
-    qglColor4sv                  = NULL;
-    qglColor4ub                  = NULL;
-    qglColor4ubv                 = NULL;
-    qglColor4ui                  = NULL;
-    qglColor4uiv                 = NULL;
-    qglColor4us                  = NULL;
-    qglColor4usv                 = NULL;
-    qglColorMask                 = NULL;
-    qglColorMaterial             = NULL;
-    qglColorPointer              = NULL;
-    qglCopyPixels                = NULL;
-    qglCopyTexImage1D            = NULL;
-    qglCopyTexImage2D            = NULL;
-    qglCopyTexSubImage1D         = NULL;
-    qglCopyTexSubImage2D         = NULL;
-    qglCullFace                  = NULL;
-    qglDeleteLists               = NULL;
-    qglDeleteTextures            = NULL;
-    qglDepthFunc                 = NULL;
-    qglDepthMask                 = NULL;
-    qglDepthRange                = NULL;
-    qglDisable                   = NULL;
-    qglDisableClientState        = NULL;
-    qglDrawArrays                = NULL;
-    qglDrawBuffer                = NULL;
-    qglDrawElements              = NULL;
-    qglDrawPixels                = NULL;
-    qglEdgeFlag                  = NULL;
-    qglEdgeFlagPointer           = NULL;
-    qglEdgeFlagv                 = NULL;
-    qglEnable                    = NULL;
-    qglEnableClientState         = NULL;
-    qglEnd                       = NULL;
-    qglEndList                   = NULL;
-    qglEvalCoord1d               = NULL;
-    qglEvalCoord1dv              = NULL;
-    qglEvalCoord1f               = NULL;
-    qglEvalCoord1fv              = NULL;
-    qglEvalCoord2d               = NULL;
-    qglEvalCoord2dv              = NULL;
-    qglEvalCoord2f               = NULL;
-    qglEvalCoord2fv              = NULL;
-    qglEvalMesh1                 = NULL;
-    qglEvalMesh2                 = NULL;
-    qglEvalPoint1                = NULL;
-    qglEvalPoint2                = NULL;
-    qglFeedbackBuffer            = NULL;
-    qglFinish                    = NULL;
-    qglFlush                     = NULL;
-    qglFogf                      = NULL;
-    qglFogfv                     = NULL;
-    qglFogi                      = NULL;
-    qglFogiv                     = NULL;
-    qglFrontFace                 = NULL;
-    qglFrustum                   = NULL;
-    qglGenLists                  = NULL;
-    qglGenTextures               = NULL;
-    qglGetBooleanv               = NULL;
-    qglGetClipPlane              = NULL;
-    qglGetDoublev                = NULL;
-    qglGetError                  = NULL;
-    qglGetFloatv                 = NULL;
-    qglGetIntegerv               = NULL;
-    qglGetLightfv                = NULL;
-    qglGetLightiv                = NULL;
-    qglGetMapdv                  = NULL;
-    qglGetMapfv                  = NULL;
-    qglGetMapiv                  = NULL;
-    qglGetMaterialfv             = NULL;
-    qglGetMaterialiv             = NULL;
-    qglGetPixelMapfv             = NULL;
-    qglGetPixelMapuiv            = NULL;
-    qglGetPixelMapusv            = NULL;
-    qglGetPointerv               = NULL;
-    qglGetPolygonStipple         = NULL;
-    qglGetString                 = NULL;
-    qglGetTexEnvfv               = NULL;
-    qglGetTexEnviv               = NULL;
-    qglGetTexGendv               = NULL;
-    qglGetTexGenfv               = NULL;
-    qglGetTexGeniv               = NULL;
-    qglGetTexImage               = NULL;
-    qglGetTexLevelParameterfv    = NULL;
-    qglGetTexLevelParameteriv    = NULL;
-    qglGetTexParameterfv         = NULL;
-    qglGetTexParameteriv         = NULL;
-    qglHint                      = NULL;
-    qglIndexMask                 = NULL;
-    qglIndexPointer              = NULL;
-    qglIndexd                    = NULL;
-    qglIndexdv                   = NULL;
-    qglIndexf                    = NULL;
-    qglIndexfv                   = NULL;
-    qglIndexi                    = NULL;
-    qglIndexiv                   = NULL;
-    qglIndexs                    = NULL;
-    qglIndexsv                   = NULL;
-    qglIndexub                   = NULL;
-    qglIndexubv                  = NULL;
-    qglInitNames                 = NULL;
-    qglInterleavedArrays         = NULL;
-    qglIsEnabled                 = NULL;
-    qglIsList                    = NULL;
-    qglIsTexture                 = NULL;
-    qglLightModelf               = NULL;
-    qglLightModelfv              = NULL;
-    qglLightModeli               = NULL;
-    qglLightModeliv              = NULL;
-    qglLightf                    = NULL;
-    qglLightfv                   = NULL;
-    qglLighti                    = NULL;
-    qglLightiv                   = NULL;
-    qglLineStipple               = NULL;
-    qglLineWidth                 = NULL;
-    qglListBase                  = NULL;
-    qglLoadIdentity              = NULL;
-    qglLoadMatrixd               = NULL;
-    qglLoadMatrixf               = NULL;
-    qglLoadName                  = NULL;
-    qglLogicOp                   = NULL;
-    qglMap1d                     = NULL;
-    qglMap1f                     = NULL;
-    qglMap2d                     = NULL;
-    qglMap2f                     = NULL;
-    qglMapGrid1d                 = NULL;
-    qglMapGrid1f                 = NULL;
-    qglMapGrid2d                 = NULL;
-    qglMapGrid2f                 = NULL;
-    qglMaterialf                 = NULL;
-    qglMaterialfv                = NULL;
-    qglMateriali                 = NULL;
-    qglMaterialiv                = NULL;
-    qglMatrixMode                = NULL;
-    qglMultMatrixd               = NULL;
-    qglMultMatrixf               = NULL;
-    qglNewList                   = NULL;
-    qglNormal3b                  = NULL;
-    qglNormal3bv                 = NULL;
-    qglNormal3d                  = NULL;
-    qglNormal3dv                 = NULL;
-    qglNormal3f                  = NULL;
-    qglNormal3fv                 = NULL;
-    qglNormal3i                  = NULL;
-    qglNormal3iv                 = NULL;
-    qglNormal3s                  = NULL;
-    qglNormal3sv                 = NULL;
-    qglNormalPointer             = NULL;
-    qglOrtho                     = NULL;
-    qglPassThrough               = NULL;
-    qglPixelMapfv                = NULL;
-    qglPixelMapuiv               = NULL;
-    qglPixelMapusv               = NULL;
-    qglPixelStoref               = NULL;
-    qglPixelStorei               = NULL;
-    qglPixelTransferf            = NULL;
-    qglPixelTransferi            = NULL;
-    qglPixelZoom                 = NULL;
-    qglPointSize                 = NULL;
-    qglPolygonMode               = NULL;
-    qglPolygonOffset             = NULL;
-    qglPolygonStipple            = NULL;
-    qglPopAttrib                 = NULL;
-    qglPopClientAttrib           = NULL;
-    qglPopMatrix                 = NULL;
-    qglPopName                   = NULL;
-    qglPrioritizeTextures        = NULL;
-    qglPushAttrib                = NULL;
-    qglPushClientAttrib          = NULL;
-    qglPushMatrix                = NULL;
-    qglPushName                  = NULL;
-    qglRasterPos2d               = NULL;
-    qglRasterPos2dv              = NULL;
-    qglRasterPos2f               = NULL;
-    qglRasterPos2fv              = NULL;
-    qglRasterPos2i               = NULL;
-    qglRasterPos2iv              = NULL;
-    qglRasterPos2s               = NULL;
-    qglRasterPos2sv              = NULL;
-    qglRasterPos3d               = NULL;
-    qglRasterPos3dv              = NULL;
-    qglRasterPos3f               = NULL;
-    qglRasterPos3fv              = NULL;
-    qglRasterPos3i               = NULL;
-    qglRasterPos3iv              = NULL;
-    qglRasterPos3s               = NULL;
-    qglRasterPos3sv              = NULL;
-    qglRasterPos4d               = NULL;
-    qglRasterPos4dv              = NULL;
-    qglRasterPos4f               = NULL;
-    qglRasterPos4fv              = NULL;
-    qglRasterPos4i               = NULL;
-    qglRasterPos4iv              = NULL;
-    qglRasterPos4s               = NULL;
-    qglRasterPos4sv              = NULL;
-    qglReadBuffer                = NULL;
-    qglReadPixels                = NULL;
-    qglRectd                     = NULL;
-    qglRectdv                    = NULL;
-    qglRectf                     = NULL;
-    qglRectfv                    = NULL;
-    qglRecti                     = NULL;
-    qglRectiv                    = NULL;
-    qglRects                     = NULL;
-    qglRectsv                    = NULL;
-    qglRenderMode                = NULL;
-    qglRotated                   = NULL;
-    qglRotatef                   = NULL;
-    qglScaled                    = NULL;
-    qglScalef                    = NULL;
-    qglScissor                   = NULL;
-    qglSelectBuffer              = NULL;
-    qglShadeModel                = NULL;
-    qglStencilFunc               = NULL;
-    qglStencilMask               = NULL;
-    qglStencilOp                 = NULL;
-    qglTexCoord1d                = NULL;
-    qglTexCoord1dv               = NULL;
-    qglTexCoord1f                = NULL;
-    qglTexCoord1fv               = NULL;
-    qglTexCoord1i                = NULL;
-    qglTexCoord1iv               = NULL;
-    qglTexCoord1s                = NULL;
-    qglTexCoord1sv               = NULL;
-    qglTexCoord2d                = NULL;
-    qglTexCoord2dv               = NULL;
-    qglTexCoord2f                = NULL;
-    qglTexCoord2fv               = NULL;
-    qglTexCoord2i                = NULL;
-    qglTexCoord2iv               = NULL;
-    qglTexCoord2s                = NULL;
-    qglTexCoord2sv               = NULL;
-    qglTexCoord3d                = NULL;
-    qglTexCoord3dv               = NULL;
-    qglTexCoord3f                = NULL;
-    qglTexCoord3fv               = NULL;
-    qglTexCoord3i                = NULL;
-    qglTexCoord3iv               = NULL;
-    qglTexCoord3s                = NULL;
-    qglTexCoord3sv               = NULL;
-    qglTexCoord4d                = NULL;
-    qglTexCoord4dv               = NULL;
-    qglTexCoord4f                = NULL;
-    qglTexCoord4fv               = NULL;
-    qglTexCoord4i                = NULL;
-    qglTexCoord4iv               = NULL;
-    qglTexCoord4s                = NULL;
-    qglTexCoord4sv               = NULL;
-    qglTexCoordPointer           = NULL;
-    qglTexEnvf                   = NULL;
-    qglTexEnvfv                  = NULL;
-    qglTexEnvi                   = NULL;
-    qglTexEnviv                  = NULL;
-    qglTexGend                   = NULL;
-    qglTexGendv                  = NULL;
-    qglTexGenf                   = NULL;
-    qglTexGenfv                  = NULL;
-    qglTexGeni                   = NULL;
-    qglTexGeniv                  = NULL;
-    qglTexImage1D                = NULL;
-    qglTexImage2D                = NULL;
-    qglTexParameterf             = NULL;
-    qglTexParameterfv            = NULL;
-    qglTexParameteri             = NULL;
-    qglTexParameteriv            = NULL;
-    qglTexSubImage1D             = NULL;
-    qglTexSubImage2D             = NULL;
-    qglTranslated                = NULL;
-    qglTranslatef                = NULL;
-    qglVertex2d                  = NULL;
-    qglVertex2dv                 = NULL;
-    qglVertex2f                  = NULL;
-    qglVertex2fv                 = NULL;
-    qglVertex2i                  = NULL;
-    qglVertex2iv                 = NULL;
-    qglVertex2s                  = NULL;
-    qglVertex2sv                 = NULL;
-    qglVertex3d                  = NULL;
-    qglVertex3dv                 = NULL;
-    qglVertex3f                  = NULL;
-    qglVertex3fv                 = NULL;
-    qglVertex3i                  = NULL;
-    qglVertex3iv                 = NULL;
-    qglVertex3s                  = NULL;
-    qglVertex3sv                 = NULL;
-    qglVertex4d                  = NULL;
-    qglVertex4dv                 = NULL;
-    qglVertex4f                  = NULL;
-    qglVertex4fv                 = NULL;
-    qglVertex4i                  = NULL;
-    qglVertex4iv                 = NULL;
-    qglVertex4s                  = NULL;
-    qglVertex4sv                 = NULL;
-    qglVertexPointer             = NULL;
-    qglViewport                  = NULL;
-    
-    qwglCopyContext              = NULL;
-    qwglCreateContext            = NULL;
-    qwglCreateLayerContext       = NULL;
-    qwglDeleteContext            = NULL;
-    qwglDescribeLayerPlane       = NULL;
-    qwglGetCurrentContext        = NULL;
-    qwglGetCurrentDC             = NULL;
-    qwglGetLayerPaletteEntries   = NULL;
-    qwglGetProcAddress           = NULL;
-    qwglMakeCurrent              = NULL;
-    qwglRealizeLayerPalette      = NULL;
-    qwglSetLayerPaletteEntries   = NULL;
-    qwglShareLists               = NULL;
-    qwglSwapLayerBuffers         = NULL;
-    qwglUseFontBitmaps           = NULL;
-    qwglUseFontOutlines          = NULL;
-    
-    qwglChoosePixelFormat        = NULL;
-    qwglDescribePixelFormat      = NULL;
-    qwglGetPixelFormat           = NULL;
-    qwglSetPixelFormat           = NULL;
-    qwglSwapBuffers              = NULL;
-    
-    qwglSwapIntervalEXT	= NULL;
-    
-    qwglGetDeviceGammaRampEXT = NULL;
-    qwglSetDeviceGammaRampEXT = NULL;
+	if ( g_hGLDLL )
+	{
+		::FreeLibrary( g_hGLDLL );
+		g_hGLDLL = NULL;
+	}
+	
+	qglAccum                     = NULL;
+	qglAlphaFunc                 = NULL;
+	qglAreTexturesResident       = NULL;
+	qglArrayElement              = NULL;
+	qglBegin                     = NULL;
+	qglBindTexture               = NULL;
+	qglBitmap                    = NULL;
+	qglBlendFunc                 = NULL;
+	qglCallList                  = NULL;
+	qglCallLists                 = NULL;
+	qglClear                     = NULL;
+	qglClearAccum                = NULL;
+	qglClearColor                = NULL;
+	qglClearDepth                = NULL;
+	qglClearIndex                = NULL;
+	qglClearStencil              = NULL;
+	qglClipPlane                 = NULL;
+	qglColor3b                   = NULL;
+	qglColor3bv                  = NULL;
+	qglColor3d                   = NULL;
+	qglColor3dv                  = NULL;
+	qglColor3f                   = NULL;
+	qglColor3fv                  = NULL;
+	qglColor3i                   = NULL;
+	qglColor3iv                  = NULL;
+	qglColor3s                   = NULL;
+	qglColor3sv                  = NULL;
+	qglColor3ub                  = NULL;
+	qglColor3ubv                 = NULL;
+	qglColor3ui                  = NULL;
+	qglColor3uiv                 = NULL;
+	qglColor3us                  = NULL;
+	qglColor3usv                 = NULL;
+	qglColor4b                   = NULL;
+	qglColor4bv                  = NULL;
+	qglColor4d                   = NULL;
+	qglColor4dv                  = NULL;
+	qglColor4f                   = NULL;
+	qglColor4fv                  = NULL;
+	qglColor4i                   = NULL;
+	qglColor4iv                  = NULL;
+	qglColor4s                   = NULL;
+	qglColor4sv                  = NULL;
+	qglColor4ub                  = NULL;
+	qglColor4ubv                 = NULL;
+	qglColor4ui                  = NULL;
+	qglColor4uiv                 = NULL;
+	qglColor4us                  = NULL;
+	qglColor4usv                 = NULL;
+	qglColorMask                 = NULL;
+	qglColorMaterial             = NULL;
+	qglColorPointer              = NULL;
+	qglCopyPixels                = NULL;
+	qglCopyTexImage1D            = NULL;
+	qglCopyTexImage2D            = NULL;
+	qglCopyTexSubImage1D         = NULL;
+	qglCopyTexSubImage2D         = NULL;
+	qglCullFace                  = NULL;
+	qglDeleteLists               = NULL;
+	qglDeleteTextures            = NULL;
+	qglDepthFunc                 = NULL;
+	qglDepthMask                 = NULL;
+	qglDepthRange                = NULL;
+	qglDisable                   = NULL;
+	qglDisableClientState        = NULL;
+	qglDrawArrays                = NULL;
+	qglDrawBuffer                = NULL;
+	qglDrawElements              = NULL;
+	qglDrawPixels                = NULL;
+	qglEdgeFlag                  = NULL;
+	qglEdgeFlagPointer           = NULL;
+	qglEdgeFlagv                 = NULL;
+	qglEnable                    = NULL;
+	qglEnableClientState         = NULL;
+	qglEnd                       = NULL;
+	qglEndList                   = NULL;
+	qglEvalCoord1d               = NULL;
+	qglEvalCoord1dv              = NULL;
+	qglEvalCoord1f               = NULL;
+	qglEvalCoord1fv              = NULL;
+	qglEvalCoord2d               = NULL;
+	qglEvalCoord2dv              = NULL;
+	qglEvalCoord2f               = NULL;
+	qglEvalCoord2fv              = NULL;
+	qglEvalMesh1                 = NULL;
+	qglEvalMesh2                 = NULL;
+	qglEvalPoint1                = NULL;
+	qglEvalPoint2                = NULL;
+	qglFeedbackBuffer            = NULL;
+	qglFinish                    = NULL;
+	qglFlush                     = NULL;
+	qglFogf                      = NULL;
+	qglFogfv                     = NULL;
+	qglFogi                      = NULL;
+	qglFogiv                     = NULL;
+	qglFrontFace                 = NULL;
+	qglFrustum                   = NULL;
+	qglGenLists                  = NULL;
+	qglGenTextures               = NULL;
+	qglGetBooleanv               = NULL;
+	qglGetClipPlane              = NULL;
+	qglGetDoublev                = NULL;
+	qglGetError                  = NULL;
+	qglGetFloatv                 = NULL;
+	qglGetIntegerv               = NULL;
+	qglGetLightfv                = NULL;
+	qglGetLightiv                = NULL;
+	qglGetMapdv                  = NULL;
+	qglGetMapfv                  = NULL;
+	qglGetMapiv                  = NULL;
+	qglGetMaterialfv             = NULL;
+	qglGetMaterialiv             = NULL;
+	qglGetPixelMapfv             = NULL;
+	qglGetPixelMapuiv            = NULL;
+	qglGetPixelMapusv            = NULL;
+	qglGetPointerv               = NULL;
+	qglGetPolygonStipple         = NULL;
+	qglGetString                 = NULL;
+	qglGetTexEnvfv               = NULL;
+	qglGetTexEnviv               = NULL;
+	qglGetTexGendv               = NULL;
+	qglGetTexGenfv               = NULL;
+	qglGetTexGeniv               = NULL;
+	qglGetTexImage               = NULL;
+	qglGetTexLevelParameterfv    = NULL;
+	qglGetTexLevelParameteriv    = NULL;
+	qglGetTexParameterfv         = NULL;
+	qglGetTexParameteriv         = NULL;
+	qglHint                      = NULL;
+	qglIndexMask                 = NULL;
+	qglIndexPointer              = NULL;
+	qglIndexd                    = NULL;
+	qglIndexdv                   = NULL;
+	qglIndexf                    = NULL;
+	qglIndexfv                   = NULL;
+	qglIndexi                    = NULL;
+	qglIndexiv                   = NULL;
+	qglIndexs                    = NULL;
+	qglIndexsv                   = NULL;
+	qglIndexub                   = NULL;
+	qglIndexubv                  = NULL;
+	qglInitNames                 = NULL;
+	qglInterleavedArrays         = NULL;
+	qglIsEnabled                 = NULL;
+	qglIsList                    = NULL;
+	qglIsTexture                 = NULL;
+	qglLightModelf               = NULL;
+	qglLightModelfv              = NULL;
+	qglLightModeli               = NULL;
+	qglLightModeliv              = NULL;
+	qglLightf                    = NULL;
+	qglLightfv                   = NULL;
+	qglLighti                    = NULL;
+	qglLightiv                   = NULL;
+	qglLineStipple               = NULL;
+	qglLineWidth                 = NULL;
+	qglListBase                  = NULL;
+	qglLoadIdentity              = NULL;
+	qglLoadMatrixd               = NULL;
+	qglLoadMatrixf               = NULL;
+	qglLoadName                  = NULL;
+	qglLogicOp                   = NULL;
+	qglMap1d                     = NULL;
+	qglMap1f                     = NULL;
+	qglMap2d                     = NULL;
+	qglMap2f                     = NULL;
+	qglMapGrid1d                 = NULL;
+	qglMapGrid1f                 = NULL;
+	qglMapGrid2d                 = NULL;
+	qglMapGrid2f                 = NULL;
+	qglMaterialf                 = NULL;
+	qglMaterialfv                = NULL;
+	qglMateriali                 = NULL;
+	qglMaterialiv                = NULL;
+	qglMatrixMode                = NULL;
+	qglMultMatrixd               = NULL;
+	qglMultMatrixf               = NULL;
+	qglNewList                   = NULL;
+	qglNormal3b                  = NULL;
+	qglNormal3bv                 = NULL;
+	qglNormal3d                  = NULL;
+	qglNormal3dv                 = NULL;
+	qglNormal3f                  = NULL;
+	qglNormal3fv                 = NULL;
+	qglNormal3i                  = NULL;
+	qglNormal3iv                 = NULL;
+	qglNormal3s                  = NULL;
+	qglNormal3sv                 = NULL;
+	qglNormalPointer             = NULL;
+	qglOrtho                     = NULL;
+	qglPassThrough               = NULL;
+	qglPixelMapfv                = NULL;
+	qglPixelMapuiv               = NULL;
+	qglPixelMapusv               = NULL;
+	qglPixelStoref               = NULL;
+	qglPixelStorei               = NULL;
+	qglPixelTransferf            = NULL;
+	qglPixelTransferi            = NULL;
+	qglPixelZoom                 = NULL;
+	qglPointSize                 = NULL;
+	qglPolygonMode               = NULL;
+	qglPolygonOffset             = NULL;
+	qglPolygonStipple            = NULL;
+	qglPopAttrib                 = NULL;
+	qglPopClientAttrib           = NULL;
+	qglPopMatrix                 = NULL;
+	qglPopName                   = NULL;
+	qglPrioritizeTextures        = NULL;
+	qglPushAttrib                = NULL;
+	qglPushClientAttrib          = NULL;
+	qglPushMatrix                = NULL;
+	qglPushName                  = NULL;
+	qglRasterPos2d               = NULL;
+	qglRasterPos2dv              = NULL;
+	qglRasterPos2f               = NULL;
+	qglRasterPos2fv              = NULL;
+	qglRasterPos2i               = NULL;
+	qglRasterPos2iv              = NULL;
+	qglRasterPos2s               = NULL;
+	qglRasterPos2sv              = NULL;
+	qglRasterPos3d               = NULL;
+	qglRasterPos3dv              = NULL;
+	qglRasterPos3f               = NULL;
+	qglRasterPos3fv              = NULL;
+	qglRasterPos3i               = NULL;
+	qglRasterPos3iv              = NULL;
+	qglRasterPos3s               = NULL;
+	qglRasterPos3sv              = NULL;
+	qglRasterPos4d               = NULL;
+	qglRasterPos4dv              = NULL;
+	qglRasterPos4f               = NULL;
+	qglRasterPos4fv              = NULL;
+	qglRasterPos4i               = NULL;
+	qglRasterPos4iv              = NULL;
+	qglRasterPos4s               = NULL;
+	qglRasterPos4sv              = NULL;
+	qglReadBuffer                = NULL;
+	qglReadPixels                = NULL;
+	qglRectd                     = NULL;
+	qglRectdv                    = NULL;
+	qglRectf                     = NULL;
+	qglRectfv                    = NULL;
+	qglRecti                     = NULL;
+	qglRectiv                    = NULL;
+	qglRects                     = NULL;
+	qglRectsv                    = NULL;
+	qglRenderMode                = NULL;
+	qglRotated                   = NULL;
+	qglRotatef                   = NULL;
+	qglScaled                    = NULL;
+	qglScalef                    = NULL;
+	qglScissor                   = NULL;
+	qglSelectBuffer              = NULL;
+	qglShadeModel                = NULL;
+	qglStencilFunc               = NULL;
+	qglStencilMask               = NULL;
+	qglStencilOp                 = NULL;
+	qglTexCoord1d                = NULL;
+	qglTexCoord1dv               = NULL;
+	qglTexCoord1f                = NULL;
+	qglTexCoord1fv               = NULL;
+	qglTexCoord1i                = NULL;
+	qglTexCoord1iv               = NULL;
+	qglTexCoord1s                = NULL;
+	qglTexCoord1sv               = NULL;
+	qglTexCoord2d                = NULL;
+	qglTexCoord2dv               = NULL;
+	qglTexCoord2f                = NULL;
+	qglTexCoord2fv               = NULL;
+	qglTexCoord2i                = NULL;
+	qglTexCoord2iv               = NULL;
+	qglTexCoord2s                = NULL;
+	qglTexCoord2sv               = NULL;
+	qglTexCoord3d                = NULL;
+	qglTexCoord3dv               = NULL;
+	qglTexCoord3f                = NULL;
+	qglTexCoord3fv               = NULL;
+	qglTexCoord3i                = NULL;
+	qglTexCoord3iv               = NULL;
+	qglTexCoord3s                = NULL;
+	qglTexCoord3sv               = NULL;
+	qglTexCoord4d                = NULL;
+	qglTexCoord4dv               = NULL;
+	qglTexCoord4f                = NULL;
+	qglTexCoord4fv               = NULL;
+	qglTexCoord4i                = NULL;
+	qglTexCoord4iv               = NULL;
+	qglTexCoord4s                = NULL;
+	qglTexCoord4sv               = NULL;
+	qglTexCoordPointer           = NULL;
+	qglTexEnvf                   = NULL;
+	qglTexEnvfv                  = NULL;
+	qglTexEnvi                   = NULL;
+	qglTexEnviv                  = NULL;
+	qglTexGend                   = NULL;
+	qglTexGendv                  = NULL;
+	qglTexGenf                   = NULL;
+	qglTexGenfv                  = NULL;
+	qglTexGeni                   = NULL;
+	qglTexGeniv                  = NULL;
+	qglTexImage1D                = NULL;
+	qglTexImage2D                = NULL;
+	qglTexParameterf             = NULL;
+	qglTexParameterfv            = NULL;
+	qglTexParameteri             = NULL;
+	qglTexParameteriv            = NULL;
+	qglTexSubImage1D             = NULL;
+	qglTexSubImage2D             = NULL;
+	qglTranslated                = NULL;
+	qglTranslatef                = NULL;
+	qglVertex2d                  = NULL;
+	qglVertex2dv                 = NULL;
+	qglVertex2f                  = NULL;
+	qglVertex2fv                 = NULL;
+	qglVertex2i                  = NULL;
+	qglVertex2iv                 = NULL;
+	qglVertex2s                  = NULL;
+	qglVertex2sv                 = NULL;
+	qglVertex3d                  = NULL;
+	qglVertex3dv                 = NULL;
+	qglVertex3f                  = NULL;
+	qglVertex3fv                 = NULL;
+	qglVertex3i                  = NULL;
+	qglVertex3iv                 = NULL;
+	qglVertex3s                  = NULL;
+	qglVertex3sv                 = NULL;
+	qglVertex4d                  = NULL;
+	qglVertex4dv                 = NULL;
+	qglVertex4f                  = NULL;
+	qglVertex4fv                 = NULL;
+	qglVertex4i                  = NULL;
+	qglVertex4iv                 = NULL;
+	qglVertex4s                  = NULL;
+	qglVertex4sv                 = NULL;
+	qglVertexPointer             = NULL;
+	qglViewport                  = NULL;
+	
+	qwglCopyContext              = NULL;
+	qwglCreateContext            = NULL;
+	qwglCreateLayerContext       = NULL;
+	qwglDeleteContext            = NULL;
+	qwglDescribeLayerPlane       = NULL;
+	qwglGetCurrentContext        = NULL;
+	qwglGetCurrentDC             = NULL;
+	qwglGetLayerPaletteEntries   = NULL;
+	qwglGetProcAddress           = NULL;
+	qwglMakeCurrent              = NULL;
+	qwglRealizeLayerPalette      = NULL;
+	qwglSetLayerPaletteEntries   = NULL;
+	qwglShareLists               = NULL;
+	qwglSwapLayerBuffers         = NULL;
+	qwglUseFontBitmaps           = NULL;
+	qwglUseFontOutlines          = NULL;
+	
+	qwglChoosePixelFormat        = NULL;
+	qwglDescribePixelFormat      = NULL;
+	qwglGetPixelFormat           = NULL;
+	qwglSetPixelFormat           = NULL;
+	qwglSwapBuffers              = NULL;
+	
+	qwglSwapIntervalEXT = NULL;
+	
+	qwglGetDeviceGammaRampEXT = NULL;
+	qwglSetDeviceGammaRampEXT = NULL;
 }
 
-#	define GPA(h, a ) GetProcAddress( h, a )
+#   define GPA(h, a ) GetProcAddress( h, a )
 
 /*
 ** QGL_Init
@@ -1147,20 +1147,20 @@ void QGL_Shutdown( void )
 bool QGL_Init( const char* dllname )
 {
 
-    g_hGLDLL = ::LoadLibrary( dllname );
-    
-    if( g_hGLDLL == 0 )
-        return false;
-    qwglSwapBuffers           = ( BOOL ( __stdcall* )( HDC ) )  GPA( g_hGLDLL, "wglSwapBuffers" );
-    
-    qwglSwapIntervalEXT = 0;
-    qglPointParameterfEXT = 0;
-    qglPointParameterfvEXT = 0;
-    qglColorTableEXT = 0;
-    qglSelectTextureSGIS = 0;
-    qglMTexCoord2fSGIS = 0;
-    
-    return true;
+	g_hGLDLL = ::LoadLibrary( dllname );
+	
+	if ( g_hGLDLL == 0 )
+		return false;
+	qwglSwapBuffers           = ( BOOL ( __stdcall* )( HDC ) )  GPA( g_hGLDLL, "wglSwapBuffers" );
+	
+	qwglSwapIntervalEXT = 0;
+	qglPointParameterfEXT = 0;
+	qglPointParameterfvEXT = 0;
+	qglColorTableEXT = 0;
+	qglSelectTextureSGIS = 0;
+	qglMTexCoord2fSGIS = 0;
+	
+	return true;
 }
 
 #pragma warning (default : 4113 4133 4047 )

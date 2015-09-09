@@ -32,60 +32,60 @@ static aCvar_c cg_chatMaxHistory( "cg_chatMaxHistory", "128" );
 
 class simpleChat_c
 {
-    arraySTD_c<char*> lines;
-    
-public:
-    simpleChat_c()
-    {
-        //addChatMessage("14:30: Tester 1: Hello world!");
-        //addChatMessage("14:35: Tester 2: Hi.");
-        //addChatMessage("14:39: Tester 3: Hiho.");
-    }
-    ~simpleChat_c()
-    {
-        for( u32 i = 0; i < lines.size(); i++ )
-        {
-            free( lines[i] );
-        }
-    }
-    void addChatMessage( const char* newString )
-    {
-        while( lines.size() > 10 && lines.size() > cg_chatMaxHistory.getInt() )
-        {
-            // free the oldest message
-            free( lines[0] );
-            lines.remove( 0 );
-        }
-        lines.push_back( strdup( newString ) );
-    }
-    void drawChat( u32 x, u32 y, u32 w, u32 h )
-    {
-        y -= h;
-        u32 numLines = h / SMALLCHAR_HEIGHT;
-        float color[4] = { 0, 0, 0, 1.f };
-        int index = lines.size() - numLines;
-        if( index < 0 )
-            index = 0;
-        for( u32 i = 0; i < numLines; i++ )
-        {
-            if( index >= lines.size() )
-                break;
-            CG_DrawSmallStringColor( x, y, lines[index], color );
-            y += SMALLCHAR_HEIGHT;
-            index++;
-        }
-    }
+		arraySTD_c<char*> lines;
+		
+	public:
+		simpleChat_c()
+		{
+			//addChatMessage("14:30: Tester 1: Hello world!");
+			//addChatMessage("14:35: Tester 2: Hi.");
+			//addChatMessage("14:39: Tester 3: Hiho.");
+		}
+		~simpleChat_c()
+		{
+			for ( u32 i = 0; i < lines.size(); i++ )
+			{
+				free( lines[i] );
+			}
+		}
+		void addChatMessage( const char* newString )
+		{
+			while ( lines.size() > 10 && lines.size() > cg_chatMaxHistory.getInt() )
+			{
+				// free the oldest message
+				free( lines[0] );
+				lines.remove( 0 );
+			}
+			lines.push_back( strdup( newString ) );
+		}
+		void drawChat( u32 x, u32 y, u32 w, u32 h )
+		{
+			y -= h;
+			u32 numLines = h / SMALLCHAR_HEIGHT;
+			float color[4] = { 0, 0, 0, 1.f };
+			int index = lines.size() - numLines;
+			if ( index < 0 )
+				index = 0;
+			for ( u32 i = 0; i < numLines; i++ )
+			{
+				if ( index >= lines.size() )
+					break;
+				CG_DrawSmallStringColor( x, y, lines[index], color );
+				y += SMALLCHAR_HEIGHT;
+				index++;
+			}
+		}
 };
 
 static simpleChat_c cg_chat;
 
 void CG_AddChatMessage( const char* msg )
 {
-    cg_chat.addChatMessage( msg );
+	cg_chat.addChatMessage( msg );
 }
 
 void CG_DrawChat()
 {
-    cg_chat.drawChat( 0, 480, 400, cg_chatHeight.getInt() );
+	cg_chat.drawChat( 0, 480, 400, cg_chatHeight.getInt() );
 }
 

@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,13 +22,13 @@
 // -------------------------------------------------------------------------
 //  File name:   StdAfx.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
 //  Description: include file for standard system include files,
-//               or project specific include files that are used frequently, 
+//               or project specific include files that are used frequently,
 //               but are changed infrequently
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -42,13 +42,13 @@
 #pragma warning(disable: 4305)            // For: double to float
 #pragma warning(disable: 4800)            // For: performance warning on bool conversions
 
-#define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
+#define VC_EXTRALEAN        // Exclude rarely-used stuff from Windows headers
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
 #include <afxdisp.h>        // MFC OLE automation classes
 #ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>			// MFC support for Windows Common Controls
+#include <afxcmn.h>         // MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 
@@ -83,9 +83,9 @@ extern BOOL Init3Dfx();
 extern void FindReplace( CString& strContents, const char* pTag, const char* pValue );
 extern void CheckBspProcess();
 extern void QE_CountBrushesAndUpdateStatusBar();
-extern void	QE_CheckAutoSave();
-extern qtexture_t*	notexture;
-extern qtexture_t*	current_texture;
+extern void QE_CheckAutoSave();
+extern qtexture_t*  notexture;
+extern qtexture_t*  current_texture;
 extern BOOL SaveWindowState( HWND hWnd, const char* pszName );
 extern BOOL DoMru( HWND, WORD );
 extern void RunBsp( char* command );
@@ -93,7 +93,7 @@ extern void Map_Snapshot();
 extern void WXY_Print();
 extern void AddProp( void );
 extern bool DoColor( int iIndex );
-extern entity_s*	edit_entity;
+extern entity_s*    edit_entity;
 extern int inspector_mode;
 extern bool g_bRotateMode;
 extern bool g_bClipMode;
@@ -112,7 +112,7 @@ extern void FindReplaceTextures( const char* pFind, const char* pReplace, bool b
 extern void DoProjectSettings();
 extern bool region_active;
 extern void Brush_Print( brush_s* b );
-extern void	Texture_ShowDirectory( char* pPath, bool Linked = false );
+extern void Texture_ShowDirectory( char* pPath, bool Linked = false );
 extern void Map_ImportFile( char* filename );
 extern void Map_SaveSelected( char* pFilename );
 extern void UpdateSurfaceDialog();
@@ -132,7 +132,7 @@ extern int g_nCommandCount;
 extern SKeyInfo g_Keys[];
 extern int g_nKeyCount;
 extern int inspector_mode;
-extern char*	bsp_commands[256];
+extern char*    bsp_commands[256];
 extern void RunScriptByName( char*, bool );
 extern void DoNewColor( int* i1, int* i2, int* i3 );
 extern void UpdateSurfaceDialog();

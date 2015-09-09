@@ -29,17 +29,17 @@ or simply visit <http://www.gnu.org/licenses/>.
 
 void CG_SetCrosshairSurfaceMaterial_f()
 {
-    if( g_core->Argc() < 2 )
-    {
-        g_core->Print( "Usage: cg_setCrosshairSurfaceMaterial <material_name>\n" );
-        return;
-    }
-    const char* matName = g_core->Argv( 1 );
-    rendererSurfaceRef_s ref;
-    rf->getLookatSurfaceInfo( ref );
-    // send remap command to server so it can broadcast it to all clients
-    g_core->Cbuf_ExecuteText( EXEC_APPEND, va( "net_setWorldSurfaceMaterial %i %i %s", ref.areaNum, ref.surfaceNum, matName ) );
-    //rf->setWorldSurfaceMaterial(matName,ref.surfaceNum,ref.areaNum);
+	if ( g_core->Argc() < 2 )
+	{
+		g_core->Print( "Usage: cg_setCrosshairSurfaceMaterial <material_name>\n" );
+		return;
+	}
+	const char* matName = g_core->Argv( 1 );
+	rendererSurfaceRef_s ref;
+	rf->getLookatSurfaceInfo( ref );
+	// send remap command to server so it can broadcast it to all clients
+	g_core->Cbuf_ExecuteText( EXEC_APPEND, va( "net_setWorldSurfaceMaterial %i %i %s", ref.areaNum, ref.surfaceNum, matName ) );
+	//rf->setWorldSurfaceMaterial(matName,ref.surfaceNum,ref.areaNum);
 }
 
 static aCmd_c cg_setCrosshairSurfaceMaterial_f( "cg_setCrosshairSurfaceMaterial", CG_SetCrosshairSurfaceMaterial_f );

@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 2012 V.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   btp_api.cpp
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
 //  Description: Bullet Physics interface
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -49,35 +49,35 @@
 
 class physDLLBullet_c : public physDLLAPI_i
 {
-    arraySTD_c<bulletPhysicsWorld_c*> worlds;
-public:
-    virtual void initPhysicsSystem()
-    {
-        AUTOCVAR_RegisterAutoCvars();
-    }
-    virtual void shutdownPhysicsSystem()
-    {
-        AUTOCVAR_UnregisterAutoCvars();
-    }
-    virtual physWorldAPI_i* allocWorld( const char* debugName )
-    {
-        bulletPhysicsWorld_c* ret = new bulletPhysicsWorld_c( debugName );
-        worlds.push_back( ret );
-        return ret;
-    }
-    virtual void freeWorld( physWorldAPI_i* w )
-    {
-        bulletPhysicsWorld_c* btw = dynamic_cast<bulletPhysicsWorld_c*>( w );
-        worlds.remove( btw );
-        delete btw;
-    }
-    virtual void doDebugDrawing( class rDebugDrawer_i* dd )
-    {
-        for( u32 i = 0; i < worlds.size(); i++ )
-        {
-            worlds[i]->doDebugDrawing( dd );
-        }
-    }
+		arraySTD_c<bulletPhysicsWorld_c*> worlds;
+	public:
+		virtual void initPhysicsSystem()
+		{
+			AUTOCVAR_RegisterAutoCvars();
+		}
+		virtual void shutdownPhysicsSystem()
+		{
+			AUTOCVAR_UnregisterAutoCvars();
+		}
+		virtual physWorldAPI_i* allocWorld( const char* debugName )
+		{
+			bulletPhysicsWorld_c* ret = new bulletPhysicsWorld_c( debugName );
+			worlds.push_back( ret );
+			return ret;
+		}
+		virtual void freeWorld( physWorldAPI_i* w )
+		{
+			bulletPhysicsWorld_c* btw = dynamic_cast<bulletPhysicsWorld_c*>( w );
+			worlds.remove( btw );
+			delete btw;
+		}
+		virtual void doDebugDrawing( class rDebugDrawer_i* dd )
+		{
+			for ( u32 i = 0; i < worlds.size(); i++ )
+			{
+				worlds[i]->doDebugDrawing( dd );
+			}
+		}
 };
 
 // interface manager (import)
@@ -96,23 +96,23 @@ static physDLLBullet_c g_staticPhysDLLImpl;
 
 void ShareAPIs( iFaceMgrAPI_i* iFMA )
 {
-    g_iFaceMan = iFMA;
-    
-    g_iFaceMan->registerInterface( ( iFaceBase_i* )( void* )&g_staticPhysDLLImpl, GPHYSICS_API_IDENTSTR );
-    
-    // imports
-    g_iFaceMan->registerIFaceUser( &g_vfs, VFS_API_IDENTSTR );
-    g_iFaceMan->registerIFaceUser( &g_cvars, CVARS_API_IDENTSTR );
-    g_iFaceMan->registerIFaceUser( &g_core, CORE_API_IDENTSTR );
-    g_iFaceMan->registerIFaceUser( &cm, CM_API_IDENTSTR );
-    g_iFaceMan->registerIFaceUser( &g_loadingScreen, LOADINGSCREENMGR_API_IDENTSTR );
-    g_iFaceMan->registerIFaceUser( &rf, RENDERER_API_IDENTSTR );
-    g_iFaceMan->registerIFaceUser( &g_declMgr, DECL_MANAGER_API_IDENTSTR );
-    g_iFaceMan->registerIFaceUser( &g_modelLoader, MODELLOADERDLL_API_IDENTSTR );
+	g_iFaceMan = iFMA;
+	
+	g_iFaceMan->registerInterface( ( iFaceBase_i* )( void* )&g_staticPhysDLLImpl, GPHYSICS_API_IDENTSTR );
+	
+	// imports
+	g_iFaceMan->registerIFaceUser( &g_vfs, VFS_API_IDENTSTR );
+	g_iFaceMan->registerIFaceUser( &g_cvars, CVARS_API_IDENTSTR );
+	g_iFaceMan->registerIFaceUser( &g_core, CORE_API_IDENTSTR );
+	g_iFaceMan->registerIFaceUser( &cm, CM_API_IDENTSTR );
+	g_iFaceMan->registerIFaceUser( &g_loadingScreen, LOADINGSCREENMGR_API_IDENTSTR );
+	g_iFaceMan->registerIFaceUser( &rf, RENDERER_API_IDENTSTR );
+	g_iFaceMan->registerIFaceUser( &g_declMgr, DECL_MANAGER_API_IDENTSTR );
+	g_iFaceMan->registerIFaceUser( &g_modelLoader, MODELLOADERDLL_API_IDENTSTR );
 }
 
 qioModule_e IFM_GetCurModule()
 {
-    return QMD_GPHYSICS;
+	return QMD_GPHYSICS;
 }
 

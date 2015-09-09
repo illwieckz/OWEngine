@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 2012 V.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,12 +22,12 @@
 // -------------------------------------------------------------------------
 //  File name:   rf_skin.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
 //  Description: Used to remap model materials without modifying their
 //               binary files
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -40,78 +40,78 @@
 
 enum rSkinType_e
 {
-    SKIN_BAD,
-    // that's not a skin file, but a single material name
-    SKIN_SINGLEMATERIAL,
-    // .skin file - material list
-    SKIN_MATLIST,
+	SKIN_BAD,
+	// that's not a skin file, but a single material name
+	SKIN_SINGLEMATERIAL,
+	// .skin file - material list
+	SKIN_MATLIST,
 };
 
 struct rSkinSurface_s
 {
-    mutable class mtrAPI_i* mat;
-    str matName;
-    str surfName;
-    
-    rSkinSurface_s()
-    {
-        mat = 0;
-    }
+	mutable class mtrAPI_i* mat;
+	str matName;
+	str surfName;
+	
+	rSkinSurface_s()
+	{
+		mat = 0;
+	}
 };
 
 class rSkinRemap_c
 {
-    str skinName;
-    rSkinType_e type;
-    arraySTD_c<rSkinSurface_s> surfSkins;
-    
-    rSkinRemap_c* hashNext;
-public:
-    rSkinRemap_c();
-    
-    void setName( const char* newName )
-    {
-        skinName = newName;
-    }
-    const char* getName() const
-    {
-        return skinName;
-    }
-    void setHashNext( rSkinRemap_c* newHashNext )
-    {
-        hashNext = newHashNext;
-    }
-    rSkinRemap_c* getHashNext()
-    {
-        return hashNext;
-    }
-    
-    u32 size() const
-    {
-        return surfSkins.size();
-    }
-    
-    class mtrAPI_i* getMaterial( u32 surfNum ) const;
-    const char* getMatName( u32 surfNum ) const;
-    const rSkinSurface_s& getSkinSurf( u32 surfNum ) const
-    {
-        return surfSkins[surfNum];
-    }
-    bool isValid() const
-    {
-        if( type == SKIN_BAD )
-        {
-            return false;
-        }
-        return true;
-    }
-    
-    bool fromSingleMaterial( const char* matName );
-    bool fromSkinFile( const char* fname );
-    void addSurfSkin( const char* sfName, const char* matName );
-    
-    // used while merging models
-    void appendRemap( const rSkinRemap_c* other );
+		str skinName;
+		rSkinType_e type;
+		arraySTD_c<rSkinSurface_s> surfSkins;
+		
+		rSkinRemap_c* hashNext;
+	public:
+		rSkinRemap_c();
+		
+		void setName( const char* newName )
+		{
+			skinName = newName;
+		}
+		const char* getName() const
+		{
+			return skinName;
+		}
+		void setHashNext( rSkinRemap_c* newHashNext )
+		{
+			hashNext = newHashNext;
+		}
+		rSkinRemap_c* getHashNext()
+		{
+			return hashNext;
+		}
+		
+		u32 size() const
+		{
+			return surfSkins.size();
+		}
+		
+		class mtrAPI_i* getMaterial( u32 surfNum ) const;
+		const char* getMatName( u32 surfNum ) const;
+		const rSkinSurface_s& getSkinSurf( u32 surfNum ) const
+		{
+			return surfSkins[surfNum];
+		}
+		bool isValid() const
+		{
+			if ( type == SKIN_BAD )
+			{
+				return false;
+			}
+			return true;
+		}
+		
+		bool fromSingleMaterial( const char* matName );
+		bool fromSkinFile( const char* fname );
+		void addSurfSkin( const char* sfName, const char* matName );
+		
+		// used while merging models
+		void appendRemap( const rSkinRemap_c* other );
 };
 
 rSkinRemap_c* RF_RegisterSkin( const char* skinName );

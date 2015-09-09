@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   Entity.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -39,41 +39,41 @@ void EClass_CreateNewFromText( const char* text );
 
 struct entity_s
 {
-    struct entity_s*	prev, *next;
-    brush_s		brushes;					// head/tail of list
-    int			undoId, redoId, entityId;	// used for undo/redo
-    edVec3_c		origin;
-    eclass_s*	eclass;
-    epair_s*		epairs;
-    vec3_t vRotation;   // valid for misc_models only
-    vec3_t vScale;      // valid for misc_models only
+	struct entity_s*    prev, *next;
+	brush_s     brushes;                    // head/tail of list
+	int         undoId, redoId, entityId;   // used for undo/redo
+	edVec3_c        origin;
+	eclass_s*   eclass;
+	epair_s*        epairs;
+	vec3_t vRotation;   // valid for misc_models only
+	vec3_t vScale;      // valid for misc_models only
 };
 
-char*	 ValueForKey( entity_s* ent, const char* key );
-void	SetKeyValue( entity_s* ent, const char* key, const char* value );
-void 	SetKeyValue( epair_s*& e, const char* key, const char* value );
-void 	DeleteKey( entity_s* ent, const char* key );
-void 	DeleteKey( epair_s*& e, const char* key );
-float	FloatForKey( entity_s* ent, const char* key );
-int		IntForKey( entity_s* ent, const char* key );
-void 	GetVectorForKey( entity_s* ent, const char* key, vec3_t vec );
+char*    ValueForKey( entity_s* ent, const char* key );
+void    SetKeyValue( entity_s* ent, const char* key, const char* value );
+void    SetKeyValue( epair_s*& e, const char* key, const char* value );
+void    DeleteKey( entity_s* ent, const char* key );
+void    DeleteKey( epair_s*& e, const char* key );
+float   FloatForKey( entity_s* ent, const char* key );
+int     IntForKey( entity_s* ent, const char* key );
+void    GetVectorForKey( entity_s* ent, const char* key, vec3_t vec );
 
-void		Entity_Free( entity_s* e );
-void		Entity_FreeEpairs( entity_s* e );
-int			Entity_MemorySize( entity_s* e );
-entity_s*	Entity_Parse( bool onlypairs, brush_s* pList = NULL );
-void		Entity_Write( entity_s* e, FILE* f, bool use_region );
-void		Entity_WriteSelected( entity_s* e, FILE* f );
-void		Entity_WriteSelected( entity_s* e, CMemFile* );
-entity_s*	Entity_Create( eclass_s* c );
-entity_s*	Entity_Clone( entity_s* e );
-void		Entity_AddToList( entity_s* e, entity_s* list );
-void		Entity_RemoveFromList( entity_s* e );
+void        Entity_Free( entity_s* e );
+void        Entity_FreeEpairs( entity_s* e );
+int         Entity_MemorySize( entity_s* e );
+entity_s*   Entity_Parse( bool onlypairs, brush_s* pList = NULL );
+void        Entity_Write( entity_s* e, FILE* f, bool use_region );
+void        Entity_WriteSelected( entity_s* e, FILE* f );
+void        Entity_WriteSelected( entity_s* e, CMemFile* );
+entity_s*   Entity_Create( eclass_s* c );
+entity_s*   Entity_Clone( entity_s* e );
+void        Entity_AddToList( entity_s* e, entity_s* list );
+void        Entity_RemoveFromList( entity_s* e );
 
-void		Entity_LinkBrush( entity_s* e, brush_s* b );
-void		Entity_UnlinkBrush( brush_s* b );
-entity_s*	FindEntity( char* pszKey, char* pszValue );
-entity_s*	FindEntityInt( char* pszKey, int iValue );
+void        Entity_LinkBrush( entity_s* e, brush_s* b );
+void        Entity_UnlinkBrush( brush_s* b );
+entity_s*   FindEntity( char* pszKey, char* pszValue );
+entity_s*   FindEntityInt( char* pszKey, int iValue );
 
 int GetUniqueTargetId( int iHint );
 

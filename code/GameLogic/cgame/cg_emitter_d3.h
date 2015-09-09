@@ -31,17 +31,17 @@ or simply visit <http://www.gnu.org/licenses/>.
 // Doom3 particle emitter (requires Doom3 .prt particles decl to function)
 class emitterD3_c : public emitterBase_c
 {
-    vec3_c origin;
-    class particleDeclAPI_i* decl;
-    
-    // customRenderObjectAPI_i impl
-    virtual void instanceModel( class staticModelCreatorAPI_i* out, const class axis_c& viewerAxis );
-public:
-    emitterD3_c();
-    virtual ~emitterD3_c();
-    
-    virtual void setOrigin( const vec3_c& newOrigin );
-    virtual void setParticleDecl( class particleDeclAPI_i* newDecl );
+		vec3_c origin;
+		class particleDeclAPI_i* decl;
+		
+		// customRenderObjectAPI_i impl
+		virtual void instanceModel( class staticModelCreatorAPI_i* out, const class axis_c& viewerAxis );
+	public:
+		emitterD3_c();
+		virtual ~emitterD3_c();
+		
+		virtual void setOrigin( const vec3_c& newOrigin );
+		virtual void setParticleDecl( class particleDeclAPI_i* newDecl );
 };
 
 #endif // __CG_EMITTER_D3_H__

@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   ZView.cpp
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -55,18 +55,18 @@ CZView::~CZView()
 
 
 BEGIN_MESSAGE_MAP( CZView, CView )
-    //{{AFX_MSG_MAP(CZView)
-    ON_WM_CREATE()
-    ON_WM_KEYDOWN()
-    ON_WM_SIZE()
-    ON_WM_DESTROY()
-    ON_WM_LBUTTONUP()
-    ON_WM_LBUTTONDOWN()
-    ON_WM_RBUTTONUP()
-    ON_WM_RBUTTONDOWN()
-    ON_WM_MOUSEMOVE()
-    ON_WM_GETMINMAXINFO()
-    //}}AFX_MSG_MAP
+	//{{AFX_MSG_MAP(CZView)
+	ON_WM_CREATE()
+	ON_WM_KEYDOWN()
+	ON_WM_SIZE()
+	ON_WM_DESTROY()
+	ON_WM_LBUTTONUP()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONUP()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_MOUSEMOVE()
+	ON_WM_GETMINMAXINFO()
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,8 +74,8 @@ END_MESSAGE_MAP()
 
 void CZView::OnDraw( CDC* pDC )
 {
-    CDocument* pDoc = GetDocument();
-    // TODO: add draw code here
+	CDocument* pDoc = GetDocument();
+	// TODO: add draw code here
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,12 +84,12 @@ void CZView::OnDraw( CDC* pDC )
 #ifdef _DEBUG
 void CZView::AssertValid() const
 {
-    CView::AssertValid();
+	CView::AssertValid();
 }
 
 void CZView::Dump( CDumpContext& dc ) const
 {
-    CView::Dump( dc );
+	CView::Dump( dc );
 }
 #endif //_DEBUG
 
@@ -98,74 +98,74 @@ void CZView::Dump( CDumpContext& dc ) const
 
 int CZView::OnCreate( LPCREATESTRUCT lpCreateStruct )
 {
-    if( CView::OnCreate( lpCreateStruct ) == -1 )
-        return -1;
-        
-        
-    return 0;
+	if ( CView::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
+		
+		
+	return 0;
 }
 
 void CZView::OnKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags )
 {
-    // TODO: Add your message handler code here and/or call default
-    
-    CView::OnKeyDown( nChar, nRepCnt, nFlags );
+	// TODO: Add your message handler code here and/or call default
+	
+	CView::OnKeyDown( nChar, nRepCnt, nFlags );
 }
 
 void CZView::OnSize( UINT nType, int cx, int cy )
 {
-    CView::OnSize( nType, cx, cy );
-    
-    // TODO: Add your message handler code here
-    
+	CView::OnSize( nType, cx, cy );
+	
+	// TODO: Add your message handler code here
+	
 }
 
 void CZView::OnDestroy()
 {
-    CView::OnDestroy();
-    
-    // TODO: Add your message handler code here
-    
+	CView::OnDestroy();
+	
+	// TODO: Add your message handler code here
+	
 }
 
 void CZView::OnLButtonUp( UINT nFlags, CPoint point )
 {
-    // TODO: Add your message handler code here and/or call default
-    
-    CView::OnLButtonUp( nFlags, point );
+	// TODO: Add your message handler code here and/or call default
+	
+	CView::OnLButtonUp( nFlags, point );
 }
 
 void CZView::OnLButtonDown( UINT nFlags, CPoint point )
 {
-    // TODO: Add your message handler code here and/or call default
-    
-    CView::OnLButtonDown( nFlags, point );
+	// TODO: Add your message handler code here and/or call default
+	
+	CView::OnLButtonDown( nFlags, point );
 }
 
 void CZView::OnRButtonUp( UINT nFlags, CPoint point )
 {
-    // TODO: Add your message handler code here and/or call default
-    
-    CView::OnRButtonUp( nFlags, point );
+	// TODO: Add your message handler code here and/or call default
+	
+	CView::OnRButtonUp( nFlags, point );
 }
 
 void CZView::OnRButtonDown( UINT nFlags, CPoint point )
 {
-    // TODO: Add your message handler code here and/or call default
-    
-    CView::OnRButtonDown( nFlags, point );
+	// TODO: Add your message handler code here and/or call default
+	
+	CView::OnRButtonDown( nFlags, point );
 }
 
 void CZView::OnMouseMove( UINT nFlags, CPoint point )
 {
-    // TODO: Add your message handler code here and/or call default
-    
-    CView::OnMouseMove( nFlags, point );
+	// TODO: Add your message handler code here and/or call default
+	
+	CView::OnMouseMove( nFlags, point );
 }
 
 void CZView::OnGetMinMaxInfo( MINMAXINFO FAR* lpMMI )
 {
-    // TODO: Add your message handler code here and/or call default
-    
-    CView::OnGetMinMaxInfo( lpMMI );
+	// TODO: Add your message handler code here and/or call default
+	
+	CView::OnGetMinMaxInfo( lpMMI );
 }

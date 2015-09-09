@@ -39,54 +39,54 @@ cg.snap->player_state and cg.nextFrame->player_state
 */
 static void CG_InterpolatePlayerState( bool grabAngles )
 {
-    float			f;
-    int				i;
-    playerState_s*	out;
-    snapshot_t*		prev, *next;
-    
-    out = &cg.predictedPlayerState;
-    prev = cg.snap;
-    next = cg.nextSnap;
-    
-    *out = cg.snap->ps;
-    
-    // if we are still allowing local input, short circuit the view angles
-    if( grabAngles )
-    {
-        userCmd_s	cmd;
-        int			cmdNum;
-        
-        cmdNum = g_client->GetCurrentCmdNumber();
-        g_client->GetUserCmd( cmdNum, &cmd );
-        
-        PM_UpdateViewAngles( out, &cmd );
-    }
-    
-    //// if the next frame is a teleport, we can't lerp to it
-    //if ( cg.nextFrameTeleport ) {
-    //	return;
-    //}
-    
-    if( !next || next->serverTime <= prev->serverTime )
-    {
-        return;
-    }
-    
-    f = ( float )( cg.time - prev->serverTime ) / ( next->serverTime - prev->serverTime );
-    
-    
-    for( i = 0 ; i < 3 ; i++ )
-    {
-        out->origin[i] = prev->ps.origin[i] + f * ( next->ps.origin[i] - prev->ps.origin[i] );
-        if( !grabAngles )
-        {
-            out->viewangles[i] = LerpAngle(
-                                     prev->ps.viewangles[i], next->ps.viewangles[i], f );
-        }
-        out->velocity[i] = prev->ps.velocity[i] +
-                           f * ( next->ps.velocity[i] - prev->ps.velocity[i] );
-    }
-    
+	float           f;
+	int             i;
+	playerState_s*  out;
+	snapshot_t*     prev, *next;
+	
+	out = &cg.predictedPlayerState;
+	prev = cg.snap;
+	next = cg.nextSnap;
+	
+	*out = cg.snap->ps;
+	
+	// if we are still allowing local input, short circuit the view angles
+	if ( grabAngles )
+	{
+		userCmd_s   cmd;
+		int         cmdNum;
+		
+		cmdNum = g_client->GetCurrentCmdNumber();
+		g_client->GetUserCmd( cmdNum, &cmd );
+		
+		PM_UpdateViewAngles( out, &cmd );
+	}
+	
+	//// if the next frame is a teleport, we can't lerp to it
+	//if ( cg.nextFrameTeleport ) {
+	//  return;
+	//}
+	
+	if ( !next || next->serverTime <= prev->serverTime )
+	{
+		return;
+	}
+	
+	f = ( float )( cg.time - prev->serverTime ) / ( next->serverTime - prev->serverTime );
+	
+	
+	for ( i = 0 ; i < 3 ; i++ )
+	{
+		out->origin[i] = prev->ps.origin[i] + f * ( next->ps.origin[i] - prev->ps.origin[i] );
+		if ( !grabAngles )
+		{
+			out->viewangles[i] = LerpAngle(
+									 prev->ps.viewangles[i], next->ps.viewangles[i], f );
+		}
+		out->velocity[i] = prev->ps.velocity[i] +
+						   f * ( next->ps.velocity[i] - prev->ps.velocity[i] );
+	}
+	
 }
 
 
@@ -118,25 +118,25 @@ to ease the jerk.
 */
 void CG_PredictPlayerState( void )
 {
-    // if this is the first frame we must guarantee
-    // predictedPlayerState is valid even if there is some
-    // other error condition
-    if( !cg.validPPS )
-    {
-        cg.validPPS = true;
-        cg.predictedPlayerState = cg.snap->ps;
-    }
-    
-    
-    // demo playback just copies the moves
-    if( cg.demoPlayback )
-    {
-        CG_InterpolatePlayerState( false );
-        return;
-    }
-    
-    // V: prediction removed.
-    CG_InterpolatePlayerState( true );
+	// if this is the first frame we must guarantee
+	// predictedPlayerState is valid even if there is some
+	// other error condition
+	if ( !cg.validPPS )
+	{
+		cg.validPPS = true;
+		cg.predictedPlayerState = cg.snap->ps;
+	}
+	
+	
+	// demo playback just copies the moves
+	if ( cg.demoPlayback )
+	{
+		CG_InterpolatePlayerState( false );
+		return;
+	}
+	
+	// V: prediction removed.
+	CG_InterpolatePlayerState( true );
 }
 
 

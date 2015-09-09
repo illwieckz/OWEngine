@@ -36,10 +36,10 @@ A respawn happened this snapshot
 */
 void CG_Respawn( void )
 {
-    // no error decay on player movement
-//	cg.thisFrameTeleport = true;
-
-
+	// no error decay on player movement
+	//  cg.thisFrameTeleport = true;
+	
+	
 }
 
 extern char* eventnames[];
@@ -52,24 +52,24 @@ CG_TransitionPlayerState
 */
 void CG_TransitionPlayerState( playerState_s* ps, playerState_s* ops )
 {
-    // check for changing follow mode
-    if( ps->clientNum != ops->clientNum )
-    {
-//		cg.thisFrameTeleport = true;
-        // make sure we don't get any unwanted transition effects
-        *ops = *ps;
-    }
-    
-//	if ( cg.mapRestart ) {
-///		CG_Respawn();
-///		cg.mapRestart = false;
-//	}
-
-    // smooth the ducking viewheight change
-    if( ps->viewheight != ops->viewheight )
-    {
-        cg.duckChange = ps->viewheight - ops->viewheight;
-        cg.duckTime = cg.time;
-    }
+	// check for changing follow mode
+	if ( ps->clientNum != ops->clientNum )
+	{
+		//      cg.thisFrameTeleport = true;
+		// make sure we don't get any unwanted transition effects
+		*ops = *ps;
+	}
+	
+	//  if ( cg.mapRestart ) {
+	///     CG_Respawn();
+	///     cg.mapRestart = false;
+	//  }
+	
+	// smooth the ducking viewheight change
+	if ( ps->viewheight != ops->viewheight )
+	{
+		cg.duckChange = ps->viewheight - ops->viewheight;
+		cg.duckTime = cg.time;
+	}
 }
 

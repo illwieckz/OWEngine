@@ -3,18 +3,18 @@
 //  This file is part of OWEngine source code.
 //  Copyright (C) 1999-2005 Id Software, Inc.
 //  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-// 
+//
 //  OWEngine source code is free software; you can redistribute it
 //  and/or modify it under the terms of the GNU General Public License
 //  as published by the Free Software Foundation; either version 2
 //  of the License, or (at your option) any later version.
-//  
+//
 //  OWEngine source code is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// 
+//
 //  See the GNU General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software Foundation,
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
@@ -22,11 +22,11 @@
 // -------------------------------------------------------------------------
 //  File name:   QE3.h
 //  Version:     v1.00
-//  Created:     
+//  Created:
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
-//  History: 
+//  History:
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -85,43 +85,43 @@ extern char** myargv;
 
 double I_FloatTime( void );
 
-void	Error( char* error, ... );
-void	Warning( char* error, ... );
-int		CheckParm( char* check );
+void    Error( char* error, ... );
+void    Warning( char* error, ... );
+int     CheckParm( char* check );
 void ParseCommandLine( char* lpCmdLine );
 
 
-int 	ParseNum( char* str );
+int     ParseNum( char* str );
 
 
 char* COM_Parse( char* data );
 
-extern	char		com_token[1024];
-extern	bool	com_eof;
+extern  char        com_token[1024];
+extern  bool    com_eof;
 
-#define	MAX_NUM_ARGVS	32
-extern	int		argc;
-extern	char*	argv[MAX_NUM_ARGVS];
+#define MAX_NUM_ARGVS   32
+extern  int     argc;
+extern  char*   argv[MAX_NUM_ARGVS];
 
 typedef int fileHandle_t;
 
 typedef struct
 {
-    int		p1, p2;
-    face_s*	f1, *f2;
+	int     p1, p2;
+	face_s* f1, *f2;
 } pedge_t;
 
 typedef struct
 {
-    int		  iSize;
-    int		  iTexMenu;		// nearest, linear, etc
-    float	  fGamma;			// gamma for textures
-    char	  szProject[256];	// last project loaded
-    vec3_t	colors[COLOR_LAST];
-    bool  show_names;
-    bool  show_coordinates;
-    int       exclude;
-    int     m_nTextureTweak;
+	int       iSize;
+	int       iTexMenu;     // nearest, linear, etc
+	float     fGamma;           // gamma for textures
+	char      szProject[256];   // last project loaded
+	vec3_t  colors[COLOR_LAST];
+	bool  show_names;
+	bool  show_coordinates;
+	int       exclude;
+	int     m_nTextureTweak;
 } SavedInfo_t;
 
 //
@@ -133,7 +133,7 @@ void    WINAPI Sys_UpdateWindows( int bits );
 void    Sys_Beep( void );
 void    Sys_ClearPrintf( void );
 void    Sys_Printf( char* text, ... );
-double	Sys_DoubleTime( void );
+double  Sys_DoubleTime( void );
 void    Sys_GetCursorPos( int* x, int* y );
 void    Sys_SetCursorPos( int x, int y );
 void    Sys_SetTitle( char* text );
@@ -146,87 +146,87 @@ void    Sys_Status( const char* psz, int part );
 */
 typedef struct
 {
-    bool d_showgrid;
-    int      d_gridsize;
-    
-    int      d_num_entities;
-    
-    entity_s* d_project_entity;
-    
-    float     d_new_brush_bottom_z,
-              d_new_brush_top_z;
-              
-    HINSTANCE d_hInstance;
-    
-    HGLRC     d_hglrcBase;
-    HDC       d_hdcBase;
-    
-    HWND      d_hwndMain;
-    HWND      d_hwndCamera;
-    HWND      d_hwndEdit;
-    HWND      d_hwndEntity;
-    HWND      d_hwndTexture;
-    HWND      d_hwndXY;
-    HWND      d_hwndZ;
-    HWND      d_hwndStatus;
-    HWND      d_hwndMedia;
-    
-    edVec3_c  d_points[MAX_POINTS];
-    int       d_numpoints;
-    pedge_t   d_edges[MAX_EDGES];
-    int       d_numedges;
-    
-    int       d_num_move_points;
-    float*    d_move_points[4096];
-    
-    qtexture_t*	d_qtextures;
-    
-    texturewin_t d_texturewin;
-    
-    int	         d_pointfile_display_list;
-    
-    xy_t         d_xyOld;
-    
-    LPMRUMENU    d_lpMruMenu;
-    
-    SavedInfo_t  d_savedinfo;
-    
-    int          d_workcount;
-    
-    // connect entities uses the last two brushes selected
-    int			 d_select_count;
-    brush_s*		d_select_order[2];
-    edVec3_c       d_select_translate;    // for dragging w/o making new display lists
-    select_t     d_select_mode;
-    
-    int		     d_font_list;
-    
-    int          d_parsed_brushes;
-    
-    bool	show_blocks;
-    
-    // Timo
-    // tells if we are internally using brush primitive (texture coordinates and map format)
-    // this is a shortcut for IntForKey( g_qeglobals.d_project_entity, "brush_primit" )
-    // NOTE: must keep the two ones in sync
-    BOOL m_bBrushPrimitMode;
-    
-    // used while importing brush data from file or memory buffer
-    // tells if conversion between map format and internal preferences ( m_bBrushPrimitMode ) is needed
-    bool	bNeedConvert;
-    bool	bOldBrushes;
-    bool	bPrimitBrushes;
-    
-    edVec3_c  d_vAreaTL;
-    edVec3_c  d_vAreaBR;
-    
-    // tells if we are using .INI files for prefs instead of registry
-    bool	use_ini;
-    // even in .INI mode we use the registry for all void* prefs
-    char		use_ini_registry[64];
-    
-    bool dontDrawSelectedOutlines;
-    
+	bool d_showgrid;
+	int      d_gridsize;
+	
+	int      d_num_entities;
+	
+	entity_s* d_project_entity;
+	
+	float     d_new_brush_bottom_z,
+			  d_new_brush_top_z;
+			  
+	HINSTANCE d_hInstance;
+	
+	HGLRC     d_hglrcBase;
+	HDC       d_hdcBase;
+	
+	HWND      d_hwndMain;
+	HWND      d_hwndCamera;
+	HWND      d_hwndEdit;
+	HWND      d_hwndEntity;
+	HWND      d_hwndTexture;
+	HWND      d_hwndXY;
+	HWND      d_hwndZ;
+	HWND      d_hwndStatus;
+	HWND      d_hwndMedia;
+	
+	edVec3_c  d_points[MAX_POINTS];
+	int       d_numpoints;
+	pedge_t   d_edges[MAX_EDGES];
+	int       d_numedges;
+	
+	int       d_num_move_points;
+	float*    d_move_points[4096];
+	
+	qtexture_t* d_qtextures;
+	
+	texturewin_t d_texturewin;
+	
+	int          d_pointfile_display_list;
+	
+	xy_t         d_xyOld;
+	
+	LPMRUMENU    d_lpMruMenu;
+	
+	SavedInfo_t  d_savedinfo;
+	
+	int          d_workcount;
+	
+	// connect entities uses the last two brushes selected
+	int          d_select_count;
+	brush_s*        d_select_order[2];
+	edVec3_c       d_select_translate;    // for dragging w/o making new display lists
+	select_t     d_select_mode;
+	
+	int          d_font_list;
+	
+	int          d_parsed_brushes;
+	
+	bool    show_blocks;
+	
+	// Timo
+	// tells if we are internally using brush primitive (texture coordinates and map format)
+	// this is a shortcut for IntForKey( g_qeglobals.d_project_entity, "brush_primit" )
+	// NOTE: must keep the two ones in sync
+	BOOL m_bBrushPrimitMode;
+	
+	// used while importing brush data from file or memory buffer
+	// tells if conversion between map format and internal preferences ( m_bBrushPrimitMode ) is needed
+	bool    bNeedConvert;
+	bool    bOldBrushes;
+	bool    bPrimitBrushes;
+	
+	edVec3_c  d_vAreaTL;
+	edVec3_c  d_vAreaBR;
+	
+	// tells if we are using .INI files for prefs instead of registry
+	bool    use_ini;
+	// even in .INI mode we use the registry for all void* prefs
+	char        use_ini_registry[64];
+	
+	bool dontDrawSelectedOutlines;
+	
 } QEGlobals_t;
 
 //void *qmalloc (size_t size);
@@ -245,8 +245,8 @@ void Pointfile_Load( void );
 // drag.c
 //
 void Drag_Begin( int x, int y, int buttons,
-                 vec3_t xaxis, vec3_t yaxis,
-                 vec3_t origin, vec3_t dir );
+				 vec3_t xaxis, vec3_t yaxis,
+				 vec3_t origin, vec3_t dir );
 void Drag_MouseMoved( int x, int y, int buttons );
 void Drag_MouseUp( int nButtons = 0 );
 
@@ -267,17 +267,17 @@ void SelectVertexByRay( const edVec3_c& org, const edVec3_c& dir );
 
 void ConnectEntities( void );
 
-extern	int	update_bits;
+extern  int update_bits;
 
-extern	int	screen_width;
-extern	int	screen_height;
+extern  int screen_width;
+extern  int screen_height;
 
-extern	HANDLE	bsp_process;
+extern  HANDLE  bsp_process;
 extern HANDLE g_hBSPOutput;
 extern HANDLE g_hBSPInput;
 
 
-char*	TranslateString( char* buf );
+char*   TranslateString( char* buf );
 
 void ProjectDialog( void );
 
@@ -285,10 +285,10 @@ void FillTextureMenu( CStringArray* pArray = NULL );
 void FillBSPMenu( void );
 
 BOOL CALLBACK Win_Dialog(
-    HWND hwndDlg,	// handle to dialog box
-    UINT uMsg,	// message
-    WPARAM wParam,	// first message parameter
-    LPARAM lParam 	// second message parameter
+	HWND hwndDlg,   // handle to dialog box
+	UINT uMsg,  // message
+	WPARAM wParam,  // first message parameter
+	LPARAM lParam   // second message parameter
 );
 
 
@@ -382,7 +382,7 @@ bool IsBrushSelected( brush_s* bSel );
 // curve brushes
 
 void Curve_MakeCurvedBrush( bool negative, bool top, bool bottom,
-                            bool s1, bool s2, bool s3, bool s4 );
+							bool s1, bool s2, bool s3, bool s4 );
 
 void Curve_Invert( void );
 

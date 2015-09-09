@@ -31,38 +31,38 @@ or simply visit <http://www.gnu.org/licenses/>.
 
 struct emitterParticle_s
 {
-    vec3_c origin;
-    int spawnTime;
+	vec3_c origin;
+	int spawnTime;
 };
 
 // default emitter, requires only material to function
 class emitterDefault_c : public emitterBase_c
 {
-    arraySTD_c<emitterParticle_s> particles;
-    
-    class mtrAPI_i* mat;
-    float spriteRadius;
-    int spawnInterval;
-    int particleLife;
-    
-    vec3_c origin;
-    int lastSpawnTime;
-    int lastUpdateTime;
-    
-    void spawnSingleParticle( int curTime );
-    
-    // customRenderObjectAPI_i impl
-    virtual void instanceModel( class staticModelCreatorAPI_i* out, const class axis_c& viewerAxis );
-public:
-    emitterDefault_c( int timeNow );
-    ~emitterDefault_c();
-    
-    virtual void updateEmitter( int newTime );
-    
-    virtual void setOrigin( const vec3_c& newOrigin );
-    virtual void setRadius( float newSpriteRadius );
-    virtual void setInterval( int newSpawnInterval );
-    virtual void setMaterial( class mtrAPI_i* newMat );
+		arraySTD_c<emitterParticle_s> particles;
+		
+		class mtrAPI_i* mat;
+		float spriteRadius;
+		int spawnInterval;
+		int particleLife;
+		
+		vec3_c origin;
+		int lastSpawnTime;
+		int lastUpdateTime;
+		
+		void spawnSingleParticle( int curTime );
+		
+		// customRenderObjectAPI_i impl
+		virtual void instanceModel( class staticModelCreatorAPI_i* out, const class axis_c& viewerAxis );
+	public:
+		emitterDefault_c( int timeNow );
+		~emitterDefault_c();
+		
+		virtual void updateEmitter( int newTime );
+		
+		virtual void setOrigin( const vec3_c& newOrigin );
+		virtual void setRadius( float newSpriteRadius );
+		virtual void setInterval( int newSpawnInterval );
+		virtual void setMaterial( class mtrAPI_i* newMat );
 };
 
 #endif // __CG_EMITTER_H__
