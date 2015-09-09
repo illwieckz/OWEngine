@@ -1,2 +1,3 @@
 09-09-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Initial import
+	* Removed duplicated libCurl libarry in Engine folder (it was already moved in Library)
