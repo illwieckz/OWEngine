@@ -2,3 +2,4 @@
 	* Initial import
 	* Removed duplicated libCurl libarry in Engine folder (it was already moved in Library)
 	* Indentation and reformatting source code to new coding style
+	* Added missing Bloom shader
