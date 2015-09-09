@@ -262,6 +262,14 @@
 			Name="shaders"
 			>
 			<File
+				RelativePath="..\..\game\main\glsl\bloom.frag"
+				>
+			</File>
+			<File
+				RelativePath="..\..\game\main\glsl\bloom.vert"
+				>
+			</File>
+			<File
 				RelativePath="..\..\game\main\glsl\blur.frag"
 				>
 			</File>

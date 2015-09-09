@@ -4,3 +4,5 @@
 	* Indentation and reformatting source code to new coding style
 	* Added missing Bloom shader
 	* Fixed initShadowVolumeDepthStencilStates in DirectX 10 renderer
+	* Added Bloom shaders in Visual Studio solution (so it be easier to edit)
+
