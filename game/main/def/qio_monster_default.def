@@ -1,0 +1,7 @@
+
+
+entityDef monster_default {
+	"classname" "FakePlayer"
+	"anim" "idle"
+  "takeDamage" "1"
+}

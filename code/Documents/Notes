@@ -1,0 +1,5 @@
+Developer notes. Just anything odd, interesting etc out of the source goes in here.
+
+09-09-2015
+	* Only compiling on Visual Studio 2008 is supported at this moment
+
