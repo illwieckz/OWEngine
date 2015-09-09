@@ -5,4 +5,5 @@
 	* Added missing Bloom shader
 	* Fixed initShadowVolumeDepthStencilStates in DirectX 10 renderer
 	* Added Bloom shaders in Visual Studio solution (so it be easier to edit)
-
+	* Updated GLEW library to version 1.13.0
+	
