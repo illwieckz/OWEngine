@@ -400,11 +400,11 @@ typedef struct brush_s
 {
 	struct brush_s* prev, *next;    // links in active/selected
 	struct brush_s* oprev, *onext;  // links in entity
-	struct entity_s*    owner;
+	struct entity_s* owner;
 	edAABB_c bounds;
-	face_s*     brush_faces;
+	face_s* brush_faces;
 	
-	bool bModelFailed;
+	bool    bModelFailed;
 	//
 	// curve brush extensions
 	// all are derived from brush_faces

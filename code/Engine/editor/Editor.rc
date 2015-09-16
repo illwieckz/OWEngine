@@ -599,7 +599,7 @@ BEGIN
             POPUP "Themes"
             BEGIN
                 MENUITEM "QE4 Original",                ID_COLOR_SETORIGINAL
-                MENUITEM "Q3Radiant Original",          ID_COLOR_SETQER
+                MENUITEM "OWRadiant Original",          ID_COLOR_SETQER
                 MENUITEM "Black and Green",             ID_COLOR_SETBLACK
             END
             MENUITEM SEPARATOR
@@ -1035,7 +1035,7 @@ BEGIN
             POPUP "Themes"
             BEGIN
                 MENUITEM "QE4 Original",                ID_COLOR_SETORIGINAL
-                MENUITEM "Q3Radiant Original",          ID_COLOR_SETQER
+                MENUITEM "OWRadiant Original",          ID_COLOR_SETQER
                 MENUITEM "Black and Green",             ID_COLOR_SETBLACK
             END
             MENUITEM SEPARATOR
@@ -1320,18 +1320,13 @@ END
 
 IDD_ABOUT DIALOG DISCARDABLE  0, 0, 275, 223
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About Q3Radiant"
+CAPTION "About OWRadiant"
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,236,7,35,14
     CONTROL         127,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | 
                     SS_REALSIZEIMAGE | SS_SUNKEN | WS_BORDER,7,7,87,80
-    GROUPBOX        "OpenGL Properties",IDC_STATIC,5,93,265,56
-    LTEXT           "Vendor:\t\tWHOEVER",IDC_ABOUT_GLVENDOR,10,101,253,10
-    LTEXT           "Version:\t\t1.1",IDC_ABOUT_GLVERSION,10,111,249,10
-    LTEXT           "Renderer:\tWHATEVER",IDC_ABOUT_GLRENDERER,10,121,253,24
-    GROUPBOX        "OpenGL Extensions",IDC_STATIC,5,152,265,65
-    CONTROL         "Q3 Radiant 1.0 Beta build 200f\nCopyright ©1999, 2005 Id Software, Inc.\n\n",
+    CONTROL         "OW Radiant 1.0 Beta build 201f\nCopyright ©1999, 2005 Id Software, Inc.\nCopyright ©2015, Dusan Jocic.\n\n\n",
                     IDC_STATIC,"Static",SS_LEFTNOWORDWRAP,99,7,132,78
     EDITTEXT        IDC_ABOUT_GLEXTENSIONS,10,162,256,53,ES_MULTILINE | 
                     ES_AUTOVSCROLL | ES_READONLY | WS_DISABLED | NOT 
@@ -1524,7 +1519,7 @@ END
 
 IDD_DLG_PREFS DIALOG DISCARDABLE  0, 0, 386, 327
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Q3Radiant Preferences"
+CAPTION "OWRadiant Preferences"
 FONT 8, "MS Sans Serif"
 BEGIN
     COMBOBOX        IDC_COMBO_WHATGAME,13,18,157,76,CBS_DROPDOWN | CBS_SORT | 
@@ -1704,7 +1699,7 @@ BEGIN
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "Edit...",ID_EDIT,166,90,39,14,WS_DISABLED
     DEFPUSHBUTTON   "Run",ID_RUN,166,56,39,14
-    LTEXT           "WARNING: BrushScripting is in a highly experimental state and is far from complete. If you attempt to use them it is VERY LIKELY that Q3Radiant will crash. Save your work before attempting to make use of any scripting features.",
+    LTEXT           "WARNING: BrushScripting is in a highly experimental state and is far from complete. If you attempt to use them it is VERY LIKELY that OWRadiant will crash. Save your work before attempting to make use of any scripting features.",
                     IDC_STATIC,7,7,198,38
 END
 
@@ -2475,7 +2470,7 @@ END
 
 STRINGTABLE PRELOAD DISCARDABLE 
 BEGIN
-    IDR_MAINFRAME           "Q3Radiant"
+    IDR_MAINFRAME           "OWRadiant"
     IDR_RADIANTYPE          "\nRadian\nRadian\n\n\nRadiant.Document\nRadian Document"
     IDS_STRING1             "DOOM"
 END

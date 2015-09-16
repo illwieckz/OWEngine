@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   MainFrm.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  19-06-2015 : Cleaned CMainFrame::OnFileNewproject()
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -3120,90 +3121,9 @@ void CMainFrame::OnHelpCommandlist()
 
 void CMainFrame::OnFileNewproject()
 {
-	// TODO
-#if 0
-	CNewProjDlg dlg;
-	if ( dlg.DoModal() == IDOK && dlg.m_strName.GetLength() > 0 )
-	{
-		CString strQ2;
-		CString strQ2File;
-		ExtractPath_and_Filename( g_PrefsDlg.m_strQuake2, strQ2, strQ2File );
-		
-		
-		AddSlash( strQ2 );
-		strQ2 += dlg.m_strName;
-		CString strProjToLoad;
-		CString strMapToLoad;
-		bool bGood = true;
-		if ( ::CreateDirectory( strQ2, NULL ) )
-		{
-			CString strDir = strQ2;
-			strDir += "\\maps";
-			if ( ::CreateDirectory( strDir, NULL ) )
-			{
-				CString strSource = g_strAppPath;
-				AddSlash( strSource );
-				strSource += "projmap.dat";
-				CString strDest = strDir;
-				AddSlash( strDest );
-				CString strName;
-				strName.Format( "%s.map", dlg.m_strName );
-				strDest += strName;
-				strMapToLoad = strDest;
-				if ( !::CopyFile( strSource, strDest, FALSE ) )
-					bGood = false;
-			}
-			else bGood = false;
-			
-			strDir = strQ2;
-			strDir += "\\pics";
-			if ( ::CreateDirectory( strDir, NULL ) )
-			{
-				CString strSource = g_strAppPath;
-				AddSlash( strSource );
-				strSource += "colormap.pcx";
-				CString strDest = strDir;
-				AddSlash( strDest );
-				strDest += "colormap.pcx";
-				if ( !::CopyFile( strSource, strDest, FALSE ) )
-					bGood = false;
-			}
-			else bGood = false;
-			
-			strDir = strQ2;
-			strDir += "\\scripts";
-			if ( ::CreateDirectory( strDir, NULL ) )
-			{
-				CString strSource = g_strAppPath;
-				AddSlash( strSource );
-				strSource += "projqe4.dat";
-				CString strDest = strDir;
-				AddSlash( strDest );
-				strDest += "quake.qe4";
-				if ( !::CopyFile( strSource, strDest, FALSE ) )
-					bGood = false;
-				else
-					strProjToLoad = strDest;
-			}
-			else bGood = false;
-			if ( bGood && strProjToLoad.GetLength() > 0 )
-			{
-				if ( QE_LoadProject( strProjToLoad.GetBuffer( 0 ) ) )
-				{
-					if ( strMapToLoad.GetLength() > 0 )
-						Map_LoadFile( strMapToLoad.GetBuffer( 0 ) );
-				}
-			}
-		}
-		else
-		{
-			CString strMsg;
-			strMsg.Format( "Unable to create directory %s", strQ2 );
-			MessageBox( strMsg );
-		}
-		
-	}
-#endif
+	//Dushan
+	//NOTE : Nothing, the should not be new project
+	//       There is no point in using in-engine editor for other projects
 }
 
 void CMainFrame::UpdateStatusText()

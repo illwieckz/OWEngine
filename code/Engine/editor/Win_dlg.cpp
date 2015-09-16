@@ -27,6 +27,7 @@
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-16-2015 : Removed reading of renderer and OpenGL extensions 
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -590,21 +591,6 @@ BOOL CALLBACK AboutDlgProc( HWND hwndDlg,
 	{
 		case WM_INITDIALOG:
 			{
-				char renderer[1024];
-				char version[1024];
-				char vendor[1024];
-				char extensions[4096];
-				
-				sprintf( renderer, "Renderer:\t%s", glGetString( GL_RENDERER ) );
-				sprintf( version, "Version:\t\t%s", glGetString( GL_VERSION ) );
-				sprintf( vendor, "Vendor:\t\t%s", glGetString( GL_VENDOR ) );
-				sprintf( extensions, "%s", glGetString( GL_EXTENSIONS ) );
-				
-				SetWindowText( GetDlgItem( hwndDlg, IDC_ABOUT_GLRENDERER ),   renderer );
-				SetWindowText( GetDlgItem( hwndDlg, IDC_ABOUT_GLVERSION ),    version );
-				SetWindowText( GetDlgItem( hwndDlg, IDC_ABOUT_GLVENDOR ),     vendor );
-				SetWindowText( GetDlgItem( hwndDlg, IDC_ABOUT_GLEXTENSIONS ), extensions );
-				
 			}
 			return TRUE;
 			

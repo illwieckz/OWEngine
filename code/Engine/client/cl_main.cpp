@@ -3508,6 +3508,7 @@ void CL_Shutdown( char* finalmsg, bool disconnect, bool quit )
 	Cmd_RemoveCommand( "model" );
 	Cmd_RemoveCommand( "video" );
 	Cmd_RemoveCommand( "stopvideo" );
+	Cmd_RemoveCommand( "editor" );
 	
 	CL_ShutdownInput();
 	Con_Shutdown();

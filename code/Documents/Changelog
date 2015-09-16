@@ -4,6 +4,10 @@
 	* Cleaned and removed unused things
 	* Added basic support for sound module
 	* Made console more transparent
+	* Fixed crash in editor if you open "About" in main menu
+	* Changed copyright from Q3Radiant to OWRadiant
+	* Cleaned CMainFrame::OnFileNewproject()
+	* Removed reading of renderer and OpenGL extensions 
 
 09-09-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Initial import
