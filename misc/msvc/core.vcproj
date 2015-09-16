@@ -1854,6 +1854,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\code\Engine\api\sndAPI.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\code\Engine\api\staticModelCreatorAPI.h"
 				>
 			</File>

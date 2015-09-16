@@ -21,12 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   iFaceMgrAPI.h
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: shared interface manager API
 // -------------------------------------------------------------------------
 //  History:
+//
+//  09-16-2015 : Added basic sound system module
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -52,6 +54,7 @@ enum qioModule_e
 	QMD_REF_BACKEND_DX10,
 	QMD_GPHYSICS,
 	QMD_EDITOR,
+	QMD_SOUND,
 };
 
 inline bool QM_IsServerSide( qioModule_e m )

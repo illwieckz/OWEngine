@@ -21,12 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   common.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: Misc functions used in client and server
 // -------------------------------------------------------------------------
 //  History:
+//
+//  09-16-2015: Added basic support for sound module
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1658,6 +1660,16 @@ void Com_InitImageLib()
 		Com_Error( ERR_DROP, "Cannot load imageLib DLL" );
 	}
 }
+
+bool Com_CanStartEngineWithoutSoundModule()
+{
+	//return false;
+	return true; // TODO: a developer cvar?
+	// NOTE: Engine should start without sound support
+	//       in that way it should be used only for
+	//       testing graphics
+}
+
 bool Com_CanStartEngineWithoutCMModule()
 {
 	//return false;
@@ -1672,6 +1684,22 @@ bool Com_CanStartEngineWithoutDeclManagerModule()
 {
 	//return false;
 	return true; // TODO: a developer cvar?
+}
+static moduleAPI_i* com_soundLib = 0;
+void Com_InitSoundLibDLL()
+{
+	com_soundLib = g_moduleMgr->load( "soundLib" );
+	if ( com_soundLib == 0 )
+	{
+		if ( Com_CanStartEngineWithoutSoundModule() )
+		{
+			Com_Printf( "WARNING: Cannot load Sound DLL\n" );
+		}
+		else
+		{
+			Com_Error( ERR_DROP, "Cannot load Sound DLL" );
+		}
+	}
 }
 static moduleAPI_i* com_cmLib = 0;
 void Com_InitCMDLL()
@@ -1743,8 +1771,8 @@ void Com_ShutdownModelLoaderDLL()
 	{
 		return;
 	}
-	//if(g_declMgr) {
-	//  g_declMgr->shutdown();
+	//if(com_modelLoaderDLL) {
+	//  com_modelLoaderDLL->shutdown();
 	//}
 	g_moduleMgr->unload( &com_modelLoaderDLL );
 }
@@ -1754,10 +1782,21 @@ void Com_ShutdownCMDLL()
 	{
 		return;
 	}
-	//if(g_declMgr) {
-	//  g_declMgr->shutdown();
+	//if(com_cmLib) {
+	//  com_cmLib->shutdown();
 	//}
 	g_moduleMgr->unload( &com_cmLib );
+}
+void Com_ShutdownSoundDLL()
+{
+	if ( com_soundLib == 0 )
+	{
+		return;
+	}
+	//if(com_soundLib) {
+	//  com_soundLib->shutdown();
+	//}
+	g_moduleMgr->unload( &com_soundLib );
 }
 static moduleAPI_i* com_editorLib = 0;
 editorAPI_i* g_editor = 0;
@@ -1847,6 +1886,8 @@ void Com_Init( char* commandLine )
 	FS_InitFilesystem();
 	
 	Com_InitJournaling();
+	
+	Com_InitSoundLibDLL();
 	
 	Com_InitImageLib();
 	
@@ -2436,6 +2477,8 @@ void Com_Shutdown( void )
 	Com_ShutdownCMDLL();
 	// shutdown model loader DLL
 	Com_ShutdownModelLoaderDLL();
+	// shutdown Sound module
+	Com_ShutdownSoundDLL();
 	
 	if ( logfile )
 	{

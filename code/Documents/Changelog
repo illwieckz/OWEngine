@@ -2,6 +2,7 @@
 	* Added GPL v3 license file
 	* Reformatted code
 	* Cleaned and removed unused things
+	* Added basic support for sound module
 
 09-09-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Initial import
