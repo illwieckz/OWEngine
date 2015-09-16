@@ -1924,32 +1924,32 @@ class rbDX10_c : public rbAPI_i
 		{
 			// Initialize the description of the stencil state.
 			D3D10_DEPTH_STENCIL_DESC depthStencilDesc;
-			ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
-
+			ZeroMemory( &depthStencilDesc, sizeof( depthStencilDesc ) );
+			
 			// Depth test parameters
 			depthStencilDesc.DepthEnable = true;
 			depthStencilDesc.DepthWriteMask = D3D10_DEPTH_WRITE_MASK_ALL;
 			depthStencilDesc.DepthFunc = D3D10_COMPARISON_LESS;
-
+			
 			// Stencil test parameters
 			depthStencilDesc.StencilEnable = true;
 			depthStencilDesc.StencilReadMask = D3D10_DEFAULT_STENCIL_READ_MASK;
 			depthStencilDesc.StencilWriteMask = D3D10_DEFAULT_STENCIL_WRITE_MASK;
-
+			
 			// Stencil operations if pixel is front-facing
 			depthStencilDesc.FrontFace.StencilFailOp = D3D10_STENCIL_OP_KEEP;
 			depthStencilDesc.FrontFace.StencilDepthFailOp = D3D10_STENCIL_OP_INCR;
 			depthStencilDesc.FrontFace.StencilPassOp = D3D10_STENCIL_OP_KEEP;
 			depthStencilDesc.FrontFace.StencilFunc = D3D10_COMPARISON_ALWAYS;
-
+			
 			// Stencil operations if pixel is back-facing
 			depthStencilDesc.BackFace.StencilFailOp = D3D10_STENCIL_OP_KEEP;
 			depthStencilDesc.BackFace.StencilDepthFailOp = D3D10_STENCIL_OP_DECR;
 			depthStencilDesc.BackFace.StencilPassOp = D3D10_STENCIL_OP_KEEP;
 			depthStencilDesc.BackFace.StencilFunc = D3D10_COMPARISON_ALWAYS;
-
+			
 			// Create depth stencil state
-			HRESULT result = pD3DDevice->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState);
+			HRESULT result = pD3DDevice->CreateDepthStencilState( &depthStencilDesc, &m_depthStencilState );
 			if ( FAILED( result ) )
 			{
 				g_core->RedWarning( "rbDX10_c::init: CreateDepthStencilState failed\n" );
