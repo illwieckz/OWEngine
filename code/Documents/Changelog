@@ -3,6 +3,7 @@
 	* Reformatted code
 	* Cleaned and removed unused things
 	* Added basic support for sound module
+	* Made console more transparent
 
 09-09-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Initial import

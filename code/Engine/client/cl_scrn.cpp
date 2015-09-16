@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   cl_scrn.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: master forrefresh, status bar, console, chat, etc...
 // -------------------------------------------------------------------------
 //  History:
+//  09-16-2015 : Made console more transparent
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -256,7 +257,7 @@ void SCR_DrawStringExt( int x, int y, float size, const char* string, float* set
 	rf->set2DColor( setColor );
 	while ( *s )
 	{
-		if ( !noColorEscape && Q_IsColorString( s ) )
+		if ( Q_IsColorString( s ) )
 		{
 			if ( !forceColor )
 			{
@@ -264,8 +265,11 @@ void SCR_DrawStringExt( int x, int y, float size, const char* string, float* set
 				color[3] = setColor[3];
 				rf->set2DColor( color );
 			}
-			s += 2;
-			continue;
+			if ( !noColorEscape )
+			{
+				s += 2;
+				continue;
+			}
 		}
 		SCR_DrawChar( xx, y, size, *s );
 		xx += size;

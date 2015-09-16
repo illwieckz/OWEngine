@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   cl_console.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-16-2015 : Made console more transparent
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -39,33 +40,31 @@
 
 int g_console_field_width = 78;
 
-
 #define NUM_CON_TIMES 4
 
-//#define       CON_TEXTSIZE    32768
-#define     CON_TEXTSIZE    524288
+#define CON_TEXTSIZE 524288
+
 typedef struct
 {
 	bool    initialized;
 	
 	short   text[CON_TEXTSIZE];
-	int     current;        // line where next message will be printed
-	int     x;              // offset in current line for next print
-	int     display;        // bottom of console displays this line
+	int     current;                // line where next message will be printed
+	int     x;                      // offset in current line for next print
+	int     display;                // bottom of console displays this line
 	
-	int     linewidth;      // characters across screen
-	int     totallines;     // total lines in console scrollback
+	int     linewidth;              // characters across screen
+	int     totallines;             // total lines in console scrollback
 	
-	float   xadjust;        // for wide aspect screens
+	float   xadjust;                // for wide aspect screens
 	
-	float   displayFrac;    // aproaches finalFrac at scr_conspeed
-	float   finalFrac;      // 0.0 to 1.0 lines of console to display
+	float   displayFrac;            // aproaches finalFrac at scr_conspeed
+	float   finalFrac;              // 0.0 to 1.0 lines of console to display
 	
-	int     vislines;       // in scanlines
+	int     vislines;               // in scanlines
 	
 	int     times[NUM_CON_TIMES];   // cls.realtime time the line was generated
-	// for transparent notify lines
-	vec4_t  color;
+	vec4_t  color;                  // for transparent notify lines
 } console_t;
 
 extern  console_t   con;
@@ -126,8 +125,6 @@ void Con_MessageMode2_f( void )
 	chatField.widthInChars = 25;
 	Key_SetCatcher( Key_GetCatcher( ) ^ KEYCATCH_MESSAGE );
 }
-
-
 
 /*
 ================
@@ -553,7 +550,7 @@ void CL_ConsolePrint( char* txt )
 		// count word length
 		for ( l = 0 ; l < con.linewidth ; l++ )
 		{
-			if ( txt[l] <= ' ' )
+			if ( txt[l] <= ' ' && txt[l] >= 0 )
 			{
 				break;
 			}
@@ -579,7 +576,7 @@ void CL_ConsolePrint( char* txt )
 				break;
 			default:    // display character and advance
 				y = con.current % con.totallines;
-				con.text[y * con.linewidth + con.x] = ( color << 8 ) | c;
+				con.text[y * con.linewidth + con.x] = ( color << 8 ) | ( unsigned char )c;
 				con.x++;
 				if ( con.x >= con.linewidth )
 					Con_Linefeed( skipnotify );
@@ -739,7 +736,6 @@ void Con_DrawSolidConsole( float frac )
 	short*          text;
 	int             row;
 	int             lines;
-	//  qhandle_t       conShader;
 	int             currentColor;
 	vec4_t          color;
 	
@@ -762,7 +758,8 @@ void Con_DrawSolidConsole( float frac )
 	}
 	else
 	{
-		SCR_DrawPic( 0, 0, SCREEN_WIDTH, y, cls.consoleShader );
+		vec4_t consoleColor = {0, 0, 0.1, 0.75};
+		SCR_FillRect( 0, 0, SCREEN_WIDTH, y, consoleColor );
 	}
 	
 	color[0] = 1;
