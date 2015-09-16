@@ -1,6 +1,7 @@
 09-16-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Added GPL v3 license file
 	* Reformatted code
+	* Cleaned and removed unused things
 
 09-09-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Initial import

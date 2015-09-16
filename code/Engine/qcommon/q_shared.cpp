@@ -21,13 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   q_shared.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
 //
+// 09-16-2015 : Cleaned and removed unused things
 ////////////////////////////////////////////////////////////////////////////
 
 #include "q_shared.h"
@@ -116,27 +117,6 @@ void COM_DefaultExtension( char* path, int maxSize, const char* extension )
 
 ============================================================================
 */
-/*
-// can't just use function pointers, or dll linkage can
-// mess up when qcommon is included in multiple places
-static short    (*_BigShort) (short l);
-static short    (*_LittleShort) (short l);
-static int      (*_BigLong) (int l);
-static int      (*_LittleLong) (int l);
-static qint64   (*_BigLong64) (qint64 l);
-static qint64   (*_LittleLong64) (qint64 l);
-static float    (*_BigFloat) (const float *l);
-static float    (*_LittleFloat) (const float *l);
-
-short   BigShort(short l){return _BigShort(l);}
-short   LittleShort(short l) {return _LittleShort(l);}
-int     BigLong (int l) {return _BigLong(l);}
-int     LittleLong (int l) {return _LittleLong(l);}
-qint64  BigLong64 (qint64 l) {return _BigLong64(l);}
-qint64  LittleLong64 (qint64 l) {return _LittleLong64(l);}
-float   BigFloat (const float *l) {return _BigFloat(l);}
-float   LittleFloat (const float *l) {return _LittleFloat(l);}
-*/
 
 void CopyShortSwap( void* dest, void* src )
 {
@@ -202,43 +182,6 @@ float FloatNoSwap( const float* f )
 {
 	return *f;
 }
-
-/*
-================
-Swap_Init
-================
-*/
-/*
-void Swap_Init (void)
-{
-    byte    swaptest[2] = {1,0};
-
-// set the byte swapping variables in a portable manner
-    if ( *(short *)swaptest == 1)
-    {
-        _BigShort = ShortSwap;
-        _LittleShort = ShortNoSwap;
-        _BigLong = LongSwap;
-        _LittleLong = LongNoSwap;
-        _BigLong64 = Long64Swap;
-        _LittleLong64 = Long64NoSwap;
-        _BigFloat = FloatSwap;
-        _LittleFloat = FloatNoSwap;
-    }
-    else
-    {
-        _BigShort = ShortNoSwap;
-        _LittleShort = ShortSwap;
-        _BigLong = LongNoSwap;
-        _LittleLong = LongSwap;
-        _BigLong64 = Long64NoSwap;
-        _LittleLong64 = Long64Swap;
-        _BigFloat = FloatNoSwap;
-        _LittleFloat = FloatSwap;
-    }
-
-}
-*/
 
 /*
 ============================================================================
@@ -446,34 +389,6 @@ int Com_HexStrToInt( const char* str )
 
 ============================================================================
 */
-
-int Q_isprint( int c )
-{
-	if ( c >= 0x20 && c <= 0x7E )
-		return ( 1 );
-	return ( 0 );
-}
-
-int Q_islower( int c )
-{
-	if ( c >= 'a' && c <= 'z' )
-		return ( 1 );
-	return ( 0 );
-}
-
-int Q_isupper( int c )
-{
-	if ( c >= 'A' && c <= 'Z' )
-		return ( 1 );
-	return ( 0 );
-}
-
-int Q_isalpha( int c )
-{
-	if ( ( c >= 'a' && c <= 'z' ) || ( c >= 'A' && c <= 'Z' ) )
-		return ( 1 );
-	return ( 0 );
-}
 
 bool Q_isanumber( const char* s )
 {

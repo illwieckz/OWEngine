@@ -22,13 +22,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   q_shared.h
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
 //
+// 09-16-2015 : Cleaned and removed unused things
 ////////////////////////////////////////////////////////////////////////////
 
 #ifndef __Q_SHARED_H
@@ -269,10 +270,6 @@ void Com_RandomBytes( byte* string, int len );
 
 //=============================================
 
-int Q_isprint( int c );
-int Q_islower( int c );
-int Q_isupper( int c );
-int Q_isalpha( int c );
 bool Q_isanumber( const char* s );
 bool Q_isintegral( float f );
 
