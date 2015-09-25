@@ -21,12 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   Radiant.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: Defines the class behaviours for the application.
 // -------------------------------------------------------------------------
 //  History:
+//  09-25-2015 : Moved reading Opengl extension string to about box.
+//  09-25-2015 : Fixed the buffer overrun caused by the opengl extension string being too long in the editor.
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -192,7 +194,7 @@ BOOL CRadiantApp::InitInstance()
 	
 	g_PrefsDlg.LoadPrefs();
 	
-	int nMenu = IDR_MENU1;
+	int nMenu = IDR_MENU_QUAKE3;
 	g_PrefsDlg.m_bSGIOpenGL = 1;
 	CString strOpenGL = ( g_PrefsDlg.m_bSGIOpenGL ) ? "opengl.dll" : "opengl32.dll";
 	CString strGLU = ( g_PrefsDlg.m_bSGIOpenGL ) ? "glu.dll" : "glu32.dll";

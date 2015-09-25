@@ -21,13 +21,15 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   Win_dlg.cpp
-//  Version:     v1.00
+//  Version:     v1.02
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
-//  09-16-2015 : Removed reading of renderer and OpenGL extensions 
+//  09-16-2015 : Removed reading of renderer and OpenGL extensions
+//  09-25-2015 : Moved reading Opengl extension string to about box.
+//  09-25-2015 : Fixed the buffer overrun caused by the opengl extension string being too long in the editor.
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -591,6 +593,19 @@ BOOL CALLBACK AboutDlgProc( HWND hwndDlg,
 	{
 		case WM_INITDIALOG:
 			{
+				char buffer[1024];
+				_snprintf( buffer, 1024, "Renderer:\t%s", glGetString( GL_RENDERER ) );
+				SetWindowText( GetDlgItem( hwndDlg, IDC_ABOUT_GLRENDERER ), ( LPCSTR )glGetString( GL_RENDERER ) );
+				
+				_snprintf( buffer, 1024, "Version:\t\t%s", glGetString( GL_VERSION ) );
+				SetWindowText( GetDlgItem( hwndDlg, IDC_ABOUT_GLVERSION ), ( LPCSTR )glGetString( GL_VERSION ) );
+				
+				_snprintf( buffer, 1024, "Vendor:\t\t%s", glGetString( GL_VENDOR ) );
+				SetWindowText( GetDlgItem( hwndDlg, IDC_ABOUT_GLVENDOR ), ( LPCSTR )glGetString( GL_VENDOR ) );
+				
+				char extensions[4096];
+				_snprintf( extensions, 4096, "%s", glGetString( GL_EXTENSIONS ) );
+				SetWindowText( GetDlgItem( hwndDlg, IDC_ABOUT_GLEXTENSIONS ), ( LPCSTR )glGetString( GL_EXTENSIONS ) );
 			}
 			return TRUE;
 			

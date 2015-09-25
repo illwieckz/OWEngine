@@ -21,12 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   CamWnd.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-25-2015 : Moved reading Opengl extension string to about box.
+//  09-25-2015 : Fixed the buffer overrun caused by the opengl extension string being too long in the editor.
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -326,7 +328,6 @@ int CCamWnd::OnCreate( LPCREATESTRUCT lpCreateStruct )
 	Sys_Printf( "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
 	Sys_Printf( "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
 	Sys_Printf( "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
-	Sys_Printf( "GL_EXTENSIONS: %s\n", glGetString( GL_EXTENSIONS ) );
 	
 	g_qeglobals.d_hwndCamera = GetSafeHwnd();
 	

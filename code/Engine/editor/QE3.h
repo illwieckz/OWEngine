@@ -21,12 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   QE3.h
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-25-2015 : Moved reading Opengl extension string to about box.
+//  09-25-2015 : Fixed the buffer overrun caused by the opengl extension string being too long in the editor.
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -45,6 +47,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include <stdio.h>
 
 // this define to use HTREEITEM and MFC stuff in the headers
 #define QERTYPES_USE_MFC

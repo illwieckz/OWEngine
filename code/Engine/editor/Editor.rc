@@ -1326,7 +1326,13 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,236,7,35,14
     CONTROL         127,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | 
                     SS_REALSIZEIMAGE | SS_SUNKEN | WS_BORDER,7,7,87,80
-    CONTROL         "OW Radiant 1.0 Beta build 201f\nCopyright ©1999, 2005 Id Software, Inc.\nCopyright ©2015, Dusan Jocic.\n\n\n",
+    GROUPBOX        "OpenGL Properties",IDC_STATIC,5,93,265,56
+    LTEXT           "Vendor:\t\tWHOEVER",IDC_ABOUT_GLVENDOR,10,101,253,10
+    LTEXT           "Version:\t\t1.1",IDC_ABOUT_GLVERSION,10,111,249,10
+    LTEXT           "Renderer:\tWHATEVER",IDC_ABOUT_GLRENDERER,10,121,253,24
+    GROUPBOX        "OpenGL Extensions",IDC_STATIC,5,152,265,65
+    CONTROL         "OWRadiant 1.0 Beta build 200f\nCopyright ©1999, 2005 Id Software, Inc.\n\n",
+                    "OWRadiant\nCopyright (C) 2015 Dusan Jocic.",
                     IDC_STATIC,"Static",SS_LEFTNOWORDWRAP,99,7,132,78
     EDITTEXT        IDC_ABOUT_GLEXTENSIONS,10,162,256,53,ES_MULTILINE | 
                     ES_AUTOVSCROLL | ES_READONLY | WS_DISABLED | NOT 

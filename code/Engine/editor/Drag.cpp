@@ -21,13 +21,15 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   Drag.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: Drag either multiple brushes, or select plane points from
 //               a single brush.
 // -------------------------------------------------------------------------
 //  History:
+//  09-25-2015 : Moved reading Opengl extension string to about box.
+//  09-25-2015 : Fixed the buffer overrun caused by the opengl extension string being too long in the editor.
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -573,7 +575,7 @@ void MoveSelection( vec3_t move )
 			Brush_Build( b );
 			for ( i = 0 ; i < 3 ; i++ )
 				if ( b->getMins()[i] > b->getMaxs()[i]
-						|| b->getMaxs()[i] - b->getMins()[i] > MAX_BRUSH_SIZE )
+						|| b->getMaxs()[i] - b->getMins()[i] > WORLD_SIZE )
 					break;  // dragged backwards or fucked up
 			if ( i != 3 )
 				break;
