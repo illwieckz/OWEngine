@@ -21,17 +21,20 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   ZWnd.h
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-26-2015 : Added zClip for OWEditor
 //
 ////////////////////////////////////////////////////////////////////////////
 
 #if !defined(AFX_ZWND_H__44B4BA02_781B_11D1_B53C_00AA00A410FC__INCLUDED_)
 #define AFX_ZWND_H__44B4BA02_781B_11D1_B53C_00AA00A410FC__INCLUDED_
+
+#include "zclip.h"
 
 #if _MSC_VER >= 1000
 #pragma once
@@ -63,6 +66,8 @@ class CZWnd : public CWnd
 		// Implementation
 	public:
 		virtual ~CZWnd();
+		
+		CZClip* m_pZClip;
 		
 		// Generated message map functions
 	protected:

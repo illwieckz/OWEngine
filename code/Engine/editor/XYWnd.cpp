@@ -21,12 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   XYWnd.cpp
-//  Version:     v1.00
+//  Version:     v1.02
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-25-2015 : Fixed problems with clipboard
+//  09-26-2015 : Added zClip
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -37,6 +39,10 @@
 #include "PrefsDlg.h"
 #include "DialogInfo.h"
 #include "qgl.h"
+
+#include <vector>
+using namespace std;
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -191,6 +197,56 @@ BEGIN_MESSAGE_MAP( CXYWnd, CWnd )
 	ON_COMMAND_RANGE( ID_ENTITY_START, ID_ENTITY_END, OnEntityCreate )
 END_MESSAGE_MAP()
 
+
+BOOL CXYWnd::GetStringFromClipboard( CString& String )
+{
+	if ( OpenClipboard() )
+	{
+		HGLOBAL hXferBuffer;
+		if ( ( hXferBuffer = GetClipboardData( CF_TEXT ) ) == NULL )
+		{
+			CloseClipboard();
+			Sys_Printf( "Dammit, some sort of problem reading from the clipboard..." );
+			return FALSE;	// hmmmm... Oh well.
+		}
+		
+		char* psClipBoardString = ( char* ) GlobalLock( hXferBuffer );
+		String = psClipBoardString;
+		GlobalUnlock( psClipBoardString );
+		
+		CloseClipboard();
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+BOOL CXYWnd::SendStringToClipboard( LPCSTR psString )
+{
+	HGLOBAL hXferBuffer = GlobalAlloc( ( UINT )GMEM_MOVEABLE | GMEM_DDESHARE, ( DWORD )strlen( psString ) + 1 );
+	if ( hXferBuffer )
+	{
+		char* psLockedDest = ( char* ) GlobalLock( hXferBuffer );
+		memcpy( psLockedDest, psString, strlen( psString ) + 1 );
+		GlobalUnlock( psLockedDest );
+		
+		if ( OpenClipboard() )
+		{
+			EmptyClipboard(); // empty it (all handles to NULL);
+			if ( ( SetClipboardData( ( UINT )CF_TEXT, hXferBuffer ) ) == NULL )
+			{
+				CloseClipboard();
+				Sys_Printf( "Dammit, some sort of problem writing to the clipboard..." );
+				return FALSE; // hmmmm... Oh well.
+			}
+			CloseClipboard();
+			return TRUE;
+		}
+	}
+	
+	Sys_Printf( "Dammit, I can't allocate %d bytes for some strange reason (reboot, then try again, else tell me - Ste)", strlen( psString ) );
+	return FALSE;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CXYWnd message handlers
@@ -1992,7 +2048,7 @@ XY_DrawGrid
 */
 void CXYWnd::XY_DrawGrid()
 {
-	float   x, y, xb, xe, yb, ye;
+	float   x, y, xb, xe, yb, ye, step;
 	int     w, h;
 	char    text[32];
 	
@@ -2010,56 +2066,51 @@ void CXYWnd::XY_DrawGrid()
 	//int nDim1 = 0;
 	//int nDim2 = 1;
 	
+	step = 64.0f;
+	if ( m_fScale < 0.2f )
+	{
+		step = 512.0f;
+	}
+	if ( m_fScale < 0.02f )
+	{
+		step = 2048.0f;
+	}
 	
 	xb = m_vOrigin[nDim1] - w;
 	if ( xb < region_mins[nDim1] )
 		xb = region_mins[nDim1];
-	xb = 64 * floor( xb / 64 );
+	xb = step * floor( xb / step );
 	
 	xe = m_vOrigin[nDim1] + w;
 	if ( xe > region_maxs[nDim1] )
 		xe = region_maxs[nDim1];
-	xe = 64 * ceil( xe / 64 );
+	xe = step * ceil( xe / step );
 	
 	yb = m_vOrigin[nDim2] - h;
 	if ( yb < region_mins[nDim2] )
 		yb = region_mins[nDim2];
-	yb = 64 * floor( yb / 64 );
+	yb = step * floor( yb / step );
 	
 	ye = m_vOrigin[nDim2] + h;
 	if ( ye > region_maxs[nDim2] )
 		ye = region_maxs[nDim2];
-	ye = 64 * ceil( ye / 64 );
+	ye = step * ceil( ye / step );
 	
 	// draw major blocks
 	
 	glColor3fv( g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR] );
-	
-	int stepSize = 64 * 0.1 / m_fScale;
-	if ( stepSize < 64 )
-	{
-		stepSize = 64;
-	}
-	else
-	{
-		int i;
-		for ( i = 1; i < stepSize; i <<= 1 )
-		{
-		}
-		stepSize = i;
-	}
 	
 	if ( g_qeglobals.d_showgrid )
 	{
 	
 		glBegin( GL_LINES );
 		
-		for ( x = xb ; x <= xe ; x += stepSize )
+		for ( x = xb ; x <= xe ; x += step )
 		{
 			glVertex2f( x, yb );
 			glVertex2f( x, ye );
 		}
-		for ( y = yb ; y <= ye ; y += stepSize )
+		for ( y = yb ; y <= ye ; y += step )
 		{
 			glVertex2f( xb, y );
 			glVertex2f( xe, y );
@@ -2093,6 +2144,31 @@ void CXYWnd::XY_DrawGrid()
 		glEnd();
 	}
 	
+	// draw ZClip boundaries (if applicable)...
+	//
+	if ( m_nViewType == XZ )
+	{
+		if ( g_pParentWnd->GetZWnd()->m_pZClip )	// should always be the case at this point I think, but this is safer
+		{
+			if ( g_pParentWnd->GetZWnd()->m_pZClip->IsEnabled() )
+			{
+				glColor3f( ZCLIP_COLOUR );
+				glLineWidth( 2 );
+				glBegin( GL_LINES );
+				
+				glVertex2f( xb, g_pParentWnd->GetZWnd()->m_pZClip->GetTop() );
+				glVertex2f( xe, g_pParentWnd->GetZWnd()->m_pZClip->GetTop() );
+				
+				glVertex2f( xb, g_pParentWnd->GetZWnd()->m_pZClip->GetBottom() );
+				glVertex2f( xe, g_pParentWnd->GetZWnd()->m_pZClip->GetBottom() );
+				
+				glEnd();
+				glLineWidth( 1 );
+			}
+		}
+	}
+	
+	
 	// draw coordinate text if needed
 	
 	if ( g_qeglobals.d_savedinfo.show_coordinates )
@@ -2100,13 +2176,13 @@ void CXYWnd::XY_DrawGrid()
 		//glColor4f(0, 0, 0, 0);
 		glColor3fv( g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT] );
 		
-		for ( x = xb ; x < xe ; x += stepSize )
+		for ( x = xb ; x < xe ; x += step )
 		{
 			glRasterPos2f( x, m_vOrigin[nDim2] + h - 6 / m_fScale );
 			sprintf( text, "%i", ( int )x );
 			glCallLists( strlen( text ), GL_UNSIGNED_BYTE, text );
 		}
-		for ( y = yb ; y < ye ; y += stepSize )
+		for ( y = yb ; y < ye ; y += step )
 		{
 			glRasterPos2f( m_vOrigin[nDim1] - w + 1, y );
 			sprintf( text, "%i", ( int )y );
@@ -2372,6 +2448,22 @@ BOOL FilterBrush( brush_s* pb )
 	if ( !pb->owner )
 		return FALSE;       // during construction
 		
+	if ( g_pParentWnd->GetZWnd()->m_pZClip )	// ZClip class up and running? (and hence Z window built)
+	{
+		if ( g_pParentWnd->GetZWnd()->m_pZClip->IsEnabled() )
+		{
+			// ZClipping active...
+			//
+			if ( pb->getMins()[2] > g_pParentWnd->GetZWnd()->m_pZClip->GetTop()	// brush bottom edge is above clip top
+					||
+					pb->getMaxs()[2] < g_pParentWnd->GetZWnd()->m_pZClip->GetBottom()// brush top edge is below clip bottom
+			   )
+			{
+				return TRUE;
+			}
+		}
+	}
+	
 	if ( pb->hiddenBrush )
 	{
 		return TRUE;
@@ -2458,9 +2550,10 @@ BOOL FilterBrush( brush_s* pb )
 	}
 	else
 	{
-		if ( g_qeglobals.d_savedinfo.exclude & EXCLUDE_ENT )
+		if ( !( pb->owner && !stricmp( pb->owner->eclass->name, "func_group" ) ) )	// don't exclude func_groups if excluding entities
 		{
-			return ( strncmp( pb->owner->eclass->name, "func_group", 10 ) );
+			if ( g_qeglobals.d_savedinfo.exclude & EXCLUDE_ENT )
+				return TRUE;
 		}
 	}
 	
@@ -2514,6 +2607,8 @@ void DrawPathLines( void )
 	entity_s*   ent_entity[MAX_MAP_ENTITIES];
 	
 	if ( g_qeglobals.d_savedinfo.exclude & EXCLUDE_PATHS )
+		return;
+	if ( g_qeglobals.d_savedinfo.exclude & EXCLUDE_ENT )
 		return;
 		
 	num_entities = 0;
@@ -2809,10 +2904,18 @@ void CXYWnd::XY_Draw()
 		
 	for ( brush = active_brushes.next ; brush != &active_brushes ; brush = brush->next )
 	{
-		if ( brush->getMins()[nDim1] > maxs[0] ||
+		if ( ( brush->getMins()[nDim1] > maxs[0] ||
 				brush->getMins()[nDim2] > maxs[1] ||
 				brush->getMaxs()[nDim1] < mins[0] ||
 				brush->getMaxs()[nDim2] < mins[1] )
+				&&
+				// if about to cull, only let cull happen if we're not drawing lights+radii and this isn't a light
+				!(
+					!( g_qeglobals.d_savedinfo.exclude & EXCLUDE_LIGHTS ) &&
+					brush->owner && !strcmpi( brush->owner->eclass->name, "light" )
+				)
+				
+		   )
 		{
 			culled++;
 			continue;       // off screen
@@ -3137,21 +3240,68 @@ void CXYWnd::Clip()
 	}
 }
 
+static vector <brush_s*>BrushesToSelect;
+static void SelectList_Clear()
+{
+	BrushesToSelect.clear();
+}
+static void SelectList_AddList( brush_s* pList )
+{
+	brush_s* pBrush = pList->next;
+	while ( pBrush != NULL && pBrush != pList )
+	{
+		BrushesToSelect.push_back( pBrush );
+		pBrush = pBrush->next;
+	}
+}
+static void SelectList_Select()
+{
+	for ( int i = 0; i < BrushesToSelect.size(); i++ )
+	{
+		Select_Brush( BrushesToSelect[i] );
+	}
+}
+
+LPCSTR scGetUserName( void )
+{
+	static char cTempBuffer[128];
+	DWORD dwTempBufferSize;
+	static int i = 0;
+	
+	if ( !i++ )
+	{
+		dwTempBufferSize = ( sizeof( cTempBuffer ) ) - 1;
+		strcpy( cTempBuffer, "" );
+		if ( !GetUserName( cTempBuffer, &dwTempBufferSize ) )
+			strcpy( cTempBuffer, "Unknown" );	// error retrieving host computer name
+	}
+	
+	return &cTempBuffer[0];
+}
+
+
 void CXYWnd::SplitClip()
 {
 	ProduceSplitLists();
 	if ( ( g_brFrontSplits.next != &g_brFrontSplits ) &&
 			( g_brBackSplits.next != &g_brBackSplits ) )
 	{
-		Select_Delete();
-		Brush_CopyList( &g_brFrontSplits, &selected_brushes );
-		Brush_CopyList( &g_brBackSplits, &selected_brushes );
+		SelectList_Clear();
+		SelectList_AddList( &g_brFrontSplits );
+		SelectList_AddList( &g_brBackSplits );
+		Brush_CopyList( &g_brFrontSplits, &active_brushes );
+		Brush_CopyList( &g_brBackSplits, &active_brushes );
 		CleanList( &g_brFrontSplits );
 		CleanList( &g_brBackSplits );
 		if ( RogueClipMode() )
 			RetainClipMode( false );
 		else
 			RetainClipMode( true );
+		Select_Delete();
+		if ( stricmp( scGetUserName(), "mschulenberg" ) )	// :-)
+		{
+			SelectList_Select();
+		}
 	}
 }
 
@@ -3336,48 +3486,22 @@ bool OnList( entity_s* pFind, CPtrArray* pList )
 void CXYWnd::Copy()
 {
 #if 1
-	CWaitCursor WaitCursor;
+	CWaitCursor wait;
 	g_Clipboard.SetLength( 0 );
 	g_PatchClipboard.SetLength( 0 );
-	
 	Map_SaveSelected( &g_Clipboard, &g_PatchClipboard );
-	bool bClipped = false;
-	UINT nClipboard = ::RegisterClipboardFormat( "RadiantClippings" );
-	if ( nClipboard > 0 )
-	{
-		if ( OpenClipboard() )
-		{
-			::EmptyClipboard();
-			long lSize = g_Clipboard.GetLength();
-			HANDLE h = ::GlobalAlloc( GMEM_ZEROINIT | GMEM_MOVEABLE | GMEM_DDESHARE, lSize + sizeof( long ) );
-			if ( h != NULL )
-			{
-				unsigned char* cp = reinterpret_cast<unsigned char*>( ::GlobalLock( h ) );
-				memcpy( cp, &lSize, sizeof( long ) );
-				cp += sizeof( long );
-				g_Clipboard.SeekToBegin();
-				g_Clipboard.Read( cp, lSize );
-				::GlobalUnlock( h );
-				::SetClipboardData( nClipboard, h );
-				::CloseClipboard();
-				bClipped = true;
-			}
-		}
-	}
 	
-	if ( !bClipped )
+	// send it to the real clipboard...
+	if ( g_Clipboard.GetLength() > 0 )
 	{
-		Sys_Printf( "Unable to register Windows clipboard formats, copy/paste between editors will not be possible" );
+		g_Clipboard.SeekToBegin();
+		int nLen = g_Clipboard.GetLength();
+		char* pBuffer = new char[nLen + 1];
+		g_Clipboard.Read( pBuffer, nLen );
+		pBuffer[nLen] = '\0';
+		SendStringToClipboard( pBuffer );
+		delete []pBuffer;
 	}
-	
-	/*
-	  CString strOut;
-	  ::GetTempPath(1024, strOut.GetBuffer(1024));
-	  strOut.ReleaseBuffer();
-	  AddSlash(strOut);
-	  strOut += "RadiantClipboard.$$$";
-	  Map_SaveSelected(strOut.GetBuffer(0));
-	*/
 	
 #else
 	CPtrArray holdArray;
@@ -3413,45 +3537,36 @@ void CXYWnd::Copy()
 
 void CXYWnd::Undo()
 {
-	/*
-	  if (g_brUndo.next != &g_brUndo)
-	  {
-	    g_bScreenUpdates = false;
-	    Select_Delete();
-	      for (brush_s* pBrush = g_brUndo.next ; pBrush != NULL && pBrush != &g_brUndo ; pBrush=pBrush->next)
-	    {
-	      brush_s* pClone = Brush_Clone(pBrush);
-	        Brush_AddToList (pClone, &active_brushes);
-	            Entity_LinkBrush (pBrush->pUndoOwner, pClone);
-	      Brush_Build(pClone);
-	      Select_Brush(pClone);
-	    }
-	    CleanList(&g_brUndo);
-	    g_bScreenUpdates = true;
-	    Sys_UpdateWindows(W_ALL);
-	  }
-	  else Sys_Printf("Nothing to undo.../n");
-	*/
-}
-
-void CXYWnd::UndoClear()
-{
-	/*
-	  CleanList(&g_brUndo);
-	*/
+	if ( g_brUndo.next != &g_brUndo )
+	{
+		g_bScreenUpdates = false;
+		Select_Delete();
+		for ( brush_s* pBrush = g_brUndo.next ; pBrush != NULL && pBrush != &g_brUndo ; pBrush = pBrush->next )
+		{
+			brush_s* pClone = Brush_Clone( pBrush );
+			Brush_Build( pClone );
+			Brush_AddToList( pClone, &active_brushes );
+			Entity_LinkBrush( world_entity, pClone );
+			Select_Brush( pClone );
+		}
+		CleanList( &g_brUndo );
+		g_bScreenUpdates = true;
+		Sys_UpdateWindows( W_ALL );
+	}
+	else Sys_Printf( "Nothing to paste.../n" );
 }
 
 void CXYWnd::UndoCopy()
 {
-	/*
-	  CleanList(&g_brUndo);
-	    for (brush_s* pBrush = selected_brushes.next ; pBrush != NULL && pBrush != &selected_brushes ; pBrush=pBrush->next)
-	  {
-	    brush_s* pClone = Brush_Clone(pBrush);
-	    pClone->pUndoOwner = pBrush->owner;
-	      Brush_AddToList (pClone, &g_brUndo);
-	  }
-	*/
+	CleanList( &g_brUndo );
+	for ( brush_s* pBrush = selected_brushes.next ; pBrush != NULL && pBrush != &selected_brushes ; pBrush = pBrush->next )
+	{
+		if ( pBrush->owner == world_entity )
+		{
+			brush_s* pClone = Brush_Clone( pBrush );
+			Brush_AddToList( pClone, &g_brUndo );
+		}
+	}
 }
 
 bool CXYWnd::UndoAvailable()
@@ -3465,36 +3580,16 @@ void CXYWnd::Paste()
 {
 #if 1
 
-	CWaitCursor WaitCursor;
-	bool bPasted = false;
-	UINT nClipboard = ::RegisterClipboardFormat( "RadiantClippings" );
-	if ( nClipboard > 0 && OpenClipboard() && ::IsClipboardFormatAvailable( nClipboard ) )
+	CWaitCursor wait;
+	CString strClipBoard;
+	if ( GetStringFromClipboard( strClipBoard ) )
 	{
-		HANDLE h = ::GetClipboardData( nClipboard );
-		if ( h )
+		if ( strClipBoard.GetLength() > 0 )
 		{
-			g_Clipboard.SetLength( 0 );
-			unsigned char* cp = reinterpret_cast<unsigned char*>( ::GlobalLock( h ) );
-			long lSize = 0;
-			memcpy( &lSize, cp, sizeof( long ) );
-			cp += sizeof( long );
-			g_Clipboard.Write( cp, lSize );
+			Map_ImportBuffer( ( char* )( ( LPCSTR ) strClipBoard ) );
 		}
-		::GlobalUnlock( h );
-		::CloseClipboard();
 	}
 	
-	if ( g_Clipboard.GetLength() > 0 )
-	{
-		g_Clipboard.SeekToBegin();
-		int nLen = g_Clipboard.GetLength();
-		char* pBuffer = new char[nLen + 1];
-		memset( pBuffer, 0, sizeof( pBuffer ) );
-		g_Clipboard.Read( pBuffer, nLen );
-		pBuffer[nLen] = '\0';
-		Map_ImportBuffer( pBuffer );
-		delete []pBuffer;
-	}
 	
 #if 0
 	if ( g_PatchClipboard.GetLength() > 0 )
@@ -3577,7 +3672,6 @@ void CXYWnd::OnTimer( UINT nIDEvent )
 void CXYWnd::OnKeyUp( UINT nChar, UINT nRepCnt, UINT nFlags )
 {
 	g_pParentWnd->HandleKey( nChar, nRepCnt, nFlags, false );
-	//CWnd::OnKeyUp(nChar, nRepCnt, nFlags);
 }
 
 void CXYWnd::OnNcCalcSize( BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp )

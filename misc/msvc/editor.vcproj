@@ -446,6 +446,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\code\Engine\editor\zClip.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\code\Engine\editor\ZView.cpp"
 				>
 			</File>
@@ -725,6 +729,10 @@
 			</File>
 			<File
 				RelativePath="..\..\code\Engine\editor\Z.H"
+				>
+			</File>
+			<File
+				RelativePath="..\..\code\Engine\editor\zClip.h"
 				>
 			</File>
 			<File

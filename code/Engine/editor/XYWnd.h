@@ -21,12 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   XTWnd.h
-//  Version:     v1.00
+//  Version:     v1.02
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-25-2015 : Fixed problems with Clipoard
+//  09-26-2015 : Added zClip for OWEditor
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -130,13 +132,14 @@ class CXYWnd : public CWnd
 		bool AreaSelectOK();
 		edVec3_c& RotateOrigin();
 		edVec3_c& Rotation();
-		void UndoClear();
 		bool UndoAvailable();
 		void KillPathMode();
 		void Undo();
 		void UndoCopy();
 		void Copy();
 		void Paste();
+		BOOL GetStringFromClipboard( CString& String );
+		BOOL SendStringToClipboard( LPCSTR psString );
 		void Redraw( unsigned int nBits );
 		void VectorCopyXY( vec3_t in, vec3_t out );
 		void PositionView();
@@ -247,7 +250,6 @@ class CXYWnd : public CWnd
 		bool m_bPress_selection;
 		
 		friend CCamWnd;
-		//friend C3DFXCamWnd;
 		
 		CMenu m_mnuDrop;
 		int m_nViewType;

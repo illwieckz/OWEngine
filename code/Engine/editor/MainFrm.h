@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   MainFrm.h
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-26-2015 : Added zClip
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -134,6 +135,10 @@ class CMainFrame : public CFrameWnd
 		CTexWnd* GetTexWnd()
 		{
 			return m_pTexWnd;
+		};
+		CZWnd* GetZWnd()
+		{
+			return m_pZWnd;
 		};
 		void SetActiveXY( CXYWnd* p )
 		{

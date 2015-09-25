@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   ZWnd.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-26-2015 : Added zClip for OWEditor
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -49,6 +50,7 @@ IMPLEMENT_DYNCREATE( CZWnd, CWnd );
 
 CZWnd::CZWnd()
 {
+	m_pZClip = NULL;
 }
 
 CZWnd::~CZWnd()
@@ -101,11 +103,19 @@ int CZWnd::OnCreate( LPCREATESTRUCT lpCreateStruct )
 	if ( !wglMakeCurrent( m_dcZ, m_hglrcZ ) )
 		Error( "wglMakeCurrent in CZWnd::OnCreate failed" );
 		
+	m_pZClip = new CZClip();
+	
 	return 0;
 }
 
 void CZWnd::OnDestroy()
 {
+	if ( m_pZClip )
+	{
+		delete m_pZClip;
+		m_pZClip = NULL;
+	}
+	
 	QEW_StopGL( GetSafeHwnd(), m_hglrcZ, m_dcZ );
 	CWnd::OnDestroy();
 }
@@ -149,7 +159,7 @@ void CZWnd::OnPaint()
 	if ( !wglMakeCurrent( dc.m_hDC, m_hglrcZ ) )
 	{
 		Sys_Printf( "ERROR: wglMakeCurrent failed..\n " );
-		Sys_Printf( "Please restart Q3Radiant if the Z view is not working\n" );
+		Sys_Printf( "Please restart OWRadiant if the Z view is not working\n" );
 	}
 	else
 	{

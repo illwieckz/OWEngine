@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   Select.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-26-2015 : Removed unused code
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -353,8 +354,6 @@ void Select_Deselect( bool bDeselectFaces )
 	brush_s*    b;
 	
 	Patch_Deselect();
-	
-	g_pParentWnd->ActiveXY()->UndoClear();
 	
 	g_qeglobals.d_workcount++;
 	g_qeglobals.d_select_count = 0;
