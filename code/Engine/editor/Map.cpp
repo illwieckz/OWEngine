@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   Map.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: The state of the current world that all views are displaying
 // -------------------------------------------------------------------------
 //  History:
+//  09-29-2015 : Fixed crash on void Map_Free (void)
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -228,10 +229,10 @@ Map_Free
 */
 void Map_Free( void )
 {
-	g_bRestoreBetween = false;
 	if ( selected_brushes.next &&
 			( selected_brushes.next != &selected_brushes ) )
 	{
+		g_bRestoreBetween = false;
 		if ( MessageBox( g_qeglobals.d_hwndMain, "Copy selection?", "", MB_YESNO ) == IDYES )
 			Map_SaveBetween();
 	}
@@ -267,6 +268,7 @@ void Map_Free( void )
 	if ( world_entity )
 		Entity_Free( world_entity );
 	world_entity = NULL;
+	selected_face = NULL;
 }
 
 entity_s* AngledEntity()
