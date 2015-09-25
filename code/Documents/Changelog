@@ -1,7 +1,8 @@
 09-25-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Moved reading Opengl extension string to about box.
-    * Fixed the buffer overrun caused by the opengl extension string being too long in the editor.
+	* Fixed the buffer overrun caused by the opengl extension string being too long in the editor.
 	* Fixed problems with Editor.rc
+	* Fixed crash when you open "Command List" in OWEditor
 
 09-16-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Added GPL v3 license file

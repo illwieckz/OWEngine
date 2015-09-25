@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   CommandsDlg.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  09-25-2015 : Fixed crash when you open "Command List" in OWEditor
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -77,8 +78,6 @@ BOOL CCommandsDlg::OnInitDialog()
 	m_lstCommands.SetTabStops( 96 );
 	int nCount = g_nCommandCount;
 	
-	CFile fileout;
-	fileout.Open( "c:/commandlist.txt", CFile::modeCreate | CFile::modeWrite );
 	for ( int n = 0; n < nCount; n++ )
 	{
 		CString strLine;
@@ -108,10 +107,7 @@ BOOL CCommandsDlg::OnInitDialog()
 		
 		strLine.Format( "%s \t\t\t%s%s", g_Commands[n].m_strCommand, strMod, strKeys );
 		
-		fileout.Write( strLine, strLine.GetLength() );
-		fileout.Write( "\r\n", 2 );
 	}
-	fileout.Close();
-	return TRUE;  // return TRUE unless you set the focus to a control
+	return TRUE;	// return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
