@@ -537,6 +537,18 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\code\Engine\client\cl_sound.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="2"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\code\Engine\client\cl_ui.cpp"
 				>
 				<FileConfiguration

@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   client.h
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: primary header for client
 // -------------------------------------------------------------------------
 //  History:
+//  10-01-2015: Moved sound system initialization in cl_sound.cpp
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -675,6 +676,13 @@ void LAN_SaveServersToCache( void );
 void CL_InitRenderer( void );
 void CL_ShutdownRef( void );
 void CL_InitRef( void );
+
+
+//
+// cl_sound.cpp
+//
+void CL_SoundModule( void );
+void CL_ShutdownSound( void );
 
 //
 // cl_net_chan.c

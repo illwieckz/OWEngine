@@ -19,35 +19,51 @@
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
-//  File name:   sndAPI.h
-//  Version:     v1.01
-//  Created:     09-16-2016
+//  File name:   cl_sound.cpp
+//  Version:     v1.00
+//  Created:     10-01-2015
 //  Compilers:   Visual Studio
-//  Description: sound system DLL interface
+//  Description: sound module access
 // -------------------------------------------------------------------------
 //  History:
-//  09-16-2015: Added basic support for sound module
-//  10-01-2015: Moved sound system initialization in cl_sound.cpp
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef __SND_API_H__
-#define __SND_API_H__
+#include "client.h"
+#include <api/iFaceMgrAPI.h>
+#include <api/moduleManagerAPI.h>
+#include <api/sndAPI.h>
+#include <api/coreAPI.h>
 
-#include "iFaceBase.h"
-#include <shared/typedefs.h>
+#include <shared/str.h>
 
-#define SND_API_IDENTSTR "SndEngineAPI0001"
+#include "../sys/sys_local.h"
+#include "../sys/sys_loadlib.h"
 
-// these are only temporary function pointers, TODO: rework them?
-class sndAPI_s : public iFaceBase_i
+static moduleAPI_i* cl_soundLib = 0;
+sndAPI_s* g_snd;
+
+void CL_SoundModule( void )
 {
-	public:
-		bool ( *Init ) ();
-		void ( *Shutdown) ( void );
-};
+	// sound initialization
+	Com_Printf( "----- Initializing Sound DLL ----\n" );
+	cl_soundLib = g_moduleMgr->load( "soundLib" );
+	if ( !cl_soundLib )
+	{
+		Com_Error( ERR_FATAL, "Couldn't load sound DLL" );
+	}
+	g_iFaceMan->registerIFaceUser( &g_snd, SND_API_IDENTSTR );
+	g_snd->Init();
+	Com_Printf( "-------------------------------\n" );
 
-extern sndAPI_s* g_sndAPI;
-
-#endif // __SNDAPI_H__
-
+}
+void CL_ShutdownSound( void )
+{
+	if ( !cl_soundLib )
+	{
+		return;
+	}
+	g_snd->Shutdown();
+	// first sound plugin
+	g_moduleMgr->unload( &cl_soundLib );
+}

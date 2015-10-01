@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   cl_main.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: client main loop
 // -------------------------------------------------------------------------
 //  History:
+//  10-01-2015: Moved sound system initialization in cl_sound.cpp
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -34,6 +35,7 @@
 #include <api/iFaceMgrAPI.h>
 #include <api/clientAPI.h>
 #include <api/rAPI.h>
+#include <api/sndAPI.h>
 #include <shared/str.h>
 #include <shared/colorTable.h>
 #include <shared/keyCatchers.h>
@@ -1877,7 +1879,7 @@ Restart the sound subsystem
 */
 void CL_Snd_Shutdown( void )
 {
-	//S_Shutdown();
+	CL_ShutdownSound();
 	cls.soundStarted = false;
 }
 
@@ -3040,7 +3042,7 @@ void CL_StartHunkUsers( bool rendererOnly )
 	if ( !cls.soundStarted )
 	{
 		cls.soundStarted = true;
-		//S_Init();
+		CL_SoundModule();
 	}
 	
 	if ( !cls.soundRegistered )

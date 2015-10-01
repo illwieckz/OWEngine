@@ -1,5 +1,8 @@
 10-01-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Write some information about corrupted ZIP file
+	* Moved sound system initialization in cl_sound.cpp
+	* Added sound initialization and sound shutting down
+	* Added FMOD sound library files for Windows, Mac and Linux platform
 
 09-26-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Added zClip for OWEditor

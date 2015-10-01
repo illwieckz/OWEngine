@@ -19,35 +19,34 @@
 //  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
-//  File name:   sndAPI.h
-//  Version:     v1.01
-//  Created:     09-16-2016
+//  File name:   snd_main.cpp
+//  Version:     v1.00
+//  Created:     10-01-2015
 //  Compilers:   Visual Studio
-//  Description: sound system DLL interface
+//  Description: 
 // -------------------------------------------------------------------------
 //  History:
-//  09-16-2015: Added basic support for sound module
-//  10-01-2015: Moved sound system initialization in cl_sound.cpp
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef __SND_API_H__
-#define __SND_API_H__
+#include <fmod.h>
+#include <fmod_errors.h>
 
-#include "iFaceBase.h"
-#include <shared/typedefs.h>
+#define MAX_SFX 4096
+#define MAX_FMOD_CHANNELS 2048
+#define DEFAULT_FMOD_MODE FMOD_3D | FMOD_IGNORETAGS | FMOD_LOWMEM
+#define DEFAULT_FMOD_INIT FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED | FMOD_INIT_VOL0_BECOMES_VIRTUAL
 
-#define SND_API_IDENTSTR "SndEngineAPI0001"
-
-// these are only temporary function pointers, TODO: rework them?
-class sndAPI_s : public iFaceBase_i
+typedef struct fmodSfx_s
 {
-	public:
-		bool ( *Init ) ();
-		void ( *Shutdown) ( void );
-};
+    char filename[256];
+    FMOD_SOUND *sound;
+    bool isDefault;
+    int lastUsedTime;
+} fmodSfx_t;
 
-extern sndAPI_s* g_sndAPI;
+static FMOD_SYSTEM *fmodSystem;
+static fmodSfx_t loadedSfx[4096];
 
-#endif // __SNDAPI_H__
-
+bool Sound_Init();
+void Sound_Shutdown(void);

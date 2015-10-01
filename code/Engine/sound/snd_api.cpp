@@ -20,18 +20,20 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   snd_api.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:     09-16-2016
 //  Compilers:   Visual Studio
 //  Description: Sound API implementation
 // -------------------------------------------------------------------------
 //  History:
 //  09-16-2015: Added basic support for sound module
+//  10-01-2015: Added sound initialization and sound shutting down
 //
 ////////////////////////////////////////////////////////////////////////////
 
 // snd_api.cpp - sound DLL entry point
 
+#include "snd_local.h"
 #include <qcommon/q_shared.h>
 #include <api/iFaceMgrAPI.h>
 #include <api/vfsAPI.h>
@@ -57,6 +59,8 @@ void ShareAPIs( iFaceMgrAPI_i* iFMA )
 	g_iFaceMan = iFMA;
 	
 	// exports
+	g_staticSndAPI.Init = Sound_Init;
+	g_staticSndAPI.Shutdown = Sound_Shutdown;
 	g_iFaceMan->registerInterface( &g_staticSndAPI, SND_API_IDENTSTR );
 	
 	// imports
