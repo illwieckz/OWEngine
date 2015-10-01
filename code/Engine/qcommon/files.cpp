@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   files.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: Handle based file system for OpenWolf Engine
 // -------------------------------------------------------------------------
 //  History:
+//  10-01-2015 : Write some information about corrupted ZIP file
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -2017,6 +2018,7 @@ static pack_t* FS_LoadZipFile( const char* zipfile, const char* basename )
 		err = unzGetCurrentFileInfo( uf, &file_info, filename_inzip, sizeof( filename_inzip ), NULL, 0, NULL, 0 );
 		if ( err != UNZ_OK )
 		{
+			Com_Error( ERR_FATAL, "Corrupted pk3 file \'%s\'", basename );
 			break;
 		}
 		len += strlen( filename_inzip ) + 1;
@@ -2064,6 +2066,7 @@ static pack_t* FS_LoadZipFile( const char* zipfile, const char* basename )
 		err = unzGetCurrentFileInfo( uf, &file_info, filename_inzip, sizeof( filename_inzip ), NULL, 0, NULL, 0 );
 		if ( err != UNZ_OK )
 		{
+			Com_Error( ERR_FATAL, "Corrupted pk3 file \'%s\'", basename );
 			break;
 		}
 		if ( file_info.uncompressed_size > 0 )
