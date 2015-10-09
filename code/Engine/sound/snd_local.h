@@ -23,7 +23,7 @@
 //  Version:     v1.00
 //  Created:     10-01-2015
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
 //  History:
 //
@@ -39,14 +39,14 @@
 
 typedef struct fmodSfx_s
 {
-    char filename[256];
-    FMOD_SOUND *sound;
-    bool isDefault;
-    int lastUsedTime;
+	char filename[256];
+	FMOD_SOUND* sound;
+	bool isDefault;
+	int lastUsedTime;
 } fmodSfx_t;
 
-static FMOD_SYSTEM *fmodSystem;
+static FMOD_SYSTEM* fmodSystem;
 static fmodSfx_t loadedSfx[4096];
 
 bool Sound_Init();
-void Sound_Shutdown(void);
+void Sound_Shutdown( void );

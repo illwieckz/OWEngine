@@ -43,8 +43,8 @@
 class sndAPI_s : public iFaceBase_i
 {
 	public:
-		bool ( *Init ) ();
-		void ( *Shutdown) ( void );
+		bool ( *Init )();
+		void ( *Shutdown )( void );
 };
 
 extern sndAPI_s* g_sndAPI;

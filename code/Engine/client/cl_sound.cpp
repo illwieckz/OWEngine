@@ -55,7 +55,7 @@ void CL_SoundModule( void )
 	g_iFaceMan->registerIFaceUser( &g_snd, SND_API_IDENTSTR );
 	g_snd->Init();
 	Com_Printf( "-------------------------------\n" );
-
+	
 }
 void CL_ShutdownSound( void )
 {

@@ -23,7 +23,7 @@
 //  Version:     v1.00
 //  Created:     10-01-2015
 //  Compilers:   Visual Studio
-//  Description: 
+//  Description:
 // -------------------------------------------------------------------------
 //  History:
 //
@@ -40,35 +40,35 @@
 
 bool Sound_Init()
 {
-	g_core->Print("------ Initializing FMOD Sound ------\n");
-
-    FMOD_RESULT result = FMOD_System_Create(&fmodSystem);
-    if (!fmodSystem)
+	g_core->Print( "------ Initializing FMOD Sound ------\n" );
+	
+	FMOD_RESULT result = FMOD_System_Create( &fmodSystem );
+	if ( !fmodSystem )
 	{
-        g_core->Print("FMOD_System_Create failed (%s)\n", FMOD_ErrorString(result));
-		g_core->Print("Sound initialization failed.\n");
-        return false; // error
-    }
-
+		g_core->Print( "FMOD_System_Create failed (%s)\n", FMOD_ErrorString( result ) );
+		g_core->Print( "Sound initialization failed.\n" );
+		return false; // error
+	}
+	
 	u32 version;
-    FMOD_System_GetVersion(fmodSystem, &version);
-    g_core->Print("FMOD Ex Version: %08x\n", version);
-
-    FMOD_System_Init(fmodSystem, MAX_FMOD_CHANNELS, DEFAULT_FMOD_INIT, NULL);
-    g_core->Print("FMOD Ex system initialized\n");
-
-    return true; // OK
+	FMOD_System_GetVersion( fmodSystem, &version );
+	g_core->Print( "FMOD Ex Version: %08x\n", version );
+	
+	FMOD_System_Init( fmodSystem, MAX_FMOD_CHANNELS, DEFAULT_FMOD_INIT, NULL );
+	g_core->Print( "FMOD Ex system initialized\n" );
+	
+	return true; // OK
 }
-void Sound_Shutdown(void)
+void Sound_Shutdown( void )
 {
-	g_core->Print("------ Shutdown Sound ------\n");
-
-    for (u32 i = 0; i < MAX_SFX; i++)
+	g_core->Print( "------ Shutdown Sound ------\n" );
+	
+	for ( u32 i = 0; i < MAX_SFX; i++ )
 	{
-        FMOD_SOUND *sfx = loadedSfx[i].sound;
-        if (sfx)
+		FMOD_SOUND* sfx = loadedSfx[i].sound;
+		if ( sfx )
 		{
-            FMOD_Sound_Release(sfx);
-        }
-    }
+			FMOD_Sound_Release( sfx );
+		}
+	}
 }

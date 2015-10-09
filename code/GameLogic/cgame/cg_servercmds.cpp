@@ -1,30 +1,37 @@
-/*
-===========================================================================
-Copyright (C) 1999-2005 Id Software, Inc.
-Copyright (C) 2012-2013 V.
-Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
-
-This file is part of Quake III Arena source code.
-
-Quake III Arena source code is free software; you can redistribute it
-and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
-
-Quake III Arena source code is distributed in the hope that it will be
-useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Quake III Arena source code; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-===========================================================================
-*/
+////////////////////////////////////////////////////////////////////////////
 //
-// cg_servercmds.c -- reliably sequenced text commands sent by the server
-// these are processed at snapshot transition time, so there will definately
-// be a valid snapshot this frame
+//  This file is part of OWEngine source code.
+//  Copyright (C) 1999-2005 Id Software, Inc.
+//  Copyright (C) 2012-2013 V.
+//  Copyright (C) 2015 Dusan Jocic <dusanjocic@msn.com>
+//
+//  OWEngine source code is free software; you can redistribute it
+//  and/or modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  OWEngine source code is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//
+//  See the GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software Foundation,
+//  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA,
+//  or simply visit <http://www.gnu.org/licenses/>.
+// -------------------------------------------------------------------------
+//  File name:   cg_servercmds.cpp
+//  Version:     v1.00
+//  Created:
+//  Compilers:   Visual Studio
+//  Description: Reliably sequenced text commands sent by the server
+//               these are processed at snapshot transition time, so
+//               there will definitely be a valid snapshot this frame
+// -------------------------------------------------------------------------
+//  History:
+//
+////////////////////////////////////////////////////////////////////////////
 
 #include "cg_local.h"
 #include <api/clientAPI.h>

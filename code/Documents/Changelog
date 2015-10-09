@@ -1,3 +1,7 @@
+10-09-2015 Dusan Jocic <dusanjocic@msn.com>
+	* Changed copyright holders
+	* Indentation and reformatting source code to new coding style
+
 10-03-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Added missing fmodex.dll inside game folder
 
