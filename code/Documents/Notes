@@ -1,5 +1,8 @@
 Developer notes. Just anything odd, interesting etc out of the source goes in here.
 
+10-10-2015 Dusan Jocic <dusanjocic@msn.com>
+	* For testing LUA modules and LUA hooks inside map load "test_lua_helloworld"
+
 09-09-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Only compiling on Visual Studio 2008 is supported at this moment
 
