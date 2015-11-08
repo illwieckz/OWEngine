@@ -1,3 +1,6 @@
+11-08-2015 Dusan Jocic <dusanjocic@msn.com>
+	* Fixed problems with compiling engine in Debug mode
+
 10-10-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Fixed problems with loading LUA map hooks
 

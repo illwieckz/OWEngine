@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\code\Library\gl;..\..\code\Library\SDL12\include;&quot;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include&quot;;..\..\code\Engine"
+				AdditionalIncludeDirectories="..\..\code\Library\gl;..\..\code\Library\SDL12\include;&quot;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include&quot;;..\..\code\Engine;..\..\code\Library\fmod\api\inc"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,9 +58,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDLmain.lib SDL.lib"
+				AdditionalDependencies="SDLmain.lib SDL.lib fmodex_vc.lib"
 				OutputFile="..\..\game\system\soundLibx86.dll"
-				AdditionalLibraryDirectories="..\..\code\Library\gl\libs;..\..\code\Library\SDL12\libs;&quot;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86&quot;"
+				AdditionalLibraryDirectories="..\..\code\Library\gl\libs;..\..\code\Library\SDL12\libs;&quot;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86&quot;;..\..\code\Library\fmod\api\lib"
 				ModuleDefinitionFile="soundLib.def"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
