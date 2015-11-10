@@ -65,7 +65,7 @@ void CG_ParseServerinfo( void )
 	Com_sprintf( cgs.mapname, sizeof( cgs.mapname ), "maps/%s.bsp", mapname );
 	if ( g_vfs->FS_FileExists( cgs.mapname ) == false )
 	{
-		// if there is no .bsp file, fall back to .proc (Doom3 .bsp tree with portals but without PVS)
+		// if there is no .bsp file, fall back to .proc (Doom3 .bsp tree with portals and with PVS)
 		Com_sprintf( cgs.mapname, sizeof( cgs.mapname ), "maps/%s.proc", mapname );
 		if ( g_vfs->FS_FileExists( cgs.mapname ) == false )
 		{

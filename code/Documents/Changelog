@@ -1,3 +1,10 @@
+11-10-2015 Dusan Jocic <dusanjocic@msn.com>
+	* Ported PVS from Doom3
+	* Fixed some typo mistakes
+	* Fixed showing calculations time for PVS
+	* Added missing curlib.dll for Windows builds
+	* Added missing DevIL.dll for OWMap (if anyone is using it)
+
 11-08-2015 Dusan Jocic <dusanjocic@msn.com>
 	* Fixed problems with compiling engine in Debug mode
 

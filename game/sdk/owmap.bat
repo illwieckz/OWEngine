@@ -1,2 +1,2 @@
-q3map.exe
+owmap.exe
 pause

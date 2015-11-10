@@ -1767,7 +1767,7 @@ bool rBspTree_c::loadVisibility( u32 visLump )
 	const lump_s& vl = h->getLumps()[visLump];
 	if ( vl.fileLen == 0 )
 	{
-		g_core->Print( S_COLOR_YELLOW "rBspTree_c::loadVis: visibility lump is emtpy\n" );
+		g_core->Print( S_COLOR_YELLOW "rBspTree_c::loadVis: visibility lump is empty\n" );
 		return false; // dont do the error
 	}
 	vis = ( visHeader_s* )malloc( vl.fileLen );
@@ -1809,7 +1809,7 @@ bool rBspTree_c::loadQioAreaPortals( u32 lumpNum )
 	const lump_s& vl = h->getLumps()[lumpNum];
 	if ( vl.fileLen == 0 )
 	{
-		//  g_core->Print(S_COLOR_YELLOW "rBspTree_c::loadQioAreaPortals: areaportals lump is emtpy\n");
+		g_core->Print( S_COLOR_YELLOW "rBspTree_c::loadQioAreaPortals: areaportals lump is empty\n" );
 		return false; // dont do the error
 	}
 	u32 numAreaPortals = vl.fileLen / sizeof( dareaPortal_t );
@@ -1829,7 +1829,7 @@ bool rBspTree_c::loadQioPoints( u32 lumpNum )
 	const lump_s& vl = h->getLumps()[lumpNum];
 	if ( vl.fileLen == 0 )
 	{
-		//  g_core->Print(S_COLOR_YELLOW "rBspTree_c::loadQioPoints: points lump is emtpy\n");
+		g_core->Print( S_COLOR_YELLOW "rBspTree_c::loadQioPoints: points lump is empty\n" );
 		return false; // dont do the error
 	}
 	u32 numPoints = vl.fileLen / sizeof( vec3_t );

@@ -859,7 +859,7 @@ void CL_DemoCompleted( void )
 			Com_sprintf( buffer, sizeof( buffer ),
 						 "%i frames %3.1f seconds %3.1f fps %d.0/%.1f/%d.0/%.1f ms\n",
 						 clc.timeDemoFrames,
-						 time / 1000.0,
+						 time / 1000.0f,
 						 clc.timeDemoFrames * 1000.0 / time,
 						 clc.timeDemoMinDuration,
 						 time / ( float )clc.timeDemoFrames,

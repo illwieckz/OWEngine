@@ -38,8 +38,10 @@
 #include <math/aabb.h>
 #include <math/plane.h>
 #include <shared/cmWinding.h>
+#include <shared/colorTable.h>
 #include <api/coreAPI.h>
 #include <api/portalizedWorldAPI.h>
+#include <api/rAPI.h>
 
 #define D3_PVS_ON_EPSILON       0.1f
 
@@ -68,8 +70,8 @@ typedef struct pvsPassage_s
 typedef struct pvsPortal_s
 {
 	int                 areaNum;    // area this portal leads to
-	cmWinding_c*            w;          // winding goes counter clockwise seen from the area this portal is part of
-	aabb            bounds;     // winding bounds
+	cmWinding_c*        w;          // winding goes counter clockwise seen from the area this portal is part of
+	aabb                bounds;     // winding bounds
 	plane_c             plane;      // winding plane, normal points towards the area this portal leads to
 	pvsPassage_t*       passages;   // passages to portals in the area this portal leads to
 	bool                done;       // true if pvs is calculated for this portal
@@ -81,7 +83,7 @@ typedef struct pvsPortal_s
 typedef struct pvsArea_s
 {
 	int                 numPortals; // number of portals in this area
-	aabb            bounds;     // bounds of the whole area
+	aabb                bounds;     // bounds of the whole area
 	pvsPortal_t**       portals;    // array with pointers to the portals of this area
 } pvsArea_t;
 
@@ -938,6 +940,7 @@ idPVS::Init
 void idPVS::Init( const class portalizedWorldAPI_i* newPortalWorld )
 {
 	int totalVisibleAreas;
+	int startTime, stopTime;
 	
 	Shutdown();
 	
@@ -971,8 +974,8 @@ void idPVS::Init( const class portalizedWorldAPI_i* newPortalWorld )
 		memset( currentPVS[i].pvs, 0, areaVisBytes );
 	}
 	
-	//idTimer timer;
-	//timer.Start();
+	//Begin calculating time of PVS
+	startTime = g_core->Milliseconds();
 	
 	CreatePVSData();
 	
@@ -986,9 +989,10 @@ void idPVS::Init( const class portalizedWorldAPI_i* newPortalWorld )
 	
 	DestroyPVSData();
 	
-	//  timer.Stop();
+	//Stop calculating time of PVS
+	stopTime = g_core->Milliseconds();
 	
-	//  g_core->Print( "%5.0f msec to calculate PVS\n", timer.Milliseconds() );
+	g_core->Print( "%5.0f msec to calculate PVS\n", ( stopTime - startTime ) / 1.0f ); // In milliseconds
 	g_core->Print( "%5d areas\n", numAreas );
 	g_core->Print( "%5d portals\n", numPortals );
 	g_core->Print( "%5d areas visible on average\n", totalVisibleAreas / numAreas );
@@ -1435,51 +1439,58 @@ idPVS::DrawPVS
 */
 void idPVS::DrawPVS( const vec3_c& source, const pvsType_t type ) const
 {
-	//int i, j, k, numPoints, n, sourceArea;
-	//sharedPortal_s portal;
-	//plane_c plane;
-	//vec3_c offset;
-	//idVec4 *color;
-	//pvsHandle_t handle;
+	int i, j, k, numPoints, n, sourceArea;
+	const portalAPI_i* portal;
+	pvsPortal_t* p;
+	plane_c plane;
+	vec3_c offset;
+	vec3_c color;
+	pvsHandle_t handle;
 	
-	//sourceArea = portalWorld->pointAreaNum( source );
+	sourceArea = portalWorld->pointAreaNum( source );
 	
-	//if ( sourceArea == -1 ) {
-	//  return;
-	//}
+	if ( sourceArea == -1 )
+	{
+		return;
+	}
 	
-	//handle = SetupCurrentPVS( source, type );
+	handle = SetupCurrentPVS( source, type );
 	
-	//for ( j = 0; j < numAreas; j++ ) {
+	for ( j = 0; j < numAreas; j++ )
+	{
 	
-	//  if ( !( currentPVS[handle.i].pvs[j>>3] & (1 << (j&7)) ) ) {
-	//      continue;
-	//  }
+		if ( !( currentPVS[handle.i].pvs[j >> 3] & ( 1 << ( j & 7 ) ) ) )
+		{
+			continue;
+		}
+		
+		if ( j == sourceArea )
+		{
+			color = g_color_table[ColorIndex( COLOR_RED )];
+		}
+		else
+		{
+			color = g_color_table[ColorIndex( COLOR_CYAN )];
+		}
+		
+		n = portalWorld->getNumPortalsInArea( j );
+		
+		// draw all the portals of the area
+		for ( i = 0; i < n; i++ )
+		{
+			portal = portalWorld->getPortal( j, i );
+			
+			numPoints = p->w->size();
+			p->w->getPlane( p->plane );
+			offset = plane.norm * 4.0f;
+			for ( k = 0; k < numPoints; k++ )
+			{
+				rf->addDebugLine( color, ( *p->w )[k] + offset, ( *p->w )[( k + 1 ) % numPoints] + offset, 5.f );
+			}
+		}
+	}
 	
-	//  if ( j == sourceArea ) {
-	//      color = &colorRed;
-	//  }
-	//  else {
-	//      color = &colorCyan;
-	//  }
-	
-	//  n = portalWorld->getNumPortalsInArea( j );
-	
-	//  // draw all the portals of the area
-	//  for ( i = 0; i < n; i++ ) {
-	//      portal = gameRenderWorld->GetPortal( j, i );
-	
-	//      numPoints = portal.w->size();
-	
-	//      portal.w->GetPlane( plane );
-	//      offset = plane.Normal() * 4.0f;
-	//      for ( k = 0; k < numPoints; k++ ) {
-	//          gameRenderWorld->DebugLine( *color, (*portal.w)[k] + offset, (*portal.w)[(k+1)%numPoints] + offset );
-	//      }
-	//  }
-	//}
-	
-	//FreeCurrentPVS( handle );
+	FreeCurrentPVS( handle );
 }
 
 /*
@@ -1489,56 +1500,66 @@ idPVS::DrawPVS
 */
 void idPVS::DrawPVS( const aabb& source, const pvsType_t type ) const
 {
-	//  int i, j, k, numPoints, n, num, areas[MAX_BOUNDS_AREAS];
-	//  sharedPortal_s portal;
-	//  plane_c plane;
-	//  vec3_c offset;
-	//  idVec4 *color;
-	//  pvsHandle_t handle;
-	//
-	//  num = portalWorld->boxAreaNums( source, areas, MAX_BOUNDS_AREAS );
-	//
-	//  if ( !num ) {
-	//      return;
-	//  }
-	//
-	//  handle = SetupCurrentPVS( source, type );
-	//
-	//  for ( j = 0; j < numAreas; j++ ) {
-	//
-	//      if ( !( currentPVS[handle.i].pvs[j>>3] & (1 << (j&7)) ) ) {
-	//          continue;
-	//      }
-	//
-	//      for ( i = 0; i < num; i++ ) {
-	//          if ( j == areas[i] ) {
-	//              break;
-	//          }
-	//      }
-	//      if ( i < num ) {
-	//          color = &colorRed;
-	//      }
-	//      else {
-	//          color = &colorCyan;
-	//      }
-	//
-	//      n = portalWorld->getNumPortalsInArea( j );
-	//
-	//      // draw all the portals of the area
-	//      for ( i = 0; i < n; i++ ) {
-	//          portal = gameRenderWorld->GetPortal( j, i );
-	//
-	//          numPoints = portal.w->size();
-	//
-	//          portal.w->GetPlane( plane );
-	//          offset = plane.Normal() * 4.0f;
-	//          for ( k = 0; k < numPoints; k++ ) {
-	//              gameRenderWorld->DebugLine( *color, (*portal.w)[k] + offset, (*portal.w)[(k+1)%numPoints] + offset );
-	//          }
-	//      }
-	//  }
-	//
-	//  FreeCurrentPVS( handle );
+	int i, j, k, numPoints, n, num, areas[MAX_BOUNDS_AREAS];
+	const portalAPI_i* portal;
+	pvsPortal_t* p;
+	plane_c plane;
+	vec3_c offset;
+	vec3_c color;
+	pvsHandle_t handle;
+	
+	num = portalWorld->boxAreaNums( source, areas, MAX_BOUNDS_AREAS );
+	
+	if ( !num )
+	{
+		return;
+	}
+	
+	handle = SetupCurrentPVS( source, type );
+	
+	for ( j = 0; j < numAreas; j++ )
+	{
+	
+		if ( !( currentPVS[handle.i].pvs[j >> 3] & ( 1 << ( j & 7 ) ) ) )
+		{
+			continue;
+		}
+		
+		for ( i = 0; i < num; i++ )
+		{
+			if ( j == areas[i] )
+			{
+				break;
+			}
+		}
+		if ( i < num )
+		{
+			color = g_color_table[ColorIndex( COLOR_RED )];
+		}
+		else
+		{
+			color = g_color_table[ColorIndex( COLOR_CYAN )];
+		}
+		
+		n = portalWorld->getNumPortalsInArea( j );
+		
+		// draw all the portals of the area
+		for ( i = 0; i < n; i++ )
+		{
+			portal = portalWorld->getPortal( i, j );
+			
+			numPoints = p->w->size();
+			
+			p->w->getPlane( p->plane );
+			offset = plane.norm * 4.0f;
+			for ( k = 0; k < numPoints; k++ )
+			{
+				rf->addDebugLine( color, ( *p->w )[k] + offset, ( *p->w )[( k + 1 ) % numPoints] + offset, 5.f );
+			}
+		}
+	}
+	
+	FreeCurrentPVS( handle );
 }
 
 /*
@@ -1548,49 +1569,58 @@ idPVS::DrawPVS
 */
 void idPVS::DrawCurrentPVS( const pvsHandle_t handle, const vec3_c& source ) const
 {
-	//  int i, j, k, numPoints, n, sourceArea;
-	//  sharedPortal_s portal;
-	//  plane_c plane;
-	//  vec3_c offset;
-	//  idVec4 *color;
-	//
-	//  if ( handle.i < 0 || handle.i >= MAX_CURRENT_PVS ||
-	//      handle.h != currentPVS[handle.i].handle.h ) {
-	//      g_core->DropError( "idPVS::DrawCurrentPVS: invalid handle" );
-	//  }
-	//
-	//  sourceArea = portalWorld->pointAreaNum( source );
-	//
-	//  if ( sourceArea == -1 ) {
-	//      return;
-	//  }
-	//
-	//  for ( j = 0; j < numAreas; j++ ) {
-	//
-	//      if ( !( currentPVS[handle.i].pvs[j>>3] & (1 << (j&7)) ) ) {
-	//          continue;
-	//      }
-	//
-	//      if ( j == sourceArea ) {
-	//          color = &colorRed;
-	//      }
-	//      else {
-	//          color = &colorCyan;
-	//      }
-	//
-	//      n = portalWorld->getNumPortalsInArea( j );
-	//
-	//      // draw all the portals of the area
-	//      for ( i = 0; i < n; i++ ) {
-	//          portal = gameRenderWorld->GetPortal( j, i );
-	//
-	//          numPoints = portal.w->size();
-	//
-	//          portal.w->GetPlane( plane );
-	//          offset = plane.Normal() * 4.0f;
-	//          for ( k = 0; k < numPoints; k++ ) {
-	//              gameRenderWorld->DebugLine( *color, (*portal.w)[k] + offset, (*portal.w)[(k+1)%numPoints] + offset );
-	//          }
-	//      }
-	//  }
+	int i, j, k, numPoints, n, sourceArea;
+	const portalAPI_i* portal;
+	pvsPortal_t* p;
+	plane_c plane;
+	vec3_c offset;
+	vec3_c color;
+	
+	if ( handle.i < 0 || handle.i >= MAX_CURRENT_PVS ||
+			handle.h != currentPVS[handle.i].handle.h )
+	{
+		g_core->DropError( "idPVS::DrawCurrentPVS: invalid handle" );
+	}
+	
+	sourceArea = portalWorld->pointAreaNum( source );
+	
+	if ( sourceArea == -1 )
+	{
+		return;
+	}
+	
+	for ( j = 0; j < numAreas; j++ )
+	{
+	
+		if ( !( currentPVS[handle.i].pvs[j >> 3] & ( 1 << ( j & 7 ) ) ) )
+		{
+			continue;
+		}
+		
+		if ( j == sourceArea )
+		{
+			color = g_color_table[ColorIndex( COLOR_RED )];
+		}
+		else
+		{
+			color = g_color_table[ColorIndex( COLOR_CYAN )];
+		}
+		
+		n = portalWorld->getNumPortalsInArea( j );
+		
+		// draw all the portals of the area
+		for ( i = 0; i < n; i++ )
+		{
+			portal = portalWorld->getPortal( j, i );
+			
+			numPoints = p->w->size();
+			
+			p->w->getPlane( p->plane );
+			offset = plane.norm * 4.0f;
+			for ( k = 0; k < numPoints; k++ )
+			{
+				rf->addDebugLine( color, ( *p->w )[k] + offset, ( *p->w )[( k + 1 ) % numPoints] + offset, 5.f );
+			}
+		}
+	}
 }

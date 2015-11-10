@@ -146,11 +146,11 @@ char* Sys_DefaultHomePath( void )
 Sys_Milliseconds
 ================
 */
-int sys_timeBase;
 int Sys_Milliseconds( void )
 {
-	int             sys_curtime;
-	static bool initialized = false;
+	int sys_curtime;
+	static int sys_timeBase;
+	static bool	initialized = false;
 	
 	if ( !initialized )
 	{
