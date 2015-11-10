@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   sys_win32.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description:
 // -------------------------------------------------------------------------
 //  History:
+//  11-10-2015 : sys_timeBase is static and intialized in Sys_Milliseconds()
 //
 ////////////////////////////////////////////////////////////////////////////
 

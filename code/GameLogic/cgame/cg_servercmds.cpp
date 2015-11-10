@@ -22,7 +22,7 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   cg_servercmds.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: Reliably sequenced text commands sent by the server
@@ -30,6 +30,7 @@
 //               there will definitely be a valid snapshot this frame
 // -------------------------------------------------------------------------
 //  History:
+//  11-10-2015 : If there is no BSP fall back to .proc with PVS
 //
 ////////////////////////////////////////////////////////////////////////////
 

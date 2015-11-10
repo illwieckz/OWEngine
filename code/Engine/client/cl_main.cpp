@@ -21,13 +21,14 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   cl_main.cpp
-//  Version:     v1.01
+//  Version:     v1.02
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: client main loop
 // -------------------------------------------------------------------------
 //  History:
 //  10-01-2015: Moved sound system initialization in cl_sound.cpp
+//  11-11-2015 : Fixed some typo mistakes
 //
 ////////////////////////////////////////////////////////////////////////////
 

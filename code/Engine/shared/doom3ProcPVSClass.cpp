@@ -22,7 +22,7 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   doom3ProcPVSClass.h
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: Realtime visibility checks for Doom3 .PROC files
@@ -31,6 +31,8 @@
 //                     Source Code
 // -------------------------------------------------------------------------
 //  History:
+//  11-10-2015 : Ported PVS from Doom3, 
+//  11-10-2015 : Fixed showing calculations time for PVS
 //
 ////////////////////////////////////////////////////////////////////////////
 

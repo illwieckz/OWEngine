@@ -21,12 +21,13 @@
 //  or simply visit <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------
 //  File name:   rf_bsp.cpp
-//  Version:     v1.00
+//  Version:     v1.01
 //  Created:
 //  Compilers:   Visual Studio
 //  Description: rBspTree_c class implementation
 // -------------------------------------------------------------------------
 //  History:
+//  11-11-2015 : Fixed some typo mistakes
 //
 ////////////////////////////////////////////////////////////////////////////
 
